@@ -1,0 +1,21 @@
+.App {
+    padding: 30px;
+    display: flex;
+    background-color: #7ddea6;
+    height: 100vh;
+}
+
+.App > div {
+    margin-right: 50px;
+}
+
+.todolist {
+    padding: 10px;
+    border: 1px solid #046027;
+    border-radius: 10px;
+    height: 220px;
+}
+
+.buttons {
+    text-align: center;
+}
