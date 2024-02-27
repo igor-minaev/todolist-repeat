@@ -25,6 +25,10 @@ function App() {
 
     const removeTask = (taskId: string) => setTasks(tasks.filter(t => t.id !== taskId))
     const changeFilter = (newFilterValue: FilterType) => setFilter(newFilterValue)
+    const addTask = (title: string) => {
+        const newTask: TaskType = {id: crypto.randomUUID(), category: 'Frontend', title, isDone: false}
+        setTasks([newTask,...tasks])
+    }
 
     const getFilteredTasks = (allTask: TaskType[], filter: FilterType): TaskType[] => {
         switch (filter) {
@@ -45,6 +49,7 @@ function App() {
                 tasks={filteredTasks}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
+                addTask={addTask}
             />
         </div>
     );
