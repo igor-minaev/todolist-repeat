@@ -13,9 +13,18 @@
     padding: 10px;
     border: 1px solid #046027;
     border-radius: 10px;
-    height: 220px;
+    height: max-content;
+    background-color: #9d5ce5;
 }
 
 .buttons {
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}
+
+.input{
     text-align: center;
 }
