@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {ChangeEvent, KeyboardEvent, FC, useState} from 'react';
 import {FilterType, TaskType} from '../App';
 
 type TodoListPropsType = {
@@ -6,14 +6,19 @@ type TodoListPropsType = {
     tasks: TaskType[]
     removeTask: (taskId: string) => void
     changeFilter: (newFilterValue: FilterType) => void
+    addTask: (title: string) => void
 }
 export const TodoList: FC<TodoListPropsType> = (
     {
         title,
         tasks,
         removeTask,
-        changeFilter
+        changeFilter,
+        addTask
     }) => {
+    const [newTitle, setNewTitle] = useState('')
+
+
     const listItems: JSX.Element[] = tasks.map(task => {
         const removeTaskHandler = () => removeTask(task.id)
         return (
@@ -27,6 +32,14 @@ export const TodoList: FC<TodoListPropsType> = (
     const todoListForRender: JSX.Element = tasks.length
         ? <ul>{listItems}</ul>
         : <p>Your todoList is empty</p>
+
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTitle(e.currentTarget.value)
+    const addTaskHandler = () => {
+        addTask(newTitle)
+        setNewTitle('')
+    }
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addTaskHandler()
+
     const changefilterAllHandler = () => changeFilter('All')
     const changefilterActiveHandler = () => changeFilter('Active')
     const changefilterCompletedHandler = () => changeFilter('Completed')
@@ -34,8 +47,8 @@ export const TodoList: FC<TodoListPropsType> = (
         <div className="todolist">
             <h3>{title}</h3>
             <div>
-                <input/>
-                <button>+</button>
+                <input value={newTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
+                <button onClick={addTaskHandler}>+</button>
             </div>
             {todoListForRender}
             <div className="buttons">
