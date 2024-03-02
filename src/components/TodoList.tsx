@@ -1,16 +1,18 @@
 import React, {FC} from 'react';
-import {TaskType} from '../App';
+import {FilterType, TaskType} from '../App';
 
 type TodoListPropsType = {
     title: string
     tasks: TaskType[]
     removeTask: (taskId: string) => void
+    changeFilter: (newFilterValue: FilterType) => void
 }
 export const TodoList: FC<TodoListPropsType> = (
     {
         title,
         tasks,
-        removeTask
+        removeTask,
+        changeFilter
     }) => {
     const listItems: JSX.Element[] = tasks.map(task => {
         const removeTaskHandler = () => removeTask(task.id)
@@ -25,6 +27,9 @@ export const TodoList: FC<TodoListPropsType> = (
     const todoListForRender: JSX.Element = tasks.length
         ? <ul>{listItems}</ul>
         : <p>Your todoList is empty</p>
+    const changefilterAllHandler = () => changeFilter('All')
+    const changefilterActiveHandler = () => changeFilter('Active')
+    const changefilterCompletedHandler = () => changeFilter('Completed')
     return (
         <div className="todolist">
             <h3>{title}</h3>
@@ -34,9 +39,9 @@ export const TodoList: FC<TodoListPropsType> = (
             </div>
             {todoListForRender}
             <div className="buttons">
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={changefilterAllHandler}>All</button>
+                <button onClick={changefilterActiveHandler}>Active</button>
+                <button onClick={changefilterCompletedHandler}>Completed</button>
             </div>
         </div>
     );
