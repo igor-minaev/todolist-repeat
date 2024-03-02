@@ -10,21 +10,12 @@
 }
 
 .todolist {
+    border: 2px solid #9f64e5;
+    border-radius: 5px;
     padding: 10px;
-    border: 1px solid #046027;
-    border-radius: 10px;
     height: max-content;
-    background-color: #9d5ce5;
 }
 
-.buttons {
-    text-align: center;
-}
-
-h3 {
-    text-align: center;
-}
-
-.input{
+.todolist h3, .buttons {
     text-align: center;
 }
