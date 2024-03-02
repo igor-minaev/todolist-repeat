@@ -28,3 +28,28 @@
     border: 1px solid red;
     outline: none;
 }
+
+button {
+    cursor: pointer;
+}
+
+.btn {
+    border-radius: 5px;
+    border: 1px solid #9f64e5;
+    padding: 3px 10px;
+}
+
+.activeBtn {
+    background-color: #9f64e5;
+    border-radius: 5px;
+    border: 1px solid #9f64e5;
+    padding: 3px 10px;
+}
+
+.task {
+    font-weight: bolder;
+}
+
+.taskIsDone {
+    text-decoration: line-through;
+}
