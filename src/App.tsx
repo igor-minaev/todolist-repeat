@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {TodoList} from './components/TodoList';
 
@@ -10,7 +10,7 @@ export type TaskType = {
 
 function App() {
     const todoListTitle = 'What to learn'
-    const tasks: TaskType[] = [
+    const [tasks, setTasks] = useState<TaskType[]>([
         {id: crypto.randomUUID(), title: 'HTML', isDone: true},
         {id: crypto.randomUUID(), title: 'CSS', isDone: true},
         {id: crypto.randomUUID(), title: 'JS', isDone: true},
@@ -18,10 +18,15 @@ function App() {
         {id: crypto.randomUUID(), title: 'REDUX', isDone: false},
         {id: crypto.randomUUID(), title: 'GIT', isDone: true},
         {id: crypto.randomUUID(), title: 'RTK', isDone: false}
-    ]
+    ])
+
+    const removeTask = (taskId: string) => setTasks(tasks.filter(t => t.id !== taskId))
     return (
         <div className="App">
-            <TodoList title={todoListTitle} tasks={tasks}/>
+            <TodoList
+                title={todoListTitle}
+                tasks={tasks}
+                removeTask={removeTask}/>
         </div>
     );
 }
