@@ -17,7 +17,7 @@ export const TodoList: FC<TodoListPropsType> = (
         addTask
     }) => {
     const [newTitle, setNewTitle] = useState('')
-
+    const [error, setError] = useState(false)
 
     const listItems: JSX.Element[] = tasks.map(task => {
         const removeTaskHandler = () => removeTask(task.id)
@@ -33,28 +33,39 @@ export const TodoList: FC<TodoListPropsType> = (
         ? <ul>{listItems}</ul>
         : <p>Your todoList is empty</p>
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTitle(e.currentTarget.value)
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        error && setError(false)
+        setNewTitle(e.currentTarget.value)
+    }
     const addTaskHandler = () => {
-        addTask(newTitle)
+        const trimmedTitle = newTitle.trim()
+        if (trimmedTitle) {
+            addTask(trimmedTitle)
+        } else {
+            setError(true)
+        }
         setNewTitle('')
     }
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addTaskHandler()
 
-    const changefilterAllHandler = () => changeFilter('All')
-    const changefilterActiveHandler = () => changeFilter('Active')
-    const changefilterCompletedHandler = () => changeFilter('Completed')
+    const changeFilterAllHandler = () => changeFilter('All')
+    const changeFilterActiveHandler = () => changeFilter('Active')
+    const changeFilterCompletedHandler = () => changeFilter('Completed')
+    const errorMessage = error ? <p className="errorMessage">Title is required!</p> : ''
+    const inputError = error ? 'inputError' : ''
     return (
         <div className="todolist">
             <h3>{title}</h3>
             <div>
-                <input value={newTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
+                <input className={inputError} value={newTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
                 <button onClick={addTaskHandler}>+</button>
             </div>
+            {errorMessage}
             {todoListForRender}
             <div className="buttons">
-                <button onClick={changefilterAllHandler}>All</button>
-                <button onClick={changefilterActiveHandler}>Active</button>
-                <button onClick={changefilterCompletedHandler}>Completed</button>
+                <button onClick={changeFilterAllHandler}>All</button>
+                <button onClick={changeFilterActiveHandler}>Active</button>
+                <button onClick={changeFilterCompletedHandler}>Completed</button>
             </div>
         </div>
     );

@@ -19,3 +19,12 @@
 .todolist h3, .buttons {
     text-align: center;
 }
+
+.errorMessage {
+    color: red;
+}
+
+.inputError {
+    border: 1px solid red;
+    outline: none;
+}
