@@ -56,8 +56,8 @@ function App() {
         const newTask: TaskType = {id: crypto.randomUUID(), title, direction, isDone: false}
         setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
     }
-    const changeTaskStatus = (taskId: string, isDone: boolean) => {
-        // setTasks(tasks.map(t => t.id === taskId ? {...t, isDone} : t))
+    const changeTaskStatus = (taskId: string, isDone: boolean, todolistId: string) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)})
     }
     return (
         <div className="App">

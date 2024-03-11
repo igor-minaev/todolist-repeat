@@ -12,7 +12,7 @@ type TodolistPropsType = {
     removeTask: (taskId: string, todolistId: string) => void
     changeFilter: (todolistId: string, filter: FilterValuesType) => void
     addTask: (title: string, direction: DirectionType, todolistId: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
 }
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
@@ -44,10 +44,11 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
     const tasksForTodolist = getFilteredTasks(tasks, filter)
 
     const removeTaskHandler = (taskId: string) => removeTask(taskId, todolistId)
+    const changeTaskStatusHandler = (taskId: string, isDone: boolean) => changeTaskStatus(taskId, isDone, todolistId)
 
     const listItems: JSX.Element[] = tasksForTodolist.map(task => <Task key={task.id} {...task}
                                                                         removeTask={removeTaskHandler}
-                                                                        changeTaskStatus={changeTaskStatus}/>)
+                                                                        changeTaskStatus={changeTaskStatusHandler}/>)
 
     const tasksForRender: JSX.Element = tasks.length
         ? <ul>{listItems}</ul>
