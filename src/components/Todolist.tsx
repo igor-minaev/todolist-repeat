@@ -1,5 +1,6 @@
 import React from 'react';
 import {TaskType} from '../App';
+import {Task} from './Task';
 
 type TodolistPropsType = {
     todolistTitle: string
@@ -9,20 +10,16 @@ type TodolistPropsType = {
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
     const {todolistTitle, tasks, removeTask, ...restProps} = props
+
     const listItems: JSX.Element[] = tasks.map(task => {
         const removeTaskHandler = () => removeTask(task.id)
-        return (
-            <li key={task.id}>
-                <input type="checkbox" checked={task.isDone}/>
-                <span>{task.title}</span>
-                <span>- {task.direction}</span>
-                <button onClick={removeTaskHandler}>x</button>
-            </li>
-        )
+        return <Task key={task.id} {...task} removeTask={removeTask}/>
     })
+
     const tasksForTodolist: JSX.Element = tasks.length
         ? <ul>{listItems}</ul>
         : <p>Your todolist is empty!</p>
+    
     return (
         <div className="todolist">
             <h3 className="title">{todolistTitle}</h3>
