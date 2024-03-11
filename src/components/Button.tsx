@@ -3,15 +3,16 @@ import React from 'react';
 type PropsType = {
     name: string
     onClick: () => void
+    className?: string
 }
 
 export const Button: React.FC<PropsType> = (props) => {
-    const {name, onClick, ...restProps} = props
+    const {name, onClick,className, ...restProps} = props
 
     const onClickHandler = () => onClick()
 
     return (
-        <button onClick={onClickHandler}>{name}</button>
+        <button className={className} onClick={onClickHandler}>{name}</button>
     );
 };
 

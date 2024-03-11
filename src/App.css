@@ -30,3 +30,18 @@
     border:1px solid red;
     outline: none;
 }
+
+.activeBtn{
+    background-color: #a52aef;
+    color: white;
+    border: 1px solid  #a52aef;
+    border-radius: 5px;
+}
+
+.task{
+    font-weight: bold;
+}
+
+.done{
+    text-decoration: line-through;
+}

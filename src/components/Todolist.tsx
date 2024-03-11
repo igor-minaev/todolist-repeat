@@ -5,17 +5,28 @@ import {Button} from './Button';
 
 
 type TodolistPropsType = {
+    todolistId: string
     filter: FilterValuesType
     todolistTitle: string
     tasks: TaskType[]
-    removeTask: (taskId: string) => void
+    removeTask: (taskId: string, todolistId: string) => void
     changeFilter: (filter: FilterValuesType) => void
     addTask: (title: string, direction: DirectionType) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
-    const {filter, todolistTitle, tasks, removeTask, changeFilter, addTask, changeTaskStatus, ...restProps} = props
+    const {
+        todolistId,
+        filter,
+        todolistTitle,
+        tasks,
+        removeTask,
+        changeFilter,
+        addTask,
+        changeTaskStatus,
+        ...restProps
+    } = props
     const [newTaskTitle, setNewTaskTitle] = useState('')
     const [direction, setDirection] = useState<DirectionType>('-')
     const [error, setError] = useState(false)
@@ -32,8 +43,11 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
     }
     const tasksForTodolist = getFilteredTasks(tasks, filter)
 
+    const removeTaskHandler = (taskId: string) => removeTask(taskId, todolistId)
+
     const listItems: JSX.Element[] = tasksForTodolist.map(task => <Task key={task.id} {...task}
-                                                                        removeTask={removeTask} changeTaskStatus={changeTaskStatus}/>)
+                                                                        removeTask={removeTaskHandler}
+                                                                        changeTaskStatus={changeTaskStatus}/>)
 
     const tasksForRender: JSX.Element = tasks.length
         ? <ul>{listItems}</ul>
@@ -81,9 +95,11 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
             <p style={{color: 'red'}}>{error && 'Fields title and direction are required!'}</p>
             {tasksForRender}
             <div className="buttons">
-                <Button name={'All'} onClick={changeFilterAllHandler}/>
-                <Button name={'Active'} onClick={changeFilterActiveHandler}/>
-                <Button name={'Completed'} onClick={changeFilterCompletedHandler}/>
+                <Button className={filter === 'All' ? 'activeBtn' : ''} name={'All'} onClick={changeFilterAllHandler}/>
+                <Button className={filter === 'Active' ? 'activeBtn' : ''} name={'Active'}
+                        onClick={changeFilterActiveHandler}/>
+                <Button className={filter === 'Completed' ? 'activeBtn' : ''} name={'Completed'}
+                        onClick={changeFilterCompletedHandler}/>
             </div>
         </div>
     );
