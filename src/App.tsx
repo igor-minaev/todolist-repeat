@@ -45,6 +45,11 @@ function App() {
         ]
     })
 
+    const removeTodolist = (todolistId: string) => {
+        setTodolists(todolists.filter(t => t.id !== todolistId))
+        delete tasks[todolistId]
+    }
+
 
     const removeTask = (taskId: string, todolistId: string) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)})
@@ -73,7 +78,8 @@ function App() {
                             removeTask={removeTask}
                             changeFilter={changeFilter}
                             addTask={addTask}
-                            changeTaskStatus={changeTaskStatus}/>
+                            changeTaskStatus={changeTaskStatus}
+                            removeTodolist={removeTodolist}/>
                     })
                     : <p>Create new Todolist!</p>
             }

@@ -13,6 +13,7 @@ type TodolistPropsType = {
     changeFilter: (todolistId: string, filter: FilterValuesType) => void
     addTask: (title: string, direction: DirectionType, todolistId: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
+    removeTodolist: (todolistId: string) => void
 }
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
@@ -25,6 +26,7 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         changeFilter,
         addTask,
         changeTaskStatus,
+        removeTodolist,
         ...restProps
     } = props
     const [newTaskTitle, setNewTaskTitle] = useState('')
@@ -77,11 +79,14 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         setDirection(e.currentTarget.value as DirectionType)
     }
     const inputClass = error ? 'inputError' : ''
-
+    const removeTodolistHandler = () => removeTodolist(todolistId)
 
     return (
         <div className="todolist">
-            <h3 className="title">{todolistTitle}</h3>
+            <h3 className="title">
+                {todolistTitle}
+                <Button name={'x'} onClick={removeTodolistHandler}/>
+            </h3>
             <div>
                 <input className={inputClass} placeholder="Enter new task title" value={newTaskTitle}
                        onChange={onChangeHandler}
