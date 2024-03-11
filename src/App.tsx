@@ -49,8 +49,8 @@ function App() {
     const removeTask = (taskId: string, todolistId: string) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)})
     }
-    const changeFilter = (filter: FilterValuesType) => {
-        // setFilter(filter)
+    const changeFilter = (todolistId: string, filter: FilterValuesType) => {
+        setTodolists(todolists.map(t => t.id === todolistId ? {...t, filter} : t))
     }
     const addTask = (title: string, direction: DirectionType) => {
         // const newTask: TaskType = {id: crypto.randomUUID(), title, direction, isDone: false}
