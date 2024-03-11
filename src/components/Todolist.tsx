@@ -11,10 +11,11 @@ type TodolistPropsType = {
     removeTask: (taskId: string) => void
     changeFilter: (filter: FilterValuesType) => void
     addTask: (title: string, direction: DirectionType) => void
+    changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
-    const {filter, todolistTitle, tasks, removeTask, changeFilter, addTask, ...restProps} = props
+    const {filter, todolistTitle, tasks, removeTask, changeFilter, addTask, changeTaskStatus, ...restProps} = props
     const [newTaskTitle, setNewTaskTitle] = useState('')
     const [direction, setDirection] = useState<DirectionType>('-')
     const [error, setError] = useState(false)
@@ -32,7 +33,7 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
     const tasksForTodolist = getFilteredTasks(tasks, filter)
 
     const listItems: JSX.Element[] = tasksForTodolist.map(task => <Task key={task.id} {...task}
-                                                                        removeTask={removeTask}/>)
+                                                                        removeTask={removeTask} changeTaskStatus={changeTaskStatus}/>)
 
     const tasksForRender: JSX.Element = tasks.length
         ? <ul>{listItems}</ul>
