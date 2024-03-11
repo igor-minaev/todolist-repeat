@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './components/Todolist';
 
-export type DirectionType = 'Frontend' | 'Backend'
+export type DirectionType = 'Frontend' | 'Backend' | '-'
 
 export type TaskType = {
     id: string
@@ -25,6 +25,10 @@ function App() {
 
     const removeTask = (taskId: string) => setTasks(tasks.filter(t => t.id !== taskId))
     const changeFilter = (filter: FilterValuesType) => setFilter(filter)
+    const addTask = (title: string, direction: DirectionType) => {
+        const newTask: TaskType = {id: crypto.randomUUID(), title, direction, isDone: false}
+        setTasks([newTask, ...tasks])
+    }
     return (
         <div className="App">
             <Todolist
@@ -32,7 +36,8 @@ function App() {
                 todolistTitle={todolistTitle}
                 tasks={tasks}
                 removeTask={removeTask}
-                changeFilter={changeFilter}/>
+                changeFilter={changeFilter}
+                addTask={addTask}/>
         </div>
     );
 }
