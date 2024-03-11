@@ -52,9 +52,9 @@ function App() {
     const changeFilter = (todolistId: string, filter: FilterValuesType) => {
         setTodolists(todolists.map(t => t.id === todolistId ? {...t, filter} : t))
     }
-    const addTask = (title: string, direction: DirectionType) => {
-        // const newTask: TaskType = {id: crypto.randomUUID(), title, direction, isDone: false}
-        // setTasks([newTask, ...tasks])
+    const addTask = (title: string, direction: DirectionType, todolistId: string) => {
+        const newTask: TaskType = {id: crypto.randomUUID(), title, direction, isDone: false}
+        setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
     }
     const changeTaskStatus = (taskId: string, isDone: boolean) => {
         // setTasks(tasks.map(t => t.id === taskId ? {...t, isDone} : t))
