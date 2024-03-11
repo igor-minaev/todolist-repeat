@@ -1,25 +1,42 @@
 import React from 'react';
-import {TaskType} from '../App';
+import {FilterValuesType, TaskType} from '../App';
 import {Task} from './Task';
+import {Button} from './Button';
 
 type TodolistPropsType = {
+    filter: FilterValuesType
     todolistTitle: string
     tasks: TaskType[]
     removeTask: (taskId: string) => void
+    changeFilter: (filter: FilterValuesType) => void
 }
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
-    const {todolistTitle, tasks, removeTask, ...restProps} = props
+    const {filter, todolistTitle, tasks, removeTask, changeFilter, ...restProps} = props
 
-    const listItems: JSX.Element[] = tasks.map(task => {
-        const removeTaskHandler = () => removeTask(task.id)
-        return <Task key={task.id} {...task} removeTask={removeTask}/>
-    })
+    const getFilteredTasks = (tasks: TaskType[], filter: FilterValuesType): TaskType[] => {
+        switch (filter) {
+            case 'Active':
+                return tasks.filter(t => !t.isDone)
+            case 'Completed':
+                return tasks.filter(t => t.isDone)
+            default:
+                return tasks
+        }
+    }
+    const tasksForTodolist = getFilteredTasks(tasks, filter)
 
-    const tasksForTodolist: JSX.Element = tasks.length
+    const listItems: JSX.Element[] = tasksForTodolist.map(task => <Task key={task.id} {...task}
+                                                                        removeTask={removeTask}/>)
+
+    const tasksForRender: JSX.Element = tasks.length
         ? <ul>{listItems}</ul>
         : <p>Your todolist is empty!</p>
-    
+
+    const changeFilterAllHandler = () => changeFilter('All')
+    const changeFilterActiveHandler = () => changeFilter('Active')
+    const changeFilterCompletedHandler = () => changeFilter('Completed')
+
     return (
         <div className="todolist">
             <h3 className="title">{todolistTitle}</h3>
@@ -32,11 +49,11 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
                 </select>
                 <button>+</button>
             </div>
-            {tasksForTodolist}
+            {tasksForRender}
             <div className="buttons">
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <Button name={'All'} onClick={changeFilterAllHandler}/>
+                <Button name={'Active'} onClick={changeFilterActiveHandler}/>
+                <Button name={'Completed'} onClick={changeFilterCompletedHandler}/>
             </div>
         </div>
     );
