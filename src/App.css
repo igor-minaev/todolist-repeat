@@ -9,4 +9,19 @@
     margin-right: 50px;
 }
 
+.todolist {
+    height: max-content;
+    padding: 10px;
+    border: 2px solid #a52aef;
+    border-radius: 10px;
+}
 
+.title {
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
