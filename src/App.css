@@ -9,7 +9,7 @@
     margin-right: 50px;
 }
 
-.todolist{
+.todolist {
     height: max-content;
     padding: 10px;
     border: 2px solid #8b2fdc;
@@ -17,6 +17,25 @@
     text-align: center;
 }
 
-.list{
+.list {
     text-align: left;
+}
+
+.error {
+    border: 1px solid red;
+}
+
+.active {
+    background-color: #8b2fdc;
+    color: white;
+    border: 1px solid #8b2fdc;
+}
+
+.activeTask{
+    font-weight: bolder;
+}
+
+.completedTask{
+    text-decoration: line-through;
+    opacity: 0.5;
 }
