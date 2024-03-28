@@ -1,5 +1,6 @@
 import React from 'react';
 import {Task} from './Task';
+import {Button} from './Button';
 
 type TodolistType = {
     title: string
@@ -12,7 +13,7 @@ export type TaskType = {
     isDone: boolean
 }
 
-export const Todolist: React.FC<TodolistType> = (props) => {
+export const Todolist: React.FC<TodolistType> = props => {
     const {title, tasks, ...restProps} = props
     const mappedTasks: JSX.Element[] = tasks.map(task => {
         return <Task key={task.id} {...task}/>
@@ -25,13 +26,17 @@ export const Todolist: React.FC<TodolistType> = (props) => {
             <h2>{title}</h2>
             <div>
                 <input/>
-                <button>+</button>
+                <Button name="+" onClick={() => {
+                }}/>
             </div>
             {tasksForRender}
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <Button name="All" onClick={() => {
+                }}/>
+                <Button name="Active" onClick={() => {
+                }}/>
+                <Button name="Completed" onClick={() => {
+                }}/>
             </div>
         </div>
     );
