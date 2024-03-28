@@ -1,4 +1,5 @@
 import React from 'react';
+import {Task} from './Task';
 
 type TodolistType = {
     title: string
@@ -14,10 +15,7 @@ export type TaskType = {
 export const Todolist: React.FC<TodolistType> = (props) => {
     const {title, tasks, ...restProps} = props
     const mappedTasks: JSX.Element[] = tasks.map(task => {
-        return <li key={task.id}>
-            <input type="checkbox" checked={task.isDone}/>
-            <span>{task.title}</span>
-        </li>
+        return <Task key={task.id} {...task}/>
     })
     const tasksForRender: JSX.Element = tasks
         ? <ul className="list">{mappedTasks}</ul>
