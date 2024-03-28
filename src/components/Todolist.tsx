@@ -3,6 +3,7 @@ import {Task} from './Task';
 import {Button} from './Button';
 import {FilterType} from '../App';
 import {AddItemForm} from './AddItemForm';
+import {EditableSpan} from './EditableSpan';
 
 type TodolistType = {
     id: string
@@ -14,6 +15,8 @@ type TodolistType = {
     addTask: (todolistId: string, title: string) => void
     changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
     removeTodolist: (todolistId: string) => void
+    changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
+    changeTodolistTitle: (todolistId: string, title: string) => void
 }
 
 export type TaskType = {
@@ -33,6 +36,8 @@ export const Todolist: React.FC<TodolistType> = props => {
         addTask,
         changeTaskStatus,
         removeTodolist,
+        changeTaskTitle,
+        changeTodolistTitle,
         ...restProps
     } = props
 
@@ -51,9 +56,10 @@ export const Todolist: React.FC<TodolistType> = props => {
     const tasksForTodolist = getFilteredTasks(tasks, filter)
     const removeTaskHandler = (taskId: string) => removeTask(id, taskId)
     const changeTaskStatusHandler = (taskId: string, isDone: boolean) => changeTaskStatus(id, taskId, isDone)
-
+    const changeTaskTitleHandler = (taskId: string, title: string) => changeTaskTitle(id, taskId, title)
     const mappedTasks: JSX.Element[] = tasksForTodolist.map(task => {
-        return <Task key={task.id} {...task} removeTask={removeTaskHandler} changeTaskStatus={changeTaskStatusHandler}/>
+        return <Task key={task.id} {...task} removeTask={removeTaskHandler} changeTaskStatus={changeTaskStatusHandler}
+                     changeTaskTitle={changeTaskTitleHandler}/>
     })
     const tasksForRender: JSX.Element = tasks.length
         ? <ul className="list">{mappedTasks}</ul>
@@ -63,10 +69,11 @@ export const Todolist: React.FC<TodolistType> = props => {
 
     const removeTodolistHandler = () => removeTodolist(id)
     const addTaskHandler = (title: string) => addTask(id, title)
+    const changeTodolistTitleHandler = (title: string) => changeTodolistTitle(id, title)
     return (
         <div className="todolist">
             <h2>
-                {title}
+                <EditableSpan oldTitle={title} onClick={changeTodolistTitleHandler}/>
                 <Button name="x" onClick={removeTodolistHandler}/>
             </h2>
             <AddItemForm addItem={addTaskHandler}/>
