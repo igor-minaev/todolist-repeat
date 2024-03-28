@@ -1,14 +1,25 @@
 import React from 'react';
 
-export const Todolist = () => {
+type TodolistType = {
+    title: string
+    tasks: TaskType[]
+}
+
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
+}
+
+export const Todolist: React.FC<TodolistType> = () => {
     return (
-        <div className='todolist'>
+        <div className="todolist">
             <h2>What to learn</h2>
             <div>
                 <input/>
                 <button>+</button>
             </div>
-            <ul className='list'>
+            <ul className="list">
                 <li>
                     <input type="checkbox" checked={true}/>
                     <span>1</span>
