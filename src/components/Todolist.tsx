@@ -12,6 +12,7 @@ type TodolistType = {
     changeTodolistFilter: (todolistId: string, filter: FilterType) => void
     addTask: (todolistId: string, title: string) => void
     changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
+    removeTodolist: (todolistId: string) => void
 }
 
 export type TaskType = {
@@ -21,7 +22,18 @@ export type TaskType = {
 }
 
 export const Todolist: React.FC<TodolistType> = props => {
-    const {id, filter, title, tasks, removeTask, changeTodolistFilter, addTask, changeTaskStatus, ...restProps} = props
+    const {
+        id,
+        filter,
+        title,
+        tasks,
+        removeTask,
+        changeTodolistFilter,
+        addTask,
+        changeTaskStatus,
+        removeTodolist,
+        ...restProps
+    } = props
 
     const [taskTitle, setTaskTitle] = useState('')
     const [error, setError] = useState(false)
@@ -70,9 +82,13 @@ export const Todolist: React.FC<TodolistType> = props => {
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addTaskHandler()
     const errorMessage = error && <p style={{color: 'red'}}>Title is required!</p>
     const errorInput = error ? 'error' : ''
+    const removeTodolistHandler = () => removeTodolist(id)
     return (
         <div className="todolist">
-            <h2>{title}</h2>
+            <h2>
+                {title}
+                <Button name="x" onClick={removeTodolistHandler}/>
+            </h2>
             <div>
                 <input className={errorInput} value={taskTitle} onChange={onChangeHandler}
                        onKeyDown={onKeyDownHandler}/>
