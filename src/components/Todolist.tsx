@@ -11,28 +11,25 @@ export type TaskType = {
     isDone: boolean
 }
 
-export const Todolist: React.FC<TodolistType> = () => {
+export const Todolist: React.FC<TodolistType> = (props) => {
+    const {title, tasks, ...restProps} = props
+    const mappedTasks: JSX.Element[] = tasks.map(task => {
+        return <li key={task.id}>
+            <input type="checkbox" checked={task.isDone}/>
+            <span>{task.title}</span>
+        </li>
+    })
+    const tasksForRender: JSX.Element = tasks
+        ? <ul className="list">{mappedTasks}</ul>
+        : <p>Your todolist is empty!</p>
     return (
         <div className="todolist">
-            <h2>What to learn</h2>
+            <h2>{title}</h2>
             <div>
                 <input/>
                 <button>+</button>
             </div>
-            <ul className="list">
-                <li>
-                    <input type="checkbox" checked={true}/>
-                    <span>1</span>
-                </li>
-                <li>
-                    <input type="checkbox" checked={true}/>
-                    <span>2</span>
-                </li>
-                <li>
-                    <input type="checkbox" checked={false}/>
-                    <span>3</span>
-                </li>
-            </ul>
+            {tasksForRender}
             <div>
                 <button>All</button>
                 <button>Active</button>
