@@ -1,7 +1,8 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React from 'react';
 import {Task} from './Task';
 import {Button} from './Button';
 import {FilterType} from '../App';
+import {AddItemForm} from './AddItemForm';
 
 type TodolistType = {
     id: string
@@ -35,8 +36,6 @@ export const Todolist: React.FC<TodolistType> = props => {
         ...restProps
     } = props
 
-    const [taskTitle, setTaskTitle] = useState('')
-    const [error, setError] = useState(false)
 
     const getFilteredTasks = (tasks: TaskType[], filter: FilterType): TaskType[] => {
         switch (filter) {
@@ -61,40 +60,16 @@ export const Todolist: React.FC<TodolistType> = props => {
         : <p>Your todolist is empty!</p>
 
     const changeFilterHandler = (filter: FilterType) => changeTodolistFilter(id, filter)
-    // const changeFilterAllHandler = () => changeFilter('All')
-    // const changeFilterActiveHandler = () => changeFilter('Active')
-    // const changeFilterCompletedHandler = () => changeFilter('Completed')
 
-    const addTaskHandler = () => {
-        const trimmedTitle = taskTitle.trim()
-        if (trimmedTitle) {
-            addTask(id, trimmedTitle)
-        } else {
-            setError(true)
-        }
-        setTaskTitle('')
-    }
-
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        error && setError(false)
-        setTaskTitle(e.currentTarget.value)
-    }
-    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addTaskHandler()
-    const errorMessage = error && <p style={{color: 'red'}}>Title is required!</p>
-    const errorInput = error ? 'error' : ''
     const removeTodolistHandler = () => removeTodolist(id)
+    const addTaskHandler = (title: string) => addTask(id, title)
     return (
         <div className="todolist">
             <h2>
                 {title}
                 <Button name="x" onClick={removeTodolistHandler}/>
             </h2>
-            <div>
-                <input className={errorInput} value={taskTitle} onChange={onChangeHandler}
-                       onKeyDown={onKeyDownHandler}/>
-                <Button name="+" onClick={addTaskHandler}/>
-                {errorMessage}
-            </div>
+            <AddItemForm addItem={addTaskHandler}/>
             {tasksForRender}
             <div>
                 <Button className={filter === 'All' ? 'active' : ''} name="All"

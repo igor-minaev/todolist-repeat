@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './components/Todolist';
+import {AddItemForm} from './components/AddItemForm';
+
 
 export type FilterType = 'All' | 'Active' | 'Completed'
 export type TodolistType = {
@@ -57,25 +59,36 @@ function App() {
     const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)})
     }
-    return <div className="App">
-        {todolists.length
-            ? todolists.map(t => {
-                    return <Todolist
-                        key={t.id}
-                        id={t.id}
-                        filter={t.filter}
-                        title={t.title}
-                        tasks={tasks[t.id]}
-                        removeTask={removeTask}
-                        changeTodolistFilter={changeTodolistFilter}
-                        addTask={addTask}
-                        changeTaskStatus={changeTaskStatus}
-                        removeTodolist={removeTodolist}/>
-                }
-            )
-            : <p>Create new todolist</p>
+    const addTodolist = (title: string) => {
+        const newTodolistId = crypto.randomUUID()
+        const newTodolist: TodolistType = {
+            id: newTodolistId, title, filter: 'All'
         }
-    </div>
+        setTodolists([newTodolist, ...todolists])
+        setTasks({...tasks, [newTodolistId]: []})
+    }
+    return (
+        <div className="App">
+            <AddItemForm addItem={addTodolist}/>
+            {todolists.length
+                ? todolists.map(t => {
+                        return <Todolist
+                            key={t.id}
+                            id={t.id}
+                            filter={t.filter}
+                            title={t.title}
+                            tasks={tasks[t.id]}
+                            removeTask={removeTask}
+                            changeTodolistFilter={changeTodolistFilter}
+                            addTask={addTask}
+                            changeTaskStatus={changeTaskStatus}
+                            removeTodolist={removeTodolist}/>
+                    }
+                )
+                : <p>Create new todolist</p>
+            }
+        </div>
+    )
 }
 
 export default App;
