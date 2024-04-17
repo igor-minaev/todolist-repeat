@@ -8,6 +8,7 @@ export type TaskType = {
     title: string
     isDone: boolean
 }
+export type FilterValuesType = 'all' | 'active' | 'completed'
 
 function App() {
     const todolistTitle = 'What to learn'
@@ -18,9 +19,19 @@ function App() {
         {id: v1(), title: 'REACT', isDone: false},
         {id: v1(), title: 'REDUX', isDone: false}
     ])
+    const [filter, setFilter] = useState<FilterValuesType>('all')
+
+    const changeFilter = (filter: FilterValuesType) => setFilter(filter)
+
+    const removeTask = (taskId: string) => setTasks(tasks.filter(t => t.id !== taskId))
     return (
         <div className="App">
-            <Todolist title={todolistTitle} tasks={tasks}/>
+            <Todolist
+                filter={filter}
+                title={todolistTitle}
+                tasks={tasks}
+                removeTask={removeTask}
+                changeFilter={changeFilter}/>
         </div>
     )
 }

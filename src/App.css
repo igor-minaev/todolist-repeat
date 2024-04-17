@@ -9,15 +9,15 @@
     margin-right: 50px;
 }
 
-.todolist{
+.todolist {
     border: 2px solid #550bda;
     height: max-content;
     padding: 15px 10px;
     border-radius: 10px;
-}
-.todolist h2{
     text-align: center;
 }
-.buttons{
-    text-align: center;
+
+.todolist ul {
+    text-align: left;
 }
+
