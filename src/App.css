@@ -1,41 +1,8 @@
 .App {
     padding: 30px;
     display: flex;
-    background-color: #7ddea6;
-    height: 100vh;
 }
 
 .App > div {
     margin-right: 50px;
-}
-
-.todolist {
-    height: max-content;
-    padding: 10px;
-    border: 2px solid #8b2fdc;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.list {
-    text-align: left;
-}
-
-.error {
-    border: 1px solid red;
-}
-
-.active {
-    background-color: #8b2fdc;
-    color: white;
-    border: 1px solid #8b2fdc;
-}
-
-.activeTask{
-    font-weight: bolder;
-}
-
-.completedTask{
-    text-decoration: line-through;
-    opacity: 0.5;
 }
