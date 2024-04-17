@@ -3,17 +3,18 @@ import {FilterValuesType, TaskType} from '../App';
 
 
 type TodolistPropsType = {
+    todolistId: string
     filter: FilterValuesType
     title: string
     tasks: TaskType[]
-    removeTask: (taskId: string) => void
+    removeTask: (todolistId: string, taskId: string) => void
     changeFilter: (filter: FilterValuesType) => void
     addTask: (title: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
-    const {filter, title, tasks, removeTask, changeFilter, addTask, changeTaskStatus, ...restProps} = props
+    const {todolistId, filter, title, tasks, removeTask, changeFilter, addTask, changeTaskStatus, ...restProps} = props
     const [newTaskTitle, setNewTaskTitle] = useState('')
     const [error, setError] = useState(false)
 
@@ -31,7 +32,7 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
     const filteredTasks = getFilteredTasks(tasks, filter)
 
     const mappedTasks: JSX.Element[] = filteredTasks.map(task => {
-        const removeTaskHandler = () => removeTask(task.id)
+        const removeTaskHandler = () => removeTask(todolistId, task.id)
         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(task.id, e.currentTarget.checked)
         const taskStyle = task.isDone ? 'done' : 'task'
         return (
