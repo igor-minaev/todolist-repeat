@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType, TaskType} from '../App';
 
 
@@ -8,10 +8,12 @@ type TodolistPropsType = {
     tasks: TaskType[]
     removeTask: (taskId: string) => void
     changeFilter: (filter: FilterValuesType) => void
+    addTask: (title: string) => void
 }
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
-    const {filter, title, tasks, removeTask, changeFilter, ...restProps} = props
+    const {filter, title, tasks, removeTask, changeFilter, addTask, ...restProps} = props
+    const [newTaskTitle, setNewTaskTitle] = useState('')
 
     const getFilteredTasks = (tasks: TaskType[], filter: FilterValuesType): TaskType[] => {
         switch (filter) {
@@ -42,13 +44,19 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         <p>Your todolist is empty!</p>
 
     const changeFilterHandler = (filter: FilterValuesType) => () => changeFilter(filter)
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setNewTaskTitle(e.currentTarget.value)
+    const addTaskHandler = () => {
+        addTask(newTaskTitle)
+        setNewTaskTitle('')
+    }
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addTaskHandler()
 
     return (
         <div className="todolist">
             <h2>{title}</h2>
             <div>
-                <input/>
-                <button>+</button>
+                <input value={newTaskTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
+                <button onClick={addTaskHandler}>+</button>
             </div>
             {tasksForRender}
             <div className="buttons">
