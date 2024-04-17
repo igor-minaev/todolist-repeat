@@ -21,3 +21,23 @@
     text-align: left;
 }
 
+.error {
+    border: 2px solid red;
+    outline: none;
+}
+
+.active {
+    background-color: #550bda;
+    color: white;
+    border: 1px solid #550bda;
+}
+
+.task {
+    font-weight: bolder;
+}
+
+.done {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
