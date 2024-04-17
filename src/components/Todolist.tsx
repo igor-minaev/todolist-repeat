@@ -23,14 +23,14 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         <p>Your todolist is empty!</p>
 
     return (
-        <div>
+        <div className='todolist'>
             <h2>{title}</h2>
             <div>
                 <input/>
                 <button>+</button>
             </div>
             {tasksForRender}
-            <div>
+            <div className='buttons'>
                 <button>All</button>
                 <button>Active</button>
                 <button>Completed</button>
