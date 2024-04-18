@@ -69,6 +69,10 @@ function App() {
     const changeTodolistFilter = (todolistId: string, filter: FilterValuesType) => {
         setTodolists(todolists.map(t => t.id === todolistId ? {...t, filter} : t))
     }
+    const changeTodolistTitle = (todolistId: string, title: string) => {
+        setTodolists(todolists.map(t => t.id === todolistId ? {...t, title} : t))
+    }
+
     const mappedTodolists: JSX.Element[] = todolists.map(t => {
         return (
             <Todolist
@@ -81,7 +85,8 @@ function App() {
                 changeTodolistFilter={changeTodolistFilter}
                 addTask={addTask}
                 changeTaskStatus={changeTaskStatus}
-                removeTodolist={removeTodolist}/>
+                removeTodolist={removeTodolist}
+                changeTodolistTitle={changeTodolistTitle}/>
         )
     })
     return (
