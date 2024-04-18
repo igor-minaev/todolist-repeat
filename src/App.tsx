@@ -49,13 +49,14 @@ function App() {
     }
     const addTask = (todolistId: string, title: string) => {
         const newTask: TaskType = {id: v1(), title, isDone: false}
-        setTasks({...tasks,[todolistId]:[newTask,...tasks[todolistId]]})
+        setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
     }
-    const changeTaskStatus = (taskId: string, isDone: boolean) => {
-        // setTasks(tasks.map(t => t.id === taskId ? {...t, isDone} : t))
+    const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)})
     }
 
-    const changeFilter = (filter: FilterValuesType) => {
+    const changeTodolistFilter = (todolistId: string, filter: FilterValuesType) => {
+        setTodolists(todolists.map(t => t.id === todolistId ? {...t, filter} : t))
     }
     const mappedTodolists: JSX.Element[] = todolists.map(t => {
         return (
@@ -66,7 +67,7 @@ function App() {
                 title={t.title}
                 tasks={tasks[t.id]}
                 removeTask={removeTask}
-                changeFilter={changeFilter}
+                changeTodolistFilter={changeTodolistFilter}
                 addTask={addTask}
                 changeTaskStatus={changeTaskStatus}/>
         )

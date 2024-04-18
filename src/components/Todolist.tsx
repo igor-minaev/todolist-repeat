@@ -8,13 +8,23 @@ type TodolistPropsType = {
     title: string
     tasks: TaskType[]
     removeTask: (todolistId: string, taskId: string) => void
-    changeFilter: (filter: FilterValuesType) => void
+    changeTodolistFilter: (todolistId: string, filter: FilterValuesType) => void
     addTask: (todolistId: string, title: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
 }
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
-    const {todolistId, filter, title, tasks, removeTask, changeFilter, addTask, changeTaskStatus, ...restProps} = props
+    const {
+        todolistId,
+        filter,
+        title,
+        tasks,
+        removeTask,
+        changeTodolistFilter,
+        addTask,
+        changeTaskStatus,
+        ...restProps
+    } = props
     const [newTaskTitle, setNewTaskTitle] = useState('')
     const [error, setError] = useState(false)
 
@@ -33,7 +43,7 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
 
     const mappedTasks: JSX.Element[] = filteredTasks.map(task => {
         const removeTaskHandler = () => removeTask(todolistId, task.id)
-        const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(task.id, e.currentTarget.checked)
+        const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(todolistId, task.id, e.currentTarget.checked)
         const taskStyle = task.isDone ? 'done' : 'task'
         return (
             <li key={task.id}>
@@ -48,7 +58,7 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         <ul>{mappedTasks}</ul> :
         <p>Your todolist is empty!</p>
 
-    const changeFilterHandler = (filter: FilterValuesType) => () => changeFilter(filter)
+    const changeFilterHandler = (filter: FilterValuesType) => () => changeTodolistFilter(todolistId, filter)
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         error && setError(false)
         setNewTaskTitle(e.currentTarget.value)
