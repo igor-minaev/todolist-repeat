@@ -4,6 +4,8 @@ import {v1} from 'uuid';
 import {Todolist} from './components/Todolist';
 import {AddItemForm} from './components/AddItemForm';
 import {AppBarLogin} from './components/AppBarLogin';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 export type TaskType = {
     id: string
@@ -79,26 +81,34 @@ function App() {
 
     const mappedTodolists: JSX.Element[] = todolists.map(t => {
         return (
-            <Todolist
-                key={t.id}
-                todolistId={t.id}
-                filter={t.filter}
-                title={t.title}
-                tasks={tasks[t.id]}
-                removeTask={removeTask}
-                changeTodolistFilter={changeTodolistFilter}
-                addTask={addTask}
-                changeTaskStatus={changeTaskStatus}
-                removeTodolist={removeTodolist}
-                changeTodolistTitle={changeTodolistTitle}
-                changeTaskTitle={changeTaskTitle}/>
+            <Grid item>
+                    <Todolist
+                        key={t.id}
+                        todolistId={t.id}
+                        filter={t.filter}
+                        title={t.title}
+                        tasks={tasks[t.id]}
+                        removeTask={removeTask}
+                        changeTodolistFilter={changeTodolistFilter}
+                        addTask={addTask}
+                        changeTaskStatus={changeTaskStatus}
+                        removeTodolist={removeTodolist}
+                        changeTodolistTitle={changeTodolistTitle}
+                        changeTaskTitle={changeTaskTitle}/>
+            </Grid>
         )
     })
     return (
         <div className="App">
             <AppBarLogin/>
-            <AddItemForm addItem={addTodolist}/>
-            {todolists.length ? mappedTodolists : <p>Create new todolist!</p>}
+            <Container fixed>
+                <Grid container style={{margin: '20px 0'}}>
+                    <AddItemForm addItem={addTodolist}/>
+                </Grid>
+                <Grid container spacing={2}>
+                    {todolists.length ? mappedTodolists : <p>Create new todolist!</p>}
+                </Grid>
+            </Container>
         </div>
     )
 }
