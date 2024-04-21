@@ -3,6 +3,7 @@ import './App.css';
 import {v1} from 'uuid';
 import {Todolist} from './components/Todolist';
 import {AddItemForm} from './components/AddItemForm';
+import {AppBarLogin} from './components/AppBarLogin';
 
 export type TaskType = {
     id: string
@@ -95,6 +96,7 @@ function App() {
     })
     return (
         <div className="App">
+            <AppBarLogin/>
             <AddItemForm addItem={addTodolist}/>
             {todolists.length ? mappedTodolists : <p>Create new todolist!</p>}
         </div>

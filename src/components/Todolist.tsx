@@ -6,6 +6,9 @@ import IconButton from '@mui/material/IconButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+
 
 type TodolistPropsType = {
     todolistId: string
@@ -55,20 +58,19 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(todolistId, task.id, e.currentTarget.checked)
         const taskStyle = task.isDone ? 'done' : 'task'
         return (
-            <li key={task.id} className={taskStyle}>
+            <ListItem key={task.id} className={taskStyle}>
                 <Checkbox checked={task.isDone} onChange={onChangeHandler}/>
                 <EditableSpan oldTitle={task.title}
                               onClick={(newTitle) => changeTaskTitleHandler(task.id, newTitle)}/>
-                <button onClick={removeTaskHandler}>x</button>
                 <IconButton onClick={removeTaskHandler} color="primary">
                     <DeleteForeverIcon/>
                 </IconButton>
-            </li>
+            </ListItem>
         )
     })
 
     const tasksForRender: JSX.Element = tasks.length ?
-        <ul>{mappedTasks}</ul> :
+        <List>{mappedTasks}</List> :
         <p>Your todolist is empty!</p>
 
     const changeFilterHandler = (filter: FilterValuesType) => () => changeTodolistFilter(todolistId, filter)
