@@ -1,4 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import Button from '@mui/material/Button';
 
 type AddItemFormPropsType = {
     addItem: (itemTitle: string) => void
@@ -24,11 +25,12 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = ({addItem}) => {
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addItemHandler()
     const errorMessage = error && <p style={{color: 'red'}}>Title is required!</p>
     const inputStyle = error ? 'error' : ''
+    const buttonStyles = {maxWidth: '25px', maxHeight: '25px', minWidth: '25px', minHeight: '25px'}
     return (
         <div>
             <input className={inputStyle} value={newItemTitle} onChange={onChangeHandler}
                    onKeyDown={onKeyDownHandler}/>
-            <button onClick={addItemHandler}>+</button>
+            <Button style={buttonStyles} onClick={addItemHandler} variant="contained">+</Button>
             {errorMessage}
         </div>
     );

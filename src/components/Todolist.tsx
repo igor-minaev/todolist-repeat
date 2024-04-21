@@ -2,6 +2,8 @@ import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {FilterValuesType, TaskType} from '../App';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
+import IconButton from '@mui/material/IconButton';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 
 type TodolistPropsType = {
@@ -57,6 +59,9 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
                 <EditableSpan oldTitle={task.title}
                               onClick={(newTitle) => changeTaskTitleHandler(task.id, newTitle)}/>
                 <button onClick={removeTaskHandler}>x</button>
+                <IconButton onClick={removeTaskHandler} color="primary">
+                    <DeleteForeverIcon/>
+                </IconButton>
             </li>
         )
     })
@@ -76,7 +81,9 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
             <h2>
                 <EditableSpan oldTitle={title} onClick={changeTodolistTitleHandler}/>
                 {/*{title}*/}
-                <button onClick={removeTodolistHandler}>x</button>
+                <IconButton  onClick={removeTodolistHandler} color="primary">
+                    <DeleteForeverIcon />
+                </IconButton>
             </h2>
             <AddItemForm addItem={addTaskHandler}/>
             {tasksForRender}
