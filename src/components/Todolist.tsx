@@ -4,7 +4,7 @@ import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-
+import Button from '@mui/material/Button';
 
 type TodolistPropsType = {
     todolistId: string
@@ -81,19 +81,19 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
             <h2>
                 <EditableSpan oldTitle={title} onClick={changeTodolistTitleHandler}/>
                 {/*{title}*/}
-                <IconButton  onClick={removeTodolistHandler} color="primary">
-                    <DeleteForeverIcon />
+                <IconButton onClick={removeTodolistHandler} color="primary">
+                    <DeleteForeverIcon/>
                 </IconButton>
             </h2>
             <AddItemForm addItem={addTaskHandler}/>
             {tasksForRender}
             <div className="buttons">
-                <button className={filter === 'all' ? 'active' : ''} onClick={changeFilterHandler('all')}>All</button>
-                <button className={filter === 'active' ? 'active' : ''} onClick={changeFilterHandler('active')}>Active
-                </button>
-                <button className={filter === 'completed' ? 'active' : ''}
-                        onClick={changeFilterHandler('completed')}>Completed
-                </button>
+                <Button variant={filter === 'all' ? 'contained' : 'outlined'} color="secondary"
+                        onClick={changeFilterHandler('all')} size="small">All</Button>
+                <Button variant={filter === 'active' ? 'contained' : 'outlined'} color="primary"
+                        onClick={changeFilterHandler('active')} size="small">Active</Button>
+                <Button variant={filter === 'completed' ? 'contained' : 'outlined'} color="success"
+                        onClick={changeFilterHandler('completed')} size="small">Completed</Button>
             </div>
         </div>
     );
