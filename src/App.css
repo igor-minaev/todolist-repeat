@@ -1,39 +1,19 @@
 .App {
-    background-color: #1fec8f;
-    height: 100vh;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
-
-.todolist {
-    border: 2px solid #550bda;
+.todolist{
     height: max-content;
-    width: max-content;
-    padding: 15px 10px;
-    border-radius: 10px;
+    border: 2px solid darkcyan;
+    padding: 10px;
+    border-radius: 5px;
     text-align: center;
+    background-color: rgba(172, 229, 229, 0.75);
 }
 
-.todolist ul {
+.todolist ul{
     text-align: left;
-}
-
-.error {
-    border: 2px solid red;
-    outline: none;
-}
-
-.active {
-    background-color: #550bda;
-    color: white;
-    border: 1px solid #550bda;
-}
-
-.task {
-    font-weight: bolder;
-}
-
-.done {
-    text-decoration: line-through;
-    opacity: 0.5;
 }
 
