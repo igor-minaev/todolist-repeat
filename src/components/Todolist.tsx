@@ -9,7 +9,7 @@ type TodolistPropsType = {
     tasks: TaskType[]
     removeTask: (todolistId: string, taskId: string) => void
     changeTodolistFilter: (todolistId: string, filter: FilterType) => void
-    addTask: (title: string) => void
+    addTask: (todolistId: string, title: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
 
@@ -68,7 +68,7 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
     const addTaskHandler = () => {
         const trimmedTitle = taskTitle.trim()
         if (trimmedTitle) {
-            addTask(trimmedTitle)
+            addTask(todolistId, trimmedTitle)
         } else (
             setError(true)
         )
