@@ -25,13 +25,16 @@ function App() {
 
     const removeTask = (taskId: string) => setTasks(tasks.filter(t => t.id !== taskId))
     const changeFilter = (newFilterValue: FilterType) => setFilter(newFilterValue)
-    const addTask = (title:string) => {
+    const addTask = (title: string) => {
         const newTask: TaskType = {
             id: crypto.randomUUID(),
             title,
             isDone: false
         }
         setTasks([newTask, ...tasks])
+    }
+    const changeTaskStatus = (taskId: string, isDone: boolean) => {
+        setTasks(tasks.map(t => t.id === taskId ? {...t, isDone} : t))
     }
 
     return (
@@ -43,6 +46,7 @@ function App() {
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
+                changeTaskStatus={changeTaskStatus}
             />
         </div>
     )
