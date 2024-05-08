@@ -16,6 +16,7 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
     const {filter, title, tasks, removeTask, changeFilter, addTask, changeTaskStatus, ...restProps} = props
 
     const [taskTitle, setTaskTitle] = useState('')
+    const [error, setError] = useState(false)
 
     const getFilteredTasks = (tasks: TaskType[], filter: FilterType): TaskType[] => {
         switch (filter) {
@@ -34,10 +35,11 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
     const listItems: JSX.Element[] = filteredTasks.map(t => {
         const removeTaskHandler = () => removeTask(t.id)
         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(t.id, e.currentTarget.checked)
+        const taskStyle = t.isDone ? 'taskDone' : 'task'
         return (
             <li key={t.id}>
                 <input type="checkbox" checked={t.isDone} onChange={onChangeHandler}/>
-                <span>{t.title}</span>
+                <span className={taskStyle}>{t.title}</span>
                 <Button name="x" callBack={removeTaskHandler}/>
             </li>
         )
@@ -48,24 +50,38 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         : <p>Your todolist is empty!</p>
 
     const changeFilterHandler = (newFilterValue: FilterType) => changeFilter(newFilterValue)
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setTaskTitle(e.currentTarget.value)
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        error && setError(false)
+        setTaskTitle(e.currentTarget.value)
+    }
     const addTaskHandler = () => {
-        addTask(taskTitle)
+        const trimmedTitle = taskTitle.trim()
+        if (trimmedTitle) {
+            addTask(trimmedTitle)
+        } else (
+            setError(true)
+        )
         setTaskTitle('')
     }
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addTaskHandler()
+    const inputStyles = error ? 'error' : ''
     return (
         <div className="todolist">
             <h2>{title}</h2>
             <div>
-                <input value={taskTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
+                <input className={inputStyles} value={taskTitle} onChange={onChangeHandler}
+                       onKeyDown={onKeyDownHandler}/>
                 <Button name="+" callBack={addTaskHandler}/>
+                {error && <p className="errorMessage">Title is required!</p>}
             </div>
             {mappedTasks}
             <div>
-                <Button name="All" callBack={() => changeFilterHandler('all')}/>
-                <Button name="Active" callBack={() => changeFilterHandler('active')}/>
-                <Button name="Complete" callBack={() => changeFilterHandler('completed')}/>
+                <Button className={filter === 'all' ? 'btn' : ''} name="All"
+                        callBack={() => changeFilterHandler('all')}/>
+                <Button className={filter === 'active' ? 'btn' : ''} name="Active"
+                        callBack={() => changeFilterHandler('active')}/>
+                <Button className={filter === 'completed' ? 'btn' : ''} name="Complete"
+                        callBack={() => changeFilterHandler('completed')}/>
             </div>
         </div>
     );

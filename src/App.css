@@ -4,7 +4,7 @@
     flex-wrap: wrap;
 }
 
-.todolist{
+.todolist {
     height: max-content;
     border: 2px solid darkcyan;
     padding: 10px;
@@ -13,7 +13,31 @@
     background-color: rgba(172, 229, 229, 0.75);
 }
 
-.todolist ul{
+.todolist ul {
     text-align: left;
+}
+
+.error {
+    border: 2px solid red;
+    outline: none;
+}
+
+.errorMessage {
+    color: red;
+}
+
+.btn{
+    background-color: #086060;
+    border: 2px solid #086060;
+    color: white;
+    border-radius: 5px;
+}
+.taskDone{
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.task{
+    font-weight: bolder;
 }
 
