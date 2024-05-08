@@ -11,6 +11,7 @@ type TodolistPropsType = {
     changeTodolistFilter: (todolistId: string, filter: FilterType) => void
     addTask: (todolistId: string, title: string) => void
     changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
+    removeTodolist: (todolistId: string) => void
 }
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
@@ -23,6 +24,7 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         changeTodolistFilter,
         addTask,
         changeTaskStatus,
+        removeTodolist,
         ...restProps
     } = props
 
@@ -76,9 +78,13 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
     }
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addTaskHandler()
     const inputStyles = error ? 'error' : ''
+    const removeTodolistHandler = () => removeTodolist(todolistId)
     return (
         <div className="todolist">
-            <h2>{title}</h2>
+            <h2>
+                {title}
+                <Button name="x" callBack={removeTodolistHandler}/>
+            </h2>
             <div>
                 <input className={inputStyles} value={taskTitle} onChange={onChangeHandler}
                        onKeyDown={onKeyDownHandler}/>
