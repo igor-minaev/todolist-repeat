@@ -3,6 +3,7 @@ import {FilterType, TaskType} from '../App';
 import {Button} from './Button';
 
 type TodolistPropsType = {
+    todolistId: string
     filter: FilterType
     title: string
     tasks: TaskType[]
@@ -13,7 +14,7 @@ type TodolistPropsType = {
 }
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
-    const {filter, title, tasks, removeTask, changeFilter, addTask, changeTaskStatus, ...restProps} = props
+    const {todolistId, filter, title, tasks, removeTask, changeFilter, addTask, changeTaskStatus, ...restProps} = props
 
     const [taskTitle, setTaskTitle] = useState('')
     const [error, setError] = useState(false)

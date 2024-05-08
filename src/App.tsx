@@ -44,33 +44,45 @@ function App() {
     })
 
 
-    const [filter, setFilter] = useState<FilterType>('all')
-
-    const removeTask = (taskId: string) => setTasks(tasks.filter(t => t.id !== taskId))
-    const changeFilter = (newFilterValue: FilterType) => setFilter(newFilterValue)
+    const removeTask = (taskId: string) => {
+        // setTasks(tasks.filter(t => t.id !== taskId))
+    }
+    const changeFilter = (newFilterValue: FilterType) => {
+        // setFilter(newFilterValue)
+    }
     const addTask = (title: string) => {
         const newTask: TaskType = {
             id: crypto.randomUUID(),
             title,
             isDone: false
         }
-        setTasks([newTask, ...tasks])
+        // setTasks([newTask, ...tasks])
     }
     const changeTaskStatus = (taskId: string, isDone: boolean) => {
-        setTasks(tasks.map(t => t.id === taskId ? {...t, isDone} : t))
+        // setTasks(tasks.map(t => t.id === taskId ? {...t, isDone} : t))
     }
+
+    const mappedTodolists = todolists.length
+        ? todolists.map(t => {
+            return (
+                <Todolist
+                    todolistId={t.id}
+                    filter={t.filter}
+                    title={t.title}
+                    tasks={tasks[t.id]}
+                    removeTask={removeTask}
+                    changeFilter={changeFilter}
+                    addTask={addTask}
+                    changeTaskStatus={changeTaskStatus}
+                />
+            )
+        })
+        : <p>Create new todolist</p>
+
 
     return (
         <div className="App">
-            <Todolist
-                filter={filter}
-                title={todolistTitle}
-                tasks={tasks}
-                removeTask={removeTask}
-                changeFilter={changeFilter}
-                addTask={addTask}
-                changeTaskStatus={changeTaskStatus}
-            />
+            {mappedTodolists}
         </div>
     )
 }
