@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {FilterType, TaskType} from '../App';
 import {Button} from './Button';
 
@@ -8,10 +8,13 @@ type TodolistPropsType = {
     tasks: TaskType[]
     removeTask: (taskId: string) => void
     changeFilter: (newFilterValue: FilterType) => void
+    addTask: (title: string) => void
 }
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
-    const {filter, title, tasks, removeTask, changeFilter, ...restProps} = props
+    const {filter, title, tasks, removeTask, changeFilter, addTask, ...restProps} = props
+
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const getFilteredTasks = (tasks: TaskType[], filter: FilterType): TaskType[] => {
         switch (filter) {
@@ -43,14 +46,18 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         : <p>Your todolist is empty!</p>
 
     const changeFilterHandler = (newFilterValue: FilterType) => changeFilter(newFilterValue)
-
+    const addTaskHandler = () => {
+        if (inputRef.current) {
+            addTask(inputRef.current.value)
+            inputRef.current.value = ''
+        }
+    }
     return (
         <div className="todolist">
             <h2>{title}</h2>
             <div>
-                <input/>
-                <Button name="+" callBack={() => {
-                }}/>
+                <input ref={inputRef}/>
+                <Button name="+" callBack={addTaskHandler}/>
             </div>
             {mappedTasks}
             <div>
