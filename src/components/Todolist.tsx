@@ -8,13 +8,23 @@ type TodolistPropsType = {
     title: string
     tasks: TaskType[]
     removeTask: (todolistId: string, taskId: string) => void
-    changeFilter: (newFilterValue: FilterType) => void
+    changeTodolistFilter: (todolistId: string, filter: FilterType) => void
     addTask: (title: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
-    const {todolistId, filter, title, tasks, removeTask, changeFilter, addTask, changeTaskStatus, ...restProps} = props
+    const {
+        todolistId,
+        filter,
+        title,
+        tasks,
+        removeTask,
+        changeTodolistFilter,
+        addTask,
+        changeTaskStatus,
+        ...restProps
+    } = props
 
     const [taskTitle, setTaskTitle] = useState('')
     const [error, setError] = useState(false)
@@ -50,7 +60,7 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         ? <ul>{listItems}</ul>
         : <p>Your todolist is empty!</p>
 
-    const changeFilterHandler = (newFilterValue: FilterType) => changeFilter(newFilterValue)
+    const changeFilterHandler = (newFilterValue: FilterType) => changeTodolistFilter(todolistId, newFilterValue)
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         error && setError(false)
         setTaskTitle(e.currentTarget.value)
