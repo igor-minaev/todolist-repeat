@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useRef, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useRef, useState} from 'react';
 import {FilterType, TaskType} from '../App';
 import {Button} from './Button';
 
@@ -51,11 +51,12 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         addTask(taskTitle)
         setTaskTitle('')
     }
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addTaskHandler()
     return (
         <div className="todolist">
             <h2>{title}</h2>
             <div>
-                <input value={taskTitle} onChange={onChangeHandler}/>
+                <input value={taskTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
                 <Button name="+" callBack={addTaskHandler}/>
             </div>
             {mappedTasks}
