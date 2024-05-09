@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -23,15 +24,16 @@ export const AddItemForm: React.FC<AddItemFormPropsType> = ({addItem}) => {
         setTaskTitle('')
     }
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addItemHandler()
-    const inputStyles = error ? 'error' : ''
-    const buttonStyles = {maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}
+    const buttonStyles = {maxWidth: '38px', maxHeight: '38px', minWidth: '38px', minHeight: '38px'}
 
     return (
         <div>
-            <input className={inputStyles} value={taskTitle} onChange={onChangeHandler}
-                   onKeyDown={onKeyDownHandler}/>
+            <TextField size="small" id="outlined-basic" label={error ? 'Error' : 'Title'}
+                       helperText={error ? 'Title is required!' : null} variant="outlined"
+                       value={taskTitle}
+                       onChange={onChangeHandler}
+                       onKeyDown={onKeyDownHandler} error={error}/>
             <Button style={buttonStyles} onClick={addItemHandler} variant="contained">+</Button>
-            {error && <p className="errorMessage">Title is required!</p>}
         </div>
     );
 };
