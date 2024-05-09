@@ -59,6 +59,9 @@ function App() {
     const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)})
     }
+    const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title} : t)})
+    }
 
     const changeTodolistFilter = (todolistId: string, filter: FilterType) => {
         setTodolists(todolists.map(t => t.id === todolistId ? {...t, filter} : t))
@@ -91,6 +94,7 @@ function App() {
                     addTask={addTask}
                     changeTaskStatus={changeTaskStatus}
                     removeTodolist={removeTodolist}
+                    changeTaskTitle={changeTaskTitle}
                 />
             )
         })
