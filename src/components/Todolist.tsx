@@ -5,6 +5,7 @@ import {EditableSpan} from './EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
 
 type TodolistPropsType = {
     todolistId: string
@@ -57,7 +58,7 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         const changeTaskTitleHandler = (title: string) => changeTaskTitle(todolistId, t.id, title)
         return (
             <li key={t.id} className={taskStyle}>
-                <input type="checkbox" checked={t.isDone} onChange={onChangeHandler}/>
+                <Checkbox checked={t.isDone} onChange={onChangeHandler}/>
                 <EditableSpan title={t.title} changeItemTitle={changeTaskTitleHandler}/>
                 <IconButton color="primary" onClick={removeTaskHandler}>
                     <DeleteForeverIcon/>
