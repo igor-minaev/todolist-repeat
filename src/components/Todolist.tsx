@@ -2,6 +2,7 @@ import React, {ChangeEvent, KeyboardEvent, useRef, useState} from 'react';
 import {FilterType, TaskType} from '../App';
 import {Button} from './Button';
 import {AddItemForm} from './AddItemForm';
+import {EditableSpan} from './EditableSpan';
 
 type TodolistPropsType = {
     todolistId: string
@@ -48,9 +49,9 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(todolistId, t.id, e.currentTarget.checked)
         const taskStyle = t.isDone ? 'taskDone' : 'task'
         return (
-            <li key={t.id}>
+            <li key={t.id} className={taskStyle}>
                 <input type="checkbox" checked={t.isDone} onChange={onChangeHandler}/>
-                <span className={taskStyle}>{t.title}</span>
+                <EditableSpan title={t.title} changeItemTitle={()=>{}}/>
                 <Button name="x" callBack={removeTaskHandler}/>
             </li>
         )
