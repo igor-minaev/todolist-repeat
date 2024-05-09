@@ -1,10 +1,10 @@
 import React, {ChangeEvent, KeyboardEvent, useRef, useState} from 'react';
 import {FilterType, TaskType} from '../App';
-import {Button} from './Button';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Button from '@mui/material/Button';
 
 type TodolistPropsType = {
     todolistId: string
@@ -86,12 +86,12 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
             <AddItemForm addItem={addTaskHandler}/>
             {mappedTasks}
             <div>
-                <Button className={filter === 'all' ? 'btn' : ''} name="All"
-                        callBack={() => changeFilterHandler('all')}/>
-                <Button className={filter === 'active' ? 'btn' : ''} name="Active"
-                        callBack={() => changeFilterHandler('active')}/>
-                <Button className={filter === 'completed' ? 'btn' : ''} name="Complete"
-                        callBack={() => changeFilterHandler('completed')}/>
+                <Button variant={filter === 'all' ? 'contained' : 'outlined'} color="primary"
+                        onClick={() => changeFilterHandler('all')}>All</Button>
+                <Button variant={filter === 'active' ? 'contained' : 'outlined'} color="secondary"
+                        onClick={() => changeFilterHandler('active')}>Active</Button>
+                <Button variant={filter === 'completed' ? 'contained' : 'outlined'} color="success"
+                        onClick={() => changeFilterHandler('completed')}>Complete</Button>
             </div>
         </div>
     );
