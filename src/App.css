@@ -26,18 +26,19 @@
     color: red;
 }
 
-.btn{
+.btn {
     background-color: #086060;
     border: 2px solid #086060;
     color: white;
     border-radius: 5px;
 }
-.taskDone{
+
+.taskDone {
     text-decoration: line-through;
     opacity: 0.5;
 }
 
-.task{
+.task {
     font-weight: bolder;
 }
 
