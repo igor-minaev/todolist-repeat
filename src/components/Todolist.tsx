@@ -15,6 +15,7 @@ type TodolistPropsType = {
     changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
     removeTodolist: (todolistId: string) => void
     changeTaskTitle: (todolistId: string, taskId: string, title: string) => void
+    changeTodolistTitle: (todolistId: string, title: string) => void
 }
 
 export const Todolist: React.FC<TodolistPropsType> = (props) => {
@@ -29,6 +30,7 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         changeTaskStatus,
         removeTodolist,
         changeTaskTitle,
+        changeTodolistTitle,
         ...restProps
     } = props
 
@@ -68,10 +70,11 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
 
     const removeTodolistHandler = () => removeTodolist(todolistId)
     const addTaskHandler = (title: string) => addTask(todolistId, title)
+    const changeTodolistTitleHandler = (title: string) => changeTodolistTitle(todolistId, title)
     return (
         <div className="todolist">
             <h2>
-                {title}
+                <EditableSpan title={title} changeItemTitle={changeTodolistTitleHandler}/>
                 <Button name="x" callBack={removeTodolistHandler}/>
             </h2>
             <AddItemForm addItem={addTaskHandler}/>
