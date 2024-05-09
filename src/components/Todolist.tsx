@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useRef, useState} from 'react';
 import {FilterType, TaskType} from '../App';
 import {Button} from './Button';
+import {AddItemForm} from './AddItemForm';
 
 type TodolistPropsType = {
     todolistId: string
@@ -27,9 +28,6 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         removeTodolist,
         ...restProps
     } = props
-
-    const [taskTitle, setTaskTitle] = useState('')
-    const [error, setError] = useState(false)
 
     const getFilteredTasks = (tasks: TaskType[], filter: FilterType): TaskType[] => {
         switch (filter) {
@@ -63,21 +61,7 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         : <p>Your todolist is empty!</p>
 
     const changeFilterHandler = (newFilterValue: FilterType) => changeTodolistFilter(todolistId, newFilterValue)
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        error && setError(false)
-        setTaskTitle(e.currentTarget.value)
-    }
-    const addTaskHandler = () => {
-        const trimmedTitle = taskTitle.trim()
-        if (trimmedTitle) {
-            addTask(todolistId, trimmedTitle)
-        } else (
-            setError(true)
-        )
-        setTaskTitle('')
-    }
-    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => e.key === 'Enter' && addTaskHandler()
-    const inputStyles = error ? 'error' : ''
+
     const removeTodolistHandler = () => removeTodolist(todolistId)
     return (
         <div className="todolist">
@@ -85,12 +69,7 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
                 {title}
                 <Button name="x" callBack={removeTodolistHandler}/>
             </h2>
-            <div>
-                <input className={inputStyles} value={taskTitle} onChange={onChangeHandler}
-                       onKeyDown={onKeyDownHandler}/>
-                <Button name="+" callBack={addTaskHandler}/>
-                {error && <p className="errorMessage">Title is required!</p>}
-            </div>
+            <AddItemForm/>
             {mappedTasks}
             <div>
                 <Button className={filter === 'all' ? 'btn' : ''} name="All"
