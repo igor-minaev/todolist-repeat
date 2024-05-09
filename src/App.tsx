@@ -2,6 +2,10 @@ import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from './components/Todolist';
 import {AddItemForm} from './components/AddItemForm';
+import {AppBarComponent} from './components/AppBarComponent';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 
 export type TaskType = {
     id: string
@@ -87,19 +91,23 @@ function App() {
     const mappedTodolists = todolists.length
         ? todolists.map(t => {
             return (
-                <Todolist
-                    todolistId={t.id}
-                    filter={t.filter}
-                    title={t.title}
-                    tasks={tasks[t.id]}
-                    removeTask={removeTask}
-                    changeTodolistFilter={changeTodolistFilter}
-                    addTask={addTask}
-                    changeTaskStatus={changeTaskStatus}
-                    removeTodolist={removeTodolist}
-                    changeTaskTitle={changeTaskTitle}
-                    changeTodolistTitle={changeTodolistTitle}
-                />
+                <Grid item key={t.id}>
+                    <Paper elevation={3}>
+                        <Todolist
+                            todolistId={t.id}
+                            filter={t.filter}
+                            title={t.title}
+                            tasks={tasks[t.id]}
+                            removeTask={removeTask}
+                            changeTodolistFilter={changeTodolistFilter}
+                            addTask={addTask}
+                            changeTaskStatus={changeTaskStatus}
+                            removeTodolist={removeTodolist}
+                            changeTaskTitle={changeTaskTitle}
+                            changeTodolistTitle={changeTodolistTitle}
+                        />
+                    </Paper>
+                </Grid>
             )
         })
         : <p>Create new todolist</p>
@@ -107,8 +115,15 @@ function App() {
 
     return (
         <div className="App">
-            <AddItemForm addItem={addTodolist}/>
-            {mappedTodolists}
+            <AppBarComponent/>
+            <Container fixed>
+                <Grid container style={{margin: '10px 0'}}>
+                    <AddItemForm addItem={addTodolist}/>
+                </Grid>
+                <Grid container spacing={4}>
+                    {mappedTodolists}
+                </Grid>
+            </Container>
         </div>
     )
 }

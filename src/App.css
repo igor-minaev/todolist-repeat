@@ -1,16 +1,16 @@
 .App {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    /*display: flex;*/
+    /*gap: 20px;*/
+    /*flex-wrap: wrap;*/
 }
 
 .todolist {
-    height: max-content;
-    border: 2px solid darkcyan;
+    /*height: max-content;*/
+    /*border: 2px solid darkcyan;*/
     padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    background-color: rgba(172, 229, 229, 0.75);
+    /*border-radius: 5px;*/
+    /*text-align: center;*/
+    /*background-color: rgba(172, 229, 229, 0.75);*/
 }
 
 .todolist ul {
