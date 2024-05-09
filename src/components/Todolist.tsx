@@ -63,13 +63,14 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
     const changeFilterHandler = (newFilterValue: FilterType) => changeTodolistFilter(todolistId, newFilterValue)
 
     const removeTodolistHandler = () => removeTodolist(todolistId)
+    const addTaskHandler = (title: string) => addTask(todolistId, title)
     return (
         <div className="todolist">
             <h2>
                 {title}
                 <Button name="x" callBack={removeTodolistHandler}/>
             </h2>
-            <AddItemForm/>
+            <AddItemForm addItem={addTaskHandler}/>
             {mappedTasks}
             <div>
                 <Button className={filter === 'all' ? 'btn' : ''} name="All"
