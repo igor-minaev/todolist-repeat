@@ -3,6 +3,8 @@ import {FilterType, TaskType} from '../App';
 import {Button} from './Button';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
+import IconButton from '@mui/material/IconButton';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 type TodolistPropsType = {
     todolistId: string
@@ -57,7 +59,9 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
             <li key={t.id} className={taskStyle}>
                 <input type="checkbox" checked={t.isDone} onChange={onChangeHandler}/>
                 <EditableSpan title={t.title} changeItemTitle={changeTaskTitleHandler}/>
-                <Button name="x" callBack={removeTaskHandler}/>
+                <IconButton color="primary" onClick={removeTaskHandler}>
+                    <DeleteForeverIcon/>
+                </IconButton>
             </li>
         )
     })
@@ -75,7 +79,9 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         <div className="todolist">
             <h2>
                 <EditableSpan title={title} changeItemTitle={changeTodolistTitleHandler}/>
-                <Button name="x" callBack={removeTodolistHandler}/>
+                <IconButton color="primary" onClick={removeTodolistHandler}>
+                    <DeleteForeverIcon/>
+                </IconButton>
             </h2>
             <AddItemForm addItem={addTaskHandler}/>
             {mappedTasks}
