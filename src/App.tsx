@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 
+
 export type TaskType = {
     id: string
     title: string
@@ -24,12 +25,17 @@ export type TasksStateType = {
     [key: string]: TaskType[]
 }
 
+type ThemeMode = 'dark' | 'light'
+
 function App() {
 
+
+    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
     const theme = createTheme({
         palette: {
+            mode: themeMode === 'light' ? 'light' : 'dark',
             primary: {
-                main: '#ef6c00'
+                main: '#087EA4'
             }
         }
     })
@@ -98,6 +104,10 @@ function App() {
         setTodolists(todolists.map(t => t.id === todolistId ? {...t, title} : t))
     }
 
+    const changeModeHandler = () => {
+        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
+    }
+
     const mappedTodolists = todolists.length
         ? todolists.map(t => {
             return (
@@ -125,15 +135,15 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-                <AppBarComponent theme={theme}/>
-                <Container fixed>
-                    <Grid container sx={{my: 3}}>
-                        <AddItemForm addItem={addTodolist}/>
-                    </Grid>
-                    <Grid container spacing={4}>
-                        {mappedTodolists}
-                    </Grid>
-                </Container>
+            <AppBarComponent theme={theme} color="default" onChange={changeModeHandler}/>
+            <Container fixed>
+                <Grid container sx={{my: 3}}>
+                    <AddItemForm addItem={addTodolist}/>
+                </Grid>
+                <Grid container spacing={4}>
+                    {mappedTodolists}
+                </Grid>
+            </Container>
         </ThemeProvider>
     )
 }

@@ -7,14 +7,18 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {MenuButton} from './MenuButton';
 import {Theme} from '@mui/material';
+import Switch from '@mui/material/Switch'
+import CssBaseline from '@mui/material/CssBaseline'
 
 
 type AppBarComponentProps = {
     theme: Theme
+    onChange: () => void
+    color: string
 }
 
 
-export const AppBarComponent: React.FC<AppBarComponentProps> = ({theme}) => {
+export const AppBarComponent: React.FC<AppBarComponentProps> = ({theme, onChange, color}) => {
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
@@ -34,6 +38,7 @@ export const AppBarComponent: React.FC<AppBarComponentProps> = ({theme}) => {
                     <MenuButton>Login</MenuButton>
                     <MenuButton>Logout</MenuButton>
                     <MenuButton background={theme.palette.primary.dark}>Faq</MenuButton>
+                    <Switch color={'default'} onChange={onChange}/>
                 </Toolbar>
             </AppBar>
         </Box>
