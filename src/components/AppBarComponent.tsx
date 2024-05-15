@@ -8,7 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {MenuButton} from './MenuButton';
 import {Theme} from '@mui/material';
 import Switch from '@mui/material/Switch'
-import CssBaseline from '@mui/material/CssBaseline'
+
 
 
 type AppBarComponentProps = {

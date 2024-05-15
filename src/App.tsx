@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import {createTheme, ThemeProvider} from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
 
 
 export type TaskType = {
@@ -135,6 +136,7 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
+            <CssBaseline />
             <AppBarComponent theme={theme} color="default" onChange={changeModeHandler}/>
             <Container fixed>
                 <Grid container sx={{my: 3}}>
