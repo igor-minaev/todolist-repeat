@@ -6,6 +6,7 @@ import {AppBarComponent} from './components/AppBarComponent';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import {createTheme, ThemeProvider} from '@mui/material/styles'
 
 export type TaskType = {
     id: string
@@ -24,6 +25,15 @@ export type TasksStateType = {
 }
 
 function App() {
+
+    const theme = createTheme({
+        palette: {
+            primary: {
+                main: '#087EA4'
+            }
+        }
+    })
+
     const todolistId_1 = crypto.randomUUID()
     const todolistId_2 = crypto.randomUUID()
     const [todolists, setTodolists] = useState<TodolistType[]>([
@@ -94,17 +104,17 @@ function App() {
                 <Grid item key={t.id}>
                     <Paper elevation={3} sx={{p: 2}}>
                         <Todolist
-                                  todolistId={t.id}
-                                  filter={t.filter}
-                                  title={t.title}
-                                  tasks={tasks[t.id]}
-                                  removeTask={removeTask}
-                                  changeTodolistFilter={changeTodolistFilter}
-                                  addTask={addTask}
-                                  changeTaskStatus={changeTaskStatus}
-                                  removeTodolist={removeTodolist}
-                                  changeTaskTitle={changeTaskTitle}
-                                  changeTodolistTitle={changeTodolistTitle}
+                            todolistId={t.id}
+                            filter={t.filter}
+                            title={t.title}
+                            tasks={tasks[t.id]}
+                            removeTask={removeTask}
+                            changeTodolistFilter={changeTodolistFilter}
+                            addTask={addTask}
+                            changeTaskStatus={changeTaskStatus}
+                            removeTodolist={removeTodolist}
+                            changeTaskTitle={changeTaskTitle}
+                            changeTodolistTitle={changeTodolistTitle}
                         />
                     </Paper>
                 </Grid>
@@ -114,17 +124,17 @@ function App() {
 
 
     return (
-        <div className="App">
-            <AppBarComponent/>
-            <Container fixed>
-                <Grid container sx={{my: 3}}>
-                    <AddItemForm addItem={addTodolist}/>
-                </Grid>
-                <Grid container spacing={4}>
-                    {mappedTodolists}
-                </Grid>
-            </Container>
-        </div>
+        <ThemeProvider theme={theme}>
+                <AppBarComponent theme={theme}/>
+                <Container fixed>
+                    <Grid container sx={{my: 3}}>
+                        <AddItemForm addItem={addTodolist}/>
+                    </Grid>
+                    <Grid container spacing={4}>
+                        {mappedTodolists}
+                    </Grid>
+                </Container>
+        </ThemeProvider>
     )
 }
 

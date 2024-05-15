@@ -3,13 +3,18 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {MenuButton} from './MenuButton';
+import {Theme} from '@mui/material';
 
 
-export const AppBarComponent = () => {
+type AppBarComponentProps = {
+    theme: Theme
+}
+
+
+export const AppBarComponent: React.FC<AppBarComponentProps> = ({theme}) => {
     return (
         <Box sx={{flexGrow: 1}}>
             <AppBar position="static">
@@ -28,7 +33,7 @@ export const AppBarComponent = () => {
                     </Typography>
                     <MenuButton>Login</MenuButton>
                     <MenuButton>Logout</MenuButton>
-                    <MenuButton background="#6fb1fc">Faq</MenuButton>
+                    <MenuButton background={theme.palette.primary.dark}>Faq</MenuButton>
                 </Toolbar>
             </AppBar>
         </Box>
