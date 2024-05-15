@@ -8,6 +8,8 @@ import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import Box from '@mui/material/Box';
+import {filterButtonsContainerSx, getListItemSx} from '../Todolist.styles';
 
 type TodolistPropsType = {
     todolistId: string
@@ -58,9 +60,11 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(todolistId, t.id, e.currentTarget.checked)
         const changeTaskTitleHandler = (title: string) => changeTaskTitle(todolistId, t.id, title)
         return (
-            <ListItem key={t.id}>
-                <Checkbox checked={t.isDone} onChange={onChangeHandler}/>
-                <EditableSpan title={t.title} changeItemTitle={changeTaskTitleHandler}/>
+            <ListItem key={t.id} sx={getListItemSx(t.isDone)}>
+                <div>
+                    <Checkbox checked={t.isDone} onChange={onChangeHandler}/>
+                    <EditableSpan title={t.title} changeItemTitle={changeTaskTitleHandler}/>
+                </div>
                 <IconButton color="primary" onClick={removeTaskHandler}>
                     <DeleteForeverIcon/>
                 </IconButton>
@@ -87,14 +91,14 @@ export const Todolist: React.FC<TodolistPropsType> = (props) => {
             </h2>
             <AddItemForm addItem={addTaskHandler}/>
             {mappedTasks}
-            <div>
+            <Box sx={filterButtonsContainerSx}>
                 <Button variant={filter === 'all' ? 'contained' : 'outlined'} color="primary"
                         onClick={() => changeFilterHandler('all')}>All</Button>
                 <Button variant={filter === 'active' ? 'contained' : 'outlined'} color="secondary"
                         onClick={() => changeFilterHandler('active')}>Active</Button>
                 <Button variant={filter === 'completed' ? 'contained' : 'outlined'} color="success"
                         onClick={() => changeFilterHandler('completed')}>Complete</Button>
-            </div>
+            </Box>
         </div>
     );
 };

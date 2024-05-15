@@ -92,19 +92,19 @@ function App() {
         ? todolists.map(t => {
             return (
                 <Grid item key={t.id}>
-                    <Paper elevation={3}>
+                    <Paper elevation={3} sx={{p: 2}}>
                         <Todolist
-                            todolistId={t.id}
-                            filter={t.filter}
-                            title={t.title}
-                            tasks={tasks[t.id]}
-                            removeTask={removeTask}
-                            changeTodolistFilter={changeTodolistFilter}
-                            addTask={addTask}
-                            changeTaskStatus={changeTaskStatus}
-                            removeTodolist={removeTodolist}
-                            changeTaskTitle={changeTaskTitle}
-                            changeTodolistTitle={changeTodolistTitle}
+                                  todolistId={t.id}
+                                  filter={t.filter}
+                                  title={t.title}
+                                  tasks={tasks[t.id]}
+                                  removeTask={removeTask}
+                                  changeTodolistFilter={changeTodolistFilter}
+                                  addTask={addTask}
+                                  changeTaskStatus={changeTaskStatus}
+                                  removeTodolist={removeTodolist}
+                                  changeTaskTitle={changeTaskTitle}
+                                  changeTodolistTitle={changeTodolistTitle}
                         />
                     </Paper>
                 </Grid>
@@ -117,7 +117,7 @@ function App() {
         <div className="App">
             <AppBarComponent/>
             <Container fixed>
-                <Grid container style={{margin: '10px 0'}}>
+                <Grid container sx={{my: 3}}>
                     <AddItemForm addItem={addTodolist}/>
                 </Grid>
                 <Grid container spacing={4}>
