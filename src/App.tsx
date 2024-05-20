@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
 import './App.css';
 import {Todolist} from './components/Todolist';
 import {AddItemForm} from './components/AddItemForm';
@@ -8,6 +8,14 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
+import {
+    addTodolistAC,
+    changeTodolistFilterAC,
+    changeTodolistTitleAC,
+    removeTodolistAC,
+    todolistsReducer
+} from './reducers/todolistsReducer';
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './reducers/tasksReduser';
 
 
 export type TaskType = {
@@ -43,12 +51,13 @@ function App() {
 
     const todolistId_1 = crypto.randomUUID()
     const todolistId_2 = crypto.randomUUID()
-    const [todolists, setTodolists] = useState<TodolistType[]>([
+
+    const [todolists, dispatchTodolists] = useReducer(todolistsReducer, [
         {id: todolistId_1, title: 'What to learn', filter: 'all'},
         {id: todolistId_2, title: 'What to learn2', filter: 'all'}
     ])
 
-    const [tasks, setTasks] = useState<TasksStateType>({
+    const [tasks, dispatchTasks] = useReducer(tasksReducer, {
         [todolistId_1]: [
             {id: crypto.randomUUID(), title: 'HTML', isDone: true},
             {id: crypto.randomUUID(), title: 'CSS', isDone: true},
@@ -65,44 +74,33 @@ function App() {
         ]
     })
 
-
     const removeTask = (todolistId: string, taskId: string) => {
-        setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)})
+        dispatchTasks(removeTaskAC(todolistId, taskId))
     }
     const addTask = (todolistId: string, title: string) => {
-        const newTask: TaskType = {
-            id: crypto.randomUUID(),
-            title,
-            isDone: false
-        }
-        setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
+        dispatchTasks(addTaskAC(todolistId, title))
     }
     const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
-        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)})
+        dispatchTasks(changeTaskStatusAC(todolistId, taskId, isDone))
     }
     const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
-        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title} : t)})
+        dispatchTasks(changeTaskTitleAC(todolistId, taskId, title))
     }
 
     const changeTodolistFilter = (todolistId: string, filter: FilterType) => {
-        setTodolists(todolists.map(t => t.id === todolistId ? {...t, filter} : t))
+        dispatchTodolists(changeTodolistFilterAC(todolistId, filter))
     }
     const removeTodolist = (todolistId: string) => {
-        setTodolists(todolists.filter(t => t.id !== todolistId))
+        dispatchTodolists(removeTodolistAC(todolistId))
         delete tasks[todolistId]
     }
     const addTodolist = (title: string) => {
         const newTodolistId = crypto.randomUUID()
-        const newTodolist: TodolistType = {
-            id: newTodolistId,
-            title,
-            filter: 'all'
-        }
-        setTodolists([newTodolist, ...todolists])
-        setTasks({...tasks, [newTodolistId]: []})
+        dispatchTodolists(addTodolistAC(newTodolistId, title))
+        dispatchTasks(addTodolistAC(newTodolistId, title))
     }
     const changeTodolistTitle = (todolistId: string, title: string) => {
-        setTodolists(todolists.map(t => t.id === todolistId ? {...t, title} : t))
+        dispatchTodolists(changeTodolistTitleAC(todolistId, title))
     }
 
     const changeModeHandler = () => {
@@ -136,7 +134,7 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
+            <CssBaseline/>
             <AppBarComponent theme={theme} color="default" onChange={changeModeHandler}/>
             <Container fixed>
                 <Grid container sx={{my: 3}}>
