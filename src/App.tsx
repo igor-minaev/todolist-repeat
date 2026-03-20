@@ -1,9 +1,11 @@
 import {Todolist} from "./Todolist.tsx";
 import "./App.css"
-import {TaskType} from "./types/types.ts";
+import {FilterType, TaskType} from "./types/types.ts";
 import {useState} from "react";
+import {getFilteredTasks} from "./utils/utils.ts";
 
 function App() {
+    // BLL
 
     const TodolistTitle = "What to learn"
 
@@ -16,15 +18,24 @@ function App() {
     ])
 
     const deleteTask = (taskId: string) => {
-        return setTasks(tasks.filter(t => t.id != taskId))
+        setTasks(tasks.filter(t => t.id != taskId))
     }
+
+    // UI
+    const [filter, setFilter] = useState<FilterType>("All")
+    const changeFilter = (newFilter: FilterType) => {
+        setFilter(newFilter)
+    }
+
+    const tasksForRender = getFilteredTasks(tasks, filter)
 
     return (
         <div className="app">
             <Todolist
                 title={TodolistTitle}
-                tasks={tasks}
+                tasks={tasksForRender}
                 deleteTask={deleteTask}
+                changeFilter={changeFilter}
             />
         </div>
     )

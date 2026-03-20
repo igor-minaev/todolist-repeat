@@ -1,4 +1,4 @@
-import {TaskType} from "./types/types.ts";
+import {FilterType, TaskType} from "./types/types.ts";
 import {JSX} from "react";
 
 
@@ -6,8 +6,9 @@ type TodolistPropsType = {
     title: string
     tasks: TaskType[]
     deleteTask: (taskId: string) => void
+    changeFilter: (newFilter: FilterType) => void
 }
-export const Todolist = ({title, tasks, deleteTask}: TodolistPropsType) => {
+export const Todolist = ({title, tasks, deleteTask, changeFilter}: TodolistPropsType) => {
     const taskList: JSX.Element = tasks.length
         ? <ul>
             {tasks.map(t => (
@@ -35,9 +36,9 @@ export const Todolist = ({title, tasks, deleteTask}: TodolistPropsType) => {
             </div>
             {taskList}
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={() => changeFilter("All")}>All</button>
+                <button onClick={() => changeFilter("Active")}>Active</button>
+                <button onClick={() => changeFilter("Completed")}>Completed</button>
             </div>
         </div>
     );

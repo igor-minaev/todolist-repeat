@@ -1,4 +1,5 @@
 export type PriorityType = "Low" | "Medium" | "High"
+export type FilterType = "All" | "Active" | "Completed"
 export type TaskType = {
     id: string
     title: string
