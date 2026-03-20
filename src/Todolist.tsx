@@ -1,20 +1,37 @@
-export const Todolist = () => {
+import {TaskType} from "./types/types.ts";
+import {JSX} from "react";
+
+
+type TodolistPropsType = {
+    title: string
+    tasks: TaskType[]
+}
+export const Todolist = ({title, tasks}: TodolistPropsType) => {
+    const taskList: JSX.Element = tasks.length
+        ? <ul>
+            {tasks.map(t => (
+                <li key={t.id}>
+                    <input type="checkbox" checked={t.isDone}/><span>{t.title}</span>
+                    <span><b>Priority:</b> {t.priority}</span>
+                </li>
+            ))}
+
+        </ul>
+        : <p>Your Tasks list is empty!</p>
     return (
         <div>
-            <h3>What to learn</h3>
+            <h3>{title}</h3>
             <input/>
             <button>+</button>
-            <ul>
-                <li>
-                    <input type="checkbox" checked={true}/><span>HTML</span>
-                </li>
-                <li>
-                    <input type="checkbox" checked={true}/><span>CSS</span>
-                </li>
-                <li>
-                    <input type="checkbox" checked={true}/><span>JS</span>
-                </li>
-            </ul>
+            <div className="select">
+                <label htmlFor="priority">Proiority</label>
+                <select id="priority">
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+            </div>
+            {taskList}
             <div>
                 <button>All</button>
                 <button>Active</button>
