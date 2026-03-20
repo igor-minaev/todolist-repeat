@@ -1,5 +1,5 @@
 import {FilterType, TaskType} from "./types/types.ts";
-import {ChangeEvent, JSX, useState} from "react";
+import {JSX, useRef} from "react";
 
 
 type TodolistPropsType = {
@@ -10,9 +10,6 @@ type TodolistPropsType = {
     createTask: (title: string) => void
 }
 export const Todolist = ({title, tasks, deleteTask, changeFilter, createTask}: TodolistPropsType) => {
-
-    const [newTitle, setNewTitle] = useState('')
-
     const taskList: JSX.Element = tasks.length
         ? <ul>
             {tasks.map(t => (
@@ -25,20 +22,19 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter, createTask}: T
 
         </ul>
         : <p>Your Tasks list is empty!</p>
-
-    const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTitle(e.currentTarget.value)
-    }
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const onClickHandler = () => {
-        createTask(newTitle)
-        setNewTitle('')
+        if (inputRef.current) {
+            createTask(inputRef.current.value)
+            inputRef.current.value = ''
+        }
     }
 
     return (
         <div>
             <h3>{title}</h3>
-            <input value={newTitle} onChange={onChangeTitleHandler}/>
+            <input ref={inputRef}/>
             <button onClick={onClickHandler}>+</button>
             <div className="select">
                 <label htmlFor="priority">Proiority</label>
