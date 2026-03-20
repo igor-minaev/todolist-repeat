@@ -5,14 +5,16 @@ import {JSX} from "react";
 type TodolistPropsType = {
     title: string
     tasks: TaskType[]
+    deleteTask: (taskId: string) => void
 }
-export const Todolist = ({title, tasks}: TodolistPropsType) => {
+export const Todolist = ({title, tasks, deleteTask}: TodolistPropsType) => {
     const taskList: JSX.Element = tasks.length
         ? <ul>
             {tasks.map(t => (
                 <li key={t.id}>
                     <input type="checkbox" checked={t.isDone}/><span>{t.title}</span>
                     <span><b>Priority:</b> {t.priority}</span>
+                    <button onClick={() => deleteTask(t.id)}>x</button>
                 </li>
             ))}
 
