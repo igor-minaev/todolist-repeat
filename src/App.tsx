@@ -2,7 +2,7 @@ import {Todolist} from "./Todolist.tsx";
 import "./App.css"
 import {FilterType, TaskType} from "./types/types.ts";
 import {useState} from "react";
-import {getFilteredTasks} from "./utils/utils.ts";
+import {getFilteredTasksByStatus} from "./utils/utils.ts";
 
 function App() {
     // BLL
@@ -21,13 +21,18 @@ function App() {
         setTasks(tasks.filter(t => t.id != taskId))
     }
 
+    const createTask = (title: string) => {
+        const newTask: TaskType = {id: crypto.randomUUID(), title, isDone: false, priority: "Low"}
+        setTasks([newTask, ...tasks])
+    }
+
     // UI
     const [filter, setFilter] = useState<FilterType>("All")
     const changeFilter = (newFilter: FilterType) => {
         setFilter(newFilter)
     }
 
-    const tasksForRender = getFilteredTasks(tasks, filter)
+    const tasksForRender = getFilteredTasksByStatus(tasks, filter)
 
     return (
         <div className="app">
@@ -36,6 +41,7 @@ function App() {
                 tasks={tasksForRender}
                 deleteTask={deleteTask}
                 changeFilter={changeFilter}
+                createTask={createTask}
             />
         </div>
     )

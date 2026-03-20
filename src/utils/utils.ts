@@ -1,6 +1,6 @@
 import {FilterType, TaskType} from "../types/types.ts";
 
-export const getFilteredTasks = (tasks: TaskType[], filter: FilterType): TaskType[] => {
+export const getFilteredTasksByStatus = (tasks: TaskType[], filter: FilterType): TaskType[] => {
     switch (filter) {
         case "Active":
             return tasks.filter(t => !t.isDone)
