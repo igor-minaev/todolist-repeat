@@ -35,11 +35,16 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter, createTask}: T
         setNewTitle('')
     }
 
+    const isDisableButton = newTitle.length < 3
+    const messageInput = (newTitle.length < 3 || newTitle.length > 15) &&
+        <p>Task's title should be from 3 to 15 chars</p>
+
     return (
         <div>
             <h3>{title}</h3>
             <input value={newTitle} onChange={onChangeTitleHandler}/>
-            <button onClick={onClickHandler}>+</button>
+            <button disabled={isDisableButton} onClick={onClickHandler}>+</button>
+            {messageInput}
             <div className="select">
                 <label htmlFor="priority">Proiority</label>
                 <select id="priority">
