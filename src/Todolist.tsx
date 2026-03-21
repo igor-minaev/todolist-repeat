@@ -1,5 +1,6 @@
 import {FilterType, PriorityFilterType, TaskType} from "./types/types.ts";
 import {ChangeEvent, KeyboardEvent, JSX, useState} from "react";
+import {Button} from "./components/Button.tsx";
 
 
 type TodolistPropsType = {
@@ -20,7 +21,7 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter, createTask, ch
                 <li key={t.id}>
                     <input type="checkbox" checked={t.isDone}/><span>{t.title}</span>
                     <span><b>Priority:</b> {t.priority}</span>
-                    <button onClick={() => deleteTask(t.id)}>x</button>
+                    <Button name="x" onClick={() => deleteTask(t.id)}/>
                 </li>
             ))}
 
@@ -52,7 +53,7 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter, createTask, ch
         <div>
             <h3>{title}</h3>
             <input value={newTitle} onChange={onChangeTitleHandler} onKeyDown={onKeyDownHandler}/>
-            <button disabled={isDisableButton} onClick={onClickHandler}>+</button>
+            <Button name="+" onClick={onClickHandler} disabled={isDisableButton}/>
             {messageInput}
             <div className="select">
                 <label htmlFor="priority">Priority</label>
@@ -65,9 +66,9 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter, createTask, ch
             </div>
             {taskList}
             <div>
-                <button onClick={() => changeFilter("All")}>All</button>
-                <button onClick={() => changeFilter("Active")}>Active</button>
-                <button onClick={() => changeFilter("Completed")}>Completed</button>
+                <Button name="All" onClick={() => changeFilter("All")}/>
+                <Button name="Active" onClick={() => changeFilter("Active")}/>
+                <Button name="Completed" onClick={() => changeFilter("Completed")}/>
             </div>
         </div>
     );
