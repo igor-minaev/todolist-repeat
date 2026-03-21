@@ -1,8 +1,8 @@
 import {Todolist} from "./Todolist.tsx";
 import "./App.css"
-import {FilterType, TaskType} from "./types/types.ts";
+import {FilterType, PriorityFilterType, TaskType} from "./types/types.ts";
 import {useState} from "react";
-import {getFilteredTasksByStatus} from "./utils/utils.ts";
+import {getFilteredTasks} from "./utils/utils.ts";
 
 function App() {
     // BLL
@@ -32,7 +32,12 @@ function App() {
         setFilter(newFilter)
     }
 
-    const tasksForRender = getFilteredTasksByStatus(tasks, filter)
+    const [priority, setPriority] = useState<PriorityFilterType>("All")
+    const changePriority = (newPriority: PriorityFilterType) => {
+        setPriority(newPriority)
+    }
+
+    const tasksForRender = getFilteredTasks(tasks, filter, priority)
 
     return (
         <div className="app">
@@ -42,6 +47,7 @@ function App() {
                 deleteTask={deleteTask}
                 changeFilter={changeFilter}
                 createTask={createTask}
+                changePriority={changePriority}
             />
         </div>
     )

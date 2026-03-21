@@ -1,5 +1,5 @@
-import {FilterType, TaskType} from "./types/types.ts";
-import {ChangeEvent, JSX, useState} from "react";
+import {FilterType, PriorityFilterType, TaskType} from "./types/types.ts";
+import {ChangeEvent, KeyboardEvent, JSX, useState} from "react";
 
 
 type TodolistPropsType = {
@@ -8,8 +8,9 @@ type TodolistPropsType = {
     deleteTask: (taskId: string) => void
     changeFilter: (newFilter: FilterType) => void
     createTask: (title: string) => void
+    changePriority: (newPriority: PriorityFilterType) => void
 }
-export const Todolist = ({title, tasks, deleteTask, changeFilter, createTask}: TodolistPropsType) => {
+export const Todolist = ({title, tasks, deleteTask, changeFilter, createTask, changePriority}: TodolistPropsType) => {
 
     const [newTitle, setNewTitle] = useState('')
 
@@ -35,6 +36,14 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter, createTask}: T
         setNewTitle('')
     }
 
+    const onChangeSelectHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+        changePriority(e.currentTarget.value as PriorityFilterType)
+    }
+
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        e.key === 'Enter' && onClickHandler()
+    }
+
     const isDisableButton = newTitle.length < 3
     const messageInput = (newTitle.length < 3 || newTitle.length > 15) &&
         <p>Task's title should be from 3 to 15 chars</p>
@@ -42,12 +51,13 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter, createTask}: T
     return (
         <div>
             <h3>{title}</h3>
-            <input value={newTitle} onChange={onChangeTitleHandler}/>
+            <input value={newTitle} onChange={onChangeTitleHandler} onKeyDown={onKeyDownHandler}/>
             <button disabled={isDisableButton} onClick={onClickHandler}>+</button>
             {messageInput}
             <div className="select">
-                <label htmlFor="priority">Proiority</label>
-                <select id="priority">
+                <label htmlFor="priority">Priority</label>
+                <select id="priority" onChange={onChangeSelectHandler}>
+                    <option value="All">All</option>
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
                     <option value="High">High</option>
