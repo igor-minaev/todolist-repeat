@@ -1,6 +1,7 @@
 import {FilterType, PriorityFilterType, TaskType} from "./types/types.ts";
 import {ChangeEvent, KeyboardEvent, JSX, useState} from "react";
 import {Button} from "./components/Button.tsx";
+import {Input} from "./components/Input.tsx";
 
 
 type TodolistPropsType = {
@@ -52,7 +53,7 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter, createTask, ch
     return (
         <div>
             <h3>{title}</h3>
-            <input value={newTitle} onChange={onChangeTitleHandler} onKeyDown={onKeyDownHandler}/>
+            <Input value={newTitle} onChange={onChangeTitleHandler} onKeyDown={onKeyDownHandler}/>
             <Button name="+" onClick={onClickHandler} disabled={isDisableButton}/>
             {messageInput}
             <div className="select">
