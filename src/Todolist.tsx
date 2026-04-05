@@ -1,15 +1,25 @@
-import {FilterType, PriorityType, TaskType} from "./types/types.ts";
-import {ChangeEvent} from "react";
+import {FilterType, PriorityFilterType, TaskType} from "./types/types.ts";
+import {ChangeEvent, useState} from "react";
 
 type TodolistTitle = {
     title: string
     tasks: TaskType[]
     deleteTask: (taskId: string) => void
     changeTaskFilter: (filter: FilterType) => void
-    changePriorityFilter: (priority: PriorityType) => void
+    changePriorityFilter: (priority: PriorityFilterType) => void
+    addTask: (title: string) => void
 }
 
-export const Todolist = ({title, tasks, deleteTask, changeTaskFilter, changePriorityFilter}: TodolistTitle) => {
+export const Todolist = ({
+                             title,
+                             tasks,
+                             deleteTask,
+                             changeTaskFilter,
+                             changePriorityFilter,
+                             addTask
+                         }: TodolistTitle) => {
+
+    const [taskTitle, setTaskTitle] = useState('')
 
     const mappedTasks = tasks.length
         ? <ul>
@@ -28,14 +38,24 @@ export const Todolist = ({title, tasks, deleteTask, changeTaskFilter, changePrio
         : <p>Your todolist is empty</p>
 
     const changePriorityFilterHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-        changePriorityFilter(e.currentTarget.value as PriorityType)
+        changePriorityFilter(e.currentTarget.value as PriorityFilterType)
     }
+
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setTaskTitle(e.currentTarget.value)
+    }
+
+    const addTaskHandler = () => {
+        addTask(taskTitle)
+        setTaskTitle('')
+    }
+
     return (
         <div>
             <h3>{title}</h3>
             <div>
-                <input/>
-                <button>+</button>
+                <input value={taskTitle} onChange={onChangeHandler}/>
+                <button onClick={addTaskHandler}>+</button>
             </div>
             <div>
                 <label htmlFor="priority">Priority</label>
