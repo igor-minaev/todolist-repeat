@@ -5,7 +5,20 @@ type TodolistTitle = {
     tasks: TaskType[]
 }
 
-export const Todolist = ({title}: TodolistTitle) => {
+export const Todolist = ({title, tasks}: TodolistTitle) => {
+
+    const mappedTasks = tasks.length
+        ? <ul>
+            {tasks.map(t => (
+                <li key={t.id}>
+                    <input type="checkbox" checked={t.isDone}/>
+                    <span>{t.title}</span>
+                    <span>-<b>Priority:</b> {t.priority}-</span>
+                    <button>x</button>
+                </li>
+            ))}
+        </ul>
+        : <p>Your todolist is empty</p>
     return (
         <div>
             <h3>{title}</h3>
@@ -22,7 +35,7 @@ export const Todolist = ({title}: TodolistTitle) => {
                     <option value="High"></option>
                 </select>
             </div>
-            <ul></ul>
+            {mappedTasks}
             <div>
                 <button>All</button>
                 <button>Active</button>
