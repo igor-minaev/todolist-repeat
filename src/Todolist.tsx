@@ -50,13 +50,17 @@ export const Todolist = ({
         setTaskTitle('')
     }
 
+    const disableButton = taskTitle.length < 3 || taskTitle.length > 15
+    const titleLengthValidation = taskTitle.length > 3 && taskTitle.length <= 15
+
     return (
         <div>
             <h3>{title}</h3>
             <div>
                 <input value={taskTitle} onChange={onChangeHandler}/>
-                <button onClick={addTaskHandler}>+</button>
+                <button disabled={disableButton} onClick={addTaskHandler}>+</button>
             </div>
+            {titleLengthValidation && <p>Title length should be less then 16 chars</p>}
             <div>
                 <label htmlFor="priority">Priority</label>
                 <select onChange={changePriorityFilterHandler} name="priority" id="priority">
