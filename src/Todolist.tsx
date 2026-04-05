@@ -1,7 +1,14 @@
-export const Todolist = () => {
+import {TaskType} from "./types/types.ts";
+
+type TodolistTitle = {
+    title: string
+    tasks: TaskType[]
+}
+
+export const Todolist = ({title}: TodolistTitle) => {
     return (
         <div>
-            <h3>What to learn</h3>
+            <h3>{title}</h3>
             <div>
                 <input/>
                 <button>+</button>
