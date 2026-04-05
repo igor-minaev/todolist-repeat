@@ -3,20 +3,24 @@ import {TaskType} from "./types/types.ts";
 type TodolistTitle = {
     title: string
     tasks: TaskType[]
+    deleteTask: (taskId: string) => void
 }
 
-export const Todolist = ({title, tasks}: TodolistTitle) => {
+export const Todolist = ({title, tasks, deleteTask}: TodolistTitle) => {
 
     const mappedTasks = tasks.length
         ? <ul>
-            {tasks.map(t => (
-                <li key={t.id}>
-                    <input type="checkbox" checked={t.isDone}/>
-                    <span>{t.title}</span>
-                    <span>-<b>Priority:</b> {t.priority}-</span>
-                    <button>x</button>
-                </li>
-            ))}
+            {tasks.map(t => {
+                const deleteTaskHandler = () => deleteTask(t.id)
+                return (
+                    <li key={t.id}>
+                        <input type="checkbox" checked={t.isDone}/>
+                        <span>{t.title}</span>
+                        <span>-<b>Priority:</b> {t.priority}-</span>
+                        <button onClick={deleteTaskHandler}>x</button>
+                    </li>
+                )
+            })}
         </ul>
         : <p>Your todolist is empty</p>
     return (
