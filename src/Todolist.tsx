@@ -1,5 +1,5 @@
 import {FilterType, PriorityFilterType, TaskType} from "./types/types.ts";
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type TodolistTitle = {
     title: string
@@ -22,6 +22,7 @@ export const Todolist = ({
                          }: TodolistTitle) => {
 
     const [taskTitle, setTaskTitle] = useState('')
+    const [error, setError] = useState(false)
 
     const mappedTasks = tasks.length
         ? <ul>
@@ -53,6 +54,10 @@ export const Todolist = ({
         setTaskTitle('')
     }
 
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        e.key === 'Enter' && addTaskHandler()
+    }
+
     const disableButton = taskTitle.length < 3 || taskTitle.length > 15
     const titleLengthValidation = taskTitle.length > 3 && taskTitle.length <= 15
 
@@ -60,7 +65,7 @@ export const Todolist = ({
         <div>
             <h3>{title}</h3>
             <div>
-                <input value={taskTitle} onChange={onChangeHandler}/>
+                <input value={taskTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
                 <button disabled={disableButton} onClick={addTaskHandler}>+</button>
             </div>
             {titleLengthValidation && <p>Title length should be less then 16 chars</p>}
