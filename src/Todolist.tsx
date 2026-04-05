@@ -1,12 +1,13 @@
-import {TaskType} from "./types/types.ts";
+import {FilterType, TaskType} from "./types/types.ts";
 
 type TodolistTitle = {
     title: string
     tasks: TaskType[]
     deleteTask: (taskId: string) => void
+    changeTaskFilter: (filter: FilterType) => void
 }
 
-export const Todolist = ({title, tasks, deleteTask}: TodolistTitle) => {
+export const Todolist = ({title, tasks, deleteTask, changeTaskFilter}: TodolistTitle) => {
 
     const mappedTasks = tasks.length
         ? <ul>
@@ -41,9 +42,9 @@ export const Todolist = ({title, tasks, deleteTask}: TodolistTitle) => {
             </div>
             {mappedTasks}
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={() => changeTaskFilter("All")}>All</button>
+                <button onClick={() => changeTaskFilter("Active")}>Active</button>
+                <button onClick={() => changeTaskFilter("Completed")}>Completed</button>
             </div>
         </div>
     );
