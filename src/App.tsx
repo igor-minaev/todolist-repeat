@@ -1,7 +1,7 @@
 import "./App.css"
 import {useState} from "react";
 import {Todolist} from "./Todolist.tsx";
-import {FilterType, TaskType} from "./types/types.ts";
+import {FilterType, PriorityType, TaskType} from "./types/types.ts";
 
 
 function App() {
@@ -18,14 +18,16 @@ function App() {
     ])
 
     const [filter, setFilter] = useState<FilterType>('All')
+    const [priority, setPriority] = useState<PriorityType>('All')
 
     const deleteTask = (taskId: string) => {
         setTasks(tasks.filter(t => t.id !== taskId))
     }
 
     const changeTaskFilter = (filter: FilterType) => setFilter(filter)
+    const changePriorityFilter = (priority: PriorityType) => setPriority(priority)
 
-    const getFilteredTasks = (tasks: TaskType[], filter: FilterType): TaskType[] => {
+    const getFilteredTasks = (tasks: TaskType[], filter: FilterType, priority: PriorityType): TaskType[] => {
         let filteredTasks = tasks
 
         if (filter === 'Active') {
@@ -35,10 +37,14 @@ function App() {
             filteredTasks = tasks.filter(t => t.isDone)
         }
 
+        if (priority !== 'All') {
+            filteredTasks = tasks.filter(t => t.priority === priority)
+        }
+
         return filteredTasks
     }
 
-    const tasksForTodolist = getFilteredTasks(tasks, filter)
+    const tasksForTodolist = getFilteredTasks(tasks, filter, priority)
 
 
     return (
@@ -47,7 +53,8 @@ function App() {
                 title={todolistTitle}
                 tasks={tasksForTodolist}
                 deleteTask={deleteTask}
-                changeTaskFilter={changeTaskFilter}/>
+                changeTaskFilter={changeTaskFilter}
+                changePriorityFilter={changePriorityFilter}/>
         </div>
     )
 }
