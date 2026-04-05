@@ -8,6 +8,7 @@ type TodolistTitle = {
     changeTaskFilter: (filter: FilterType) => void
     changePriorityFilter: (priority: PriorityFilterType) => void
     addTask: (title: string) => void
+    changeTaskStatus: (taskId: string, status: boolean) => void
 }
 
 export const Todolist = ({
@@ -16,7 +17,8 @@ export const Todolist = ({
                              deleteTask,
                              changeTaskFilter,
                              changePriorityFilter,
-                             addTask
+                             addTask,
+                             changeTaskStatus
                          }: TodolistTitle) => {
 
     const [taskTitle, setTaskTitle] = useState('')
@@ -25,9 +27,10 @@ export const Todolist = ({
         ? <ul>
             {tasks.map(t => {
                 const deleteTaskHandler = () => deleteTask(t.id)
+                const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(t.id, e.currentTarget.checked)
                 return (
                     <li key={t.id}>
-                        <input type="checkbox" checked={t.isDone}/>
+                        <input onChange={changeTaskStatusHandler} type="checkbox" checked={t.isDone}/>
                         <span>{t.title}</span>
                         <span>-<b>Priority:</b> {t.priority}-</span>
                         <button onClick={deleteTaskHandler}>x</button>

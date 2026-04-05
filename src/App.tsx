@@ -37,6 +37,10 @@ function App() {
         setTasks([newTask, ...tasks])
     }
 
+    const changeTaskStatus = (taskId: string, status: boolean) => {
+        setTasks(tasks.map(t => t.id === taskId ? {...t, isDone: status} : t))
+    }
+
     const getFilteredTasks = (tasks: TaskType[], filter: FilterType, priority: PriorityFilterType): TaskType[] => {
         let filteredTasks = tasks
 
@@ -65,7 +69,8 @@ function App() {
                 deleteTask={deleteTask}
                 changeTaskFilter={changeTaskFilter}
                 changePriorityFilter={changePriorityFilter}
-                addTask={addTask}/>
+                addTask={addTask}
+                changeTaskStatus={changeTaskStatus}/>
         </div>
     )
 }
