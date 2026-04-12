@@ -1,5 +1,5 @@
 import {FilterType, TaskType} from "./App.tsx";
-import {ChangeEvent, JSX, useState} from "react";
+import {ChangeEvent, KeyboardEvent, JSX, useState} from "react";
 import {Button} from "./Button.tsx";
 
 type TodolistPropsType = {
@@ -8,9 +8,10 @@ type TodolistPropsType = {
     removeTask: (taskId: string) => void
     changeFilter: (filter: FilterType) => void
     addTask: (title: string) => void
+    changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
 
-export const Todolist = ({title, tasks, removeTask, changeFilter, addTask}: TodolistPropsType) => {
+export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, changeTaskStatus}: TodolistPropsType) => {
 
     const [inputText, setInputText] = useState('')
 
@@ -18,9 +19,10 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask}: Todo
         ? <ul>
             {tasks.map(t => {
                 const removeTaskHandler = () => removeTask(t.id)
+                const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(t.id, e.currentTarget.checked)
                 return (
                     <li key={t.id}>
-                        <input type="checkbox" checked={t.isDone}/>
+                        <input type="checkbox" checked={t.isDone} onChange={changeTaskStatusHandler}/>
                         <span>{t.title}</span>
                         <Button name='x' onClick={removeTaskHandler}/>
                     </li>
@@ -37,11 +39,15 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask}: Todo
         addTask(inputText)
         setInputText('')
     }
+
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        e.key === 'Enter' && addTaskHandler()
+    }
     return (
         <div>
             <h3>{title}</h3>
             <div>
-                <input onChange={onChangeHandler} value={inputText}/>
+                <input onChange={onChangeHandler} value={inputText} onKeyDown={onKeyDownHandler}/>
                 <Button name="+" onClick={addTaskHandler}/>
             </div>
             {mappedTasks}
