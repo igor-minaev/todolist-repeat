@@ -27,6 +27,15 @@ function App() {
         setTasks(tasks.filter(t => t.id !== taskId))
     }
 
+    const addTask = (title: string) => {
+        const newTask: TaskType = {
+            id: crypto.randomUUID(),
+            title,
+            isDone: false
+        }
+        setTasks([newTask, ...tasks])
+    }
+
     const changeFilter = (filter: FilterType) => setFilter(filter)
 
     const tasksForTodolist = (tasks: TaskType[], filter: FilterType): TaskType[] => {
@@ -47,6 +56,7 @@ function App() {
                 tasks={tasksForTodolist(tasks, filter)}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
+                addTask={addTask}
             />
         </div>
     )
