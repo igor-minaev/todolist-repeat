@@ -14,6 +14,7 @@ type TodolistPropsType = {
 export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, changeTaskStatus}: TodolistPropsType) => {
 
     const [inputText, setInputText] = useState('')
+    const [error, setError] = useState(false)
 
     const mappedTasks: JSX.Element = tasks.length
         ? <ul>
@@ -32,23 +33,33 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, chang
         : <p>Your todolist is empty!</p>
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setError(false)
         setInputText(e.currentTarget.value)
     }
 
     const addTaskHandler = () => {
-        addTask(inputText)
+        const trimmedTitle = inputText.trim()
+        if (trimmedTitle) {
+            addTask(inputText)
+        } else {
+            setError(true)
+        }
         setInputText('')
     }
 
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         e.key === 'Enter' && addTaskHandler()
     }
+
+    const disabledButton = inputText.length < 3 || inputText.length > 15
+    const errorMessage = error && <p className='errorMessage'>Enter valid title</p>
     return (
         <div>
             <h3>{title}</h3>
             <div>
                 <input onChange={onChangeHandler} value={inputText} onKeyDown={onKeyDownHandler}/>
-                <Button name="+" onClick={addTaskHandler}/>
+                <Button disabled={disabledButton} name="+" onClick={addTaskHandler}/>
+                {errorMessage}
             </div>
             {mappedTasks}
             <Button name="All" onClick={() => changeFilter("All")}/>
