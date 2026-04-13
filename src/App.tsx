@@ -8,20 +8,45 @@ export type TaskType = {
     isDone: boolean
 }
 
+export type TodolistType = {
+    id: string
+    title: string
+    filter: FilterType
+}
+
+export type TasksType = {
+    [key: string]: TaskType[]
+}
+
 export type FilterType = 'All' | 'Active' | 'Completed'
 
 function App() {
-    const todolistTitle = "What to learn"
-    const [tasks, setTasks] = useState<TaskType[]>([
-        {id: crypto.randomUUID(), title: 'HTML', isDone: true},
-        {id: crypto.randomUUID(), title: 'CSS', isDone: true},
-        {id: crypto.randomUUID(), title: 'JS', isDone: false},
-        {id: crypto.randomUUID(), title: 'VITE', isDone: true},
-        {id: crypto.randomUUID(), title: 'REACT', isDone: false},
-        {id: crypto.randomUUID(), title: 'REDUX', isDone: false}
+    const todolistId_1 = crypto.randomUUID()
+    const todolistId_2 = crypto.randomUUID()
+
+    const [todolists, setTodolists] = useState<TodolistType[]>([
+        {id: todolistId_1, title: 'What to learn', filter: 'All'},
+        {id: todolistId_2, title: 'What to buy', filter: 'All'}
     ])
 
-    const [filter, setFilter] = useState<FilterType>('All')
+    const [tasks, setTasks] = useState<TasksType>({
+        [todolistId_1]: [
+            {id: crypto.randomUUID(), title: 'HTML', isDone: true},
+            {id: crypto.randomUUID(), title: 'CSS', isDone: true},
+            {id: crypto.randomUUID(), title: 'JS', isDone: false},
+            {id: crypto.randomUUID(), title: 'VITE', isDone: true},
+            {id: crypto.randomUUID(), title: 'REACT', isDone: false},
+            {id: crypto.randomUUID(), title: 'REDUX', isDone: false}
+        ],
+        [todolistId_2]: [
+            {id: crypto.randomUUID(), title: 'Milk', isDone: true},
+            {id: crypto.randomUUID(), title: 'Bread', isDone: true},
+            {id: crypto.randomUUID(), title: 'Meat', isDone: false},
+            {id: crypto.randomUUID(), title: 'Potato', isDone: true},
+        ]
+    })
+
+
 
     const removeTask = (taskId: string) => {
         setTasks(tasks.filter(t => t.id !== taskId))
