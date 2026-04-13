@@ -5,8 +5,25 @@
     flex-wrap: wrap;
 }
 
-.errorMessage{
+.errorMessage {
     color: red;
+}
+
+.task {
+    font-style: italic;
+}
+
+.taskDone {
+    font-weight: bold;
+    text-decoration: line-through;
+    opacity: 0.4;
+}
+
+.active {
+    background-color: #46b67c;
+    color: white;
+    border-radius: 5px;
+    border: 2px solid #46b67c;
 }
 
 

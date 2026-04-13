@@ -4,9 +4,9 @@ type ButtonPropsType = {
     name: string
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
-export const Button = ({name, onClick, disabled}: ButtonPropsType) => {
+export const Button = ({name, onClick, disabled, className}: ButtonPropsType) => {
     return (
-        <button disabled={disabled} onClick={onClick}>{name}</button>
+        <button className={className} disabled={disabled} onClick={onClick}>{name}</button>
     );
 };
 
