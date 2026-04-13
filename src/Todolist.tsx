@@ -11,6 +11,7 @@ type TodolistPropsType = {
     changeFilter: (todolistId: string, filter: FilterType) => void
     addTask: (todolistId: string, title: string) => void
     changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
+    removeTodolist: (todolistId: string) => void
 }
 
 export const Todolist = ({
@@ -21,7 +22,8 @@ export const Todolist = ({
                              removeTask,
                              changeFilter,
                              addTask,
-                             changeTaskStatus
+                             changeTaskStatus,
+                             removeTodolist
                          }: TodolistPropsType) => {
 
     const [inputText, setInputText] = useState('')
@@ -62,11 +64,16 @@ export const Todolist = ({
         e.key === 'Enter' && addTaskHandler()
     }
 
+    const removeTodolistHandler = () => removeTodolist(id)
+
     const disabledButton = inputText.length < 3 || inputText.length > 15
     const errorMessage = error && <p className='errorMessage'>Enter valid title</p>
     return (
         <div>
-            <h3>{title}</h3>
+            <h3>
+                {title}
+                <Button name='x' onClick={removeTodolistHandler}/>
+            </h3>
             <div>
                 <input onChange={onChangeHandler} value={inputText} onKeyDown={onKeyDownHandler}/>
                 <Button disabled={disabledButton} name="+" onClick={addTaskHandler}/>

@@ -68,6 +68,12 @@ function App() {
         setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, filter} : tl))
     }
 
+    const removeTodolist = (todolistId: string) => {
+        setTodolists(todolists.filter(tl => tl.id !== todolistId))
+        delete tasks[todolistId]
+        setTasks({...tasks})
+    }
+
     const tasksForTodolist = (tasks: TaskType[], filter: FilterType): TaskType[] => {
         switch (filter) {
             case "Active":
@@ -79,21 +85,24 @@ function App() {
         }
     }
 
+    const mappedTodolists = todolists.map(tl => (
+        <Todolist key={tl.id}
+                  id={tl.id}
+                  title={tl.title}
+                  filter={tl.filter}
+                  tasks={tasksForTodolist(tasks[tl.id], tl.filter)}
+                  removeTask={removeTask}
+                  changeFilter={changeFilter}
+                  addTask={addTask}
+                  changeTaskStatus={changeTaskStatus}
+                  removeTodolist={removeTodolist}
+        />
+    ))
+
     return (
         <div className="app">
-            {todolists.map(tl => (
-                <Todolist key={tl.id}
-                          id={tl.id}
-                          title={tl.title}
-                          filter={tl.filter}
-                          tasks={tasksForTodolist(tasks[tl.id], tl.filter)}
-                          removeTask={removeTask}
-                          changeFilter={changeFilter}
-                          addTask={addTask}
-                          changeTaskStatus={changeTaskStatus}
-                />
-            ))}
 
+            {mappedTodolists}
         </div>
     )
 }
