@@ -9,7 +9,7 @@ type TodolistPropsType = {
     tasks: TaskType[]
     removeTask: (todolistId: string, taskId: string) => void
     changeFilter: (filter: FilterType) => void
-    addTask: (title: string) => void
+    addTask: (todolistId: string, title: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
 
@@ -51,7 +51,7 @@ export const Todolist = ({
     const addTaskHandler = () => {
         const trimmedTitle = inputText.trim()
         if (trimmedTitle) {
-            addTask(inputText)
+            addTask(id, trimmedTitle)
         } else {
             setError(true)
         }
