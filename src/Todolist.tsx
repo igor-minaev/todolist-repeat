@@ -8,7 +8,7 @@ type TodolistPropsType = {
     filter: FilterType
     tasks: TaskType[]
     removeTask: (todolistId: string, taskId: string) => void
-    changeFilter: (filter: FilterType) => void
+    changeFilter: (todolistId: string, filter: FilterType) => void
     addTask: (todolistId: string, title: string) => void
     changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
 }
@@ -73,9 +73,9 @@ export const Todolist = ({
                 {errorMessage}
             </div>
             {mappedTasks}
-            <Button className={filter === "All" ? 'active' : ''} name="All" onClick={() => changeFilter("All")}/>
-            <Button className={filter === "Active" ? 'active' : ''} name="Active" onClick={() => changeFilter("Active")}/>
-            <Button className={filter === "Completed" ? 'active' : ''} name="Completed" onClick={() => changeFilter("Completed")}/>
+            <Button className={filter === "All" ? 'active' : ''} name="All" onClick={() => changeFilter(id, "All")}/>
+            <Button className={filter === "Active" ? 'active' : ''} name="Active" onClick={() => changeFilter(id, "Active")}/>
+            <Button className={filter === "Completed" ? 'active' : ''} name="Completed" onClick={() => changeFilter(id, "Completed")}/>
         </div>
     );
 };
