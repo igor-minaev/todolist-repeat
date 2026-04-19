@@ -9,7 +9,7 @@ type TodolistPropsType = {
     filter: FilterValue
     tasks: TaskType[]
     removeTask: (payload: { todolistId: string, taskId: string }) => void
-    changeFilter: (filter: FilterValue) => void
+    changeFilter: (payload: { todolistId: string, filter: FilterValue }) => void
     addTask: (payload: { todolistId: string, title: string }) => void
     changeTaskStatus: (payload: { todolistId: string, taskId: string, isDone: boolean }) => void
 }
@@ -31,7 +31,11 @@ export const Todolist = ({
         ? <ul>
             {tasks.map(t => {
                     const removeTaskHandler = () => removeTask({todolistId: id, taskId: t.id})
-                    const onChangeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus({todolistId: id, taskId: t.id, isDone: e.currentTarget.checked})
+                    const onChangeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus({
+                        todolistId: id,
+                        taskId: t.id,
+                        isDone: e.currentTarget.checked
+                    })
                     return (
                         <Task key={t.id} {...t} removeTaskHandler={removeTaskHandler} onChangeTaskStatusHandler={onChangeTaskStatusHandler}/>
                     )
@@ -65,9 +69,9 @@ export const Todolist = ({
     const validationLongMessage = newTaskTitle.length > 20 && <p>Title should be less then 20 chars</p>
     const errorMessage = error && <p className='errorMessage'>Title is required!</p>
 
-    const changeAllFilterHandler = () => changeFilter('all')
-    const changeActiveFilterHandler = () => changeFilter('active')
-    const changeCompletedFilterHandler = () => changeFilter('completed')
+    const changeAllFilterHandler = () => changeFilter({todolistId: id, filter: "all"})
+    const changeActiveFilterHandler = () => changeFilter({todolistId: id, filter: "active"})
+    const changeCompletedFilterHandler = () => changeFilter({todolistId: id, filter: "completed"})
 
     return (
         <div>

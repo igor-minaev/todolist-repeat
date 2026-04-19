@@ -48,8 +48,9 @@ function App() {
         ]
     })
 
-    const changeFilter = (filter: FilterValue) => {
-        // setFilter(filter)
+    const changeFilter = (payload: { todolistId: string, filter: FilterValue }) => {
+        const {todolistId, filter} = payload
+        setTodolists(prevState => prevState.map(tl => tl.id === todolistId ? {...tl, filter} : tl))
     }
 
     const removeTask = (payload: { todolistId: string, taskId: string }) => {
