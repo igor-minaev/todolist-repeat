@@ -2,6 +2,7 @@ import "./App.css"
 import {useState} from "react";
 import {Todolist} from "./Todolist.tsx";
 import {getFilteredTasks} from "./utilsFiltration.ts";
+import {CreateItemForm} from "./CreateItemForm.tsx";
 
 
 export type TaskType = {
@@ -85,6 +86,14 @@ function App() {
         setTasks(copyTasks)
     }
 
+    const addTodolist = (title: string) => {
+        const newTodolist: TodolistType = {
+            id: crypto.randomUUID(), title, filter: 'all'
+        }
+        setTodolists(prevState => [...prevState, newTodolist])
+        setTasks(prevState => ({...prevState, [newTodolist.id]: []}))
+    }
+
     const mappedTodolists = todolists.map(tl => {
         const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter)
         return (
@@ -106,6 +115,7 @@ function App() {
 
     return (
         <div className="app">
+            <CreateItemForm addItem={addTodolist}/>
             {mappedTodolists}
         </div>
     )

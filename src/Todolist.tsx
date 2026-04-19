@@ -1,7 +1,8 @@
 import {FilterValue, TaskType} from "./App.tsx";
 import {Button} from "./components/Button.tsx";
-import {ChangeEvent, KeyboardEvent, useState} from "react";
+import {ChangeEvent} from "react";
 import {Task} from "./Task.tsx";
+import {CreateItemForm} from "./CreateItemForm.tsx";
 
 type TodolistPropsType = {
     id: string
@@ -26,8 +27,6 @@ export const Todolist = ({
                              deleteTodolist
                          }: TodolistPropsType) => {
 
-    const [newTaskTitle, setNewTaskTitle] = useState('')
-    const [error, setError] = useState(false)
 
     const mappedTasks = tasks.length
         ? <ul>
@@ -47,33 +46,16 @@ export const Todolist = ({
         </ul>
         : <p>Your tasklist is empty!</p>
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(false)
-        setNewTaskTitle(e.currentTarget.value)
+
+    const addTaskHandler = (title: string) => {
+        addTask({todolistId: id, title})
     }
 
-    const addTaskHandler = () => {
-        const trimmedTitle = newTaskTitle.trim()
-        if (trimmedTitle) {
-            addTask({todolistId: id, title: trimmedTitle})
-        } else {
-            setError(true)
-        }
-        setNewTaskTitle('')
-    }
-
-    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        e.key === 'Enter' && addTaskHandler()
-    }
 
     const deleteTodolistHandler = () => {
         deleteTodolist(id)
     }
 
-    const disabledButton = newTaskTitle.length < 5 || newTaskTitle.length > 20
-    const validationShortMessage = newTaskTitle.length < 5 && <p>Title should be more then 5 chars</p>
-    const validationLongMessage = newTaskTitle.length > 20 && <p>Title should be less then 20 chars</p>
-    const errorMessage = error && <p className='errorMessage'>Title is required!</p>
 
     const changeAllFilterHandler = () => changeFilter({todolistId: id, filter: "all"})
     const changeActiveFilterHandler = () => changeFilter({todolistId: id, filter: "active"})
@@ -85,13 +67,7 @@ export const Todolist = ({
                 {title}
                 <Button onClick={deleteTodolistHandler}>x</Button>
             </h3>
-            <div>
-                <input className={error ? 'error' : ''} onChange={onChangeHandler} onKeyDown={onKeyDownHandler} value={newTaskTitle}/>
-                <Button disabled={disabledButton} onClick={addTaskHandler}>+</Button>
-                {!error && validationShortMessage}
-                {!error && validationLongMessage}
-                {errorMessage}
-            </div>
+            <CreateItemForm addItem={addTaskHandler}/>
             {
                 mappedTasks
             }
