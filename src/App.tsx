@@ -78,6 +78,13 @@ function App() {
         }))
     }
 
+    const deleteTodolist = (todolistId: string) => {
+        setTodolists(prevState => prevState.filter(tl => tl.id !== todolistId))
+        const copyTasks = {...tasks}
+        delete copyTasks[todolistId]
+        setTasks(copyTasks)
+    }
+
     const mappedTodolists = todolists.map(tl => {
         const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter)
         return (
@@ -91,6 +98,7 @@ function App() {
                 changeFilter={changeFilter}
                 addTask={addTask}
                 changeTaskStatus={changeTaskStatus}
+                deleteTodolist={deleteTodolist}
             />
         )
     })

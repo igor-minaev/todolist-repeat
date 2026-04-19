@@ -12,6 +12,7 @@ type TodolistPropsType = {
     changeFilter: (payload: { todolistId: string, filter: FilterValue }) => void
     addTask: (payload: { todolistId: string, title: string }) => void
     changeTaskStatus: (payload: { todolistId: string, taskId: string, isDone: boolean }) => void
+    deleteTodolist: (todolistId: string) => void
 }
 export const Todolist = ({
                              id,
@@ -21,7 +22,8 @@ export const Todolist = ({
                              removeTask,
                              changeFilter,
                              addTask,
-                             changeTaskStatus
+                             changeTaskStatus,
+                             deleteTodolist
                          }: TodolistPropsType) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState('')
@@ -64,6 +66,10 @@ export const Todolist = ({
         e.key === 'Enter' && addTaskHandler()
     }
 
+    const deleteTodolistHandler = () => {
+        deleteTodolist(id)
+    }
+
     const disabledButton = newTaskTitle.length < 5 || newTaskTitle.length > 20
     const validationShortMessage = newTaskTitle.length < 5 && <p>Title should be more then 5 chars</p>
     const validationLongMessage = newTaskTitle.length > 20 && <p>Title should be less then 20 chars</p>
@@ -75,7 +81,10 @@ export const Todolist = ({
 
     return (
         <div>
-            <h3>{title}</h3>
+            <h3>
+                {title}
+                <Button onClick={deleteTodolistHandler}>x</Button>
+            </h3>
             <div>
                 <input className={error ? 'error' : ''} onChange={onChangeHandler} onKeyDown={onKeyDownHandler} value={newTaskTitle}/>
                 <Button disabled={disabledButton} onClick={addTaskHandler}>+</Button>
