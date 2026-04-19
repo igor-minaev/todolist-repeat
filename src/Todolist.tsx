@@ -1,6 +1,6 @@
 import {FilterValue, TaskType} from "./App.tsx";
 import {Button} from "./components/Button.tsx";
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type TodolistPropsType = {
     title: string
@@ -13,6 +13,7 @@ type TodolistPropsType = {
 export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, changeTaskStatus}: TodolistPropsType) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState('')
+    const [error, setError] = useState(false)
 
     const mappedTasks = tasks.length
         ? <ul>
@@ -33,13 +34,28 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, chang
         : <p>Your tasklist is empty!</p>
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setError(false)
         setNewTaskTitle(e.currentTarget.value)
     }
 
     const addTaskHandler = () => {
-        addTask(newTaskTitle)
+        const trimmedTitle = newTaskTitle.trim()
+        if (trimmedTitle) {
+            addTask(trimmedTitle)
+        } else {
+            setError(true)
+        }
         setNewTaskTitle('')
     }
+
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        e.key === 'Enter' && addTaskHandler()
+    }
+
+    const disabledButton = newTaskTitle.length < 5 || newTaskTitle.length > 20
+    const validationShortMessage = newTaskTitle.length < 5 && <p>Title should be more then 5 chars</p>
+    const validationLongMessage = newTaskTitle.length > 20 && <p>Title should be less then 20 chars</p>
+    const errorMessage = error && <p>Title is required</p>
 
     const changeAllFilterHandler = () => changeFilter('all')
     const changeActiveFilterHandler = () => changeFilter('active')
@@ -49,8 +65,11 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, chang
         <div>
             <h3>{title}</h3>
             <div>
-                <input onChange={onChangeHandler} value={newTaskTitle}/>
-                <Button onClick={addTaskHandler}>+</Button>
+                <input onChange={onChangeHandler} onKeyDown={onKeyDownHandler} value={newTaskTitle}/>
+                <Button disabled={disabledButton} onClick={addTaskHandler}>+</Button>
+                {!error && validationShortMessage}
+                {!error && validationLongMessage}
+                {errorMessage}
             </div>
             {
                 mappedTasks
