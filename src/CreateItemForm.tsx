@@ -15,7 +15,7 @@ export const CreateItemForm = ({addItem}: CreateItemFormPropsType) => {
         setNewItemTitle(e.currentTarget.value)
     }
 
-    const addTaskHandler = () => {
+    const addTItemHandler = () => {
         const trimmedTitle = newItemTitle.trim()
         if (trimmedTitle) {
             addItem(trimmedTitle)
@@ -26,7 +26,7 @@ export const CreateItemForm = ({addItem}: CreateItemFormPropsType) => {
     }
 
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        e.key === 'Enter' && addTaskHandler()
+        e.key === 'Enter' && addTItemHandler()
     }
 
     const disabledButton = newItemTitle.length < 5 || newItemTitle.length > 20
@@ -36,7 +36,7 @@ export const CreateItemForm = ({addItem}: CreateItemFormPropsType) => {
     return (
         <div>
             <input className={error ? 'error' : ''} onChange={onChangeHandler} onKeyDown={onKeyDownHandler} value={newItemTitle}/>
-            <Button disabled={disabledButton} onClick={addTaskHandler}>+</Button>
+            <Button disabled={disabledButton} onClick={addTItemHandler}>+</Button>
             {!error && validationShortMessage}
             {!error && validationLongMessage}
             {errorMessage}
