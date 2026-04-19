@@ -11,7 +11,7 @@ type TodolistPropsType = {
     removeTask: (payload: { todolistId: string, taskId: string }) => void
     changeFilter: (filter: FilterValue) => void
     addTask: (payload: { todolistId: string, title: string }) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    changeTaskStatus: (payload: { todolistId: string, taskId: string, isDone: boolean }) => void
 }
 export const Todolist = ({
                              id,
@@ -31,7 +31,7 @@ export const Todolist = ({
         ? <ul>
             {tasks.map(t => {
                     const removeTaskHandler = () => removeTask({todolistId: id, taskId: t.id})
-                    const onChangeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(t.id, e.currentTarget.checked)
+                    const onChangeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus({todolistId: id, taskId: t.id, isDone: e.currentTarget.checked})
                     return (
                         <Task key={t.id} {...t} removeTaskHandler={removeTaskHandler} onChangeTaskStatusHandler={onChangeTaskStatusHandler}/>
                     )
