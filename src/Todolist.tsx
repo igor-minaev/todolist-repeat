@@ -1,11 +1,12 @@
-import {TaskType} from "./App.tsx";
+import {FilterValue, TaskType} from "./App.tsx";
 
 type TodolistPropsType = {
     title: string
     tasks: TaskType[]
     removeTask: (taskId: string) => void
+    changeFilter: (filter: FilterValue) => void
 }
-export const Todolist = ({title, tasks, removeTask}: TodolistPropsType) => {
+export const Todolist = ({title, tasks, removeTask, changeFilter}: TodolistPropsType) => {
 
     const mappedTasks = tasks.length
         ? <ul>
@@ -24,6 +25,10 @@ export const Todolist = ({title, tasks, removeTask}: TodolistPropsType) => {
         </ul>
         : <p>Your tasklist is empty!</p>
 
+    const changeAllFilterHandler = () => changeFilter('all')
+    const changeActiveFilterHandler = () => changeFilter('active')
+    const changeCompletedFilterHandler = () => changeFilter('completed')
+
     return (
         <div>
             <h3>{title}</h3>
@@ -35,9 +40,9 @@ export const Todolist = ({title, tasks, removeTask}: TodolistPropsType) => {
                 mappedTasks
             }
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={changeAllFilterHandler}>All</button>
+                <button onClick={changeActiveFilterHandler}>Active</button>
+                <button onClick={changeCompletedFilterHandler}>Completed</button>
             </div>
         </div>
     )

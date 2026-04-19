@@ -24,6 +24,9 @@ function App() {
     ])
 
     const [filter, setFilter] = useState<FilterValue>('all')
+    const changeFilter = (filter: FilterValue) => {
+        setFilter(filter)
+    }
 
     const removeTask = (taskId: string) => {
         setTasks(prevState => prevState.filter(t => t.id !== taskId))
@@ -36,6 +39,7 @@ function App() {
                 title={todolistTitle}
                 tasks={filteredTasks}
                 removeTask={removeTask}
+                changeFilter={changeFilter}
             />
         </div>
     )
