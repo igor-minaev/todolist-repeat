@@ -4,13 +4,22 @@ import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type TodolistPropsType = {
     title: string
+    filter: FilterValue
     tasks: TaskType[]
     removeTask: (taskId: string) => void
     changeFilter: (filter: FilterValue) => void
     addTask: (title: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
-export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, changeTaskStatus}: TodolistPropsType) => {
+export const Todolist = ({
+                             title,
+                             filter,
+                             tasks,
+                             removeTask,
+                             changeFilter,
+                             addTask,
+                             changeTaskStatus
+                         }: TodolistPropsType) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState('')
     const [error, setError] = useState(false)
@@ -23,7 +32,7 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, chang
                     return (
                         <li key={t.id}>
                             <input type="checkbox" checked={t.isDone} onChange={onChangeTaskStatusHandler}/>
-                            <span>{t.title}</span>
+                            <span className={t.isDone ? 'taskDone' : 'task'}>{t.title}</span>
                             <Button onClick={removeTaskHandler}>x</Button>
                         </li>
                     )
@@ -55,7 +64,7 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, chang
     const disabledButton = newTaskTitle.length < 5 || newTaskTitle.length > 20
     const validationShortMessage = newTaskTitle.length < 5 && <p>Title should be more then 5 chars</p>
     const validationLongMessage = newTaskTitle.length > 20 && <p>Title should be less then 20 chars</p>
-    const errorMessage = error && <p>Title is required</p>
+    const errorMessage = error && <p className='errorMessage'>Title is required!</p>
 
     const changeAllFilterHandler = () => changeFilter('all')
     const changeActiveFilterHandler = () => changeFilter('active')
@@ -65,7 +74,7 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, chang
         <div>
             <h3>{title}</h3>
             <div>
-                <input onChange={onChangeHandler} onKeyDown={onKeyDownHandler} value={newTaskTitle}/>
+                <input className={error ? 'error' : ''} onChange={onChangeHandler} onKeyDown={onKeyDownHandler} value={newTaskTitle}/>
                 <Button disabled={disabledButton} onClick={addTaskHandler}>+</Button>
                 {!error && validationShortMessage}
                 {!error && validationLongMessage}
@@ -75,9 +84,9 @@ export const Todolist = ({title, tasks, removeTask, changeFilter, addTask, chang
                 mappedTasks
             }
             <div>
-                <Button onClick={changeAllFilterHandler}>All</Button>
-                <Button onClick={changeActiveFilterHandler}>Active</Button>
-                <Button onClick={changeCompletedFilterHandler}>Completed</Button>
+                <Button className={`button ${filter === "all" ? 'active' : ''}`} onClick={changeAllFilterHandler}>All</Button>
+                <Button className={`button ${filter === "active" ? 'active' : ''}`} onClick={changeActiveFilterHandler}>Active</Button>
+                <Button className={`button ${filter === "completed" ? 'active' : ''}`} onClick={changeCompletedFilterHandler}>Completed</Button>
             </div>
         </div>
     )

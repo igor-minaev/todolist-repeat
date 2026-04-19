@@ -6,24 +6,37 @@
 }
 
 .errorMessage {
-    color: red;
+    color: #d84242;
 }
 
-.task {
+.error {
+    border: 1px solid #d84242;
+}
+
+.task{
     font-style: italic;
 }
 
-.taskDone {
-    font-weight: bold;
+.taskDone{
     text-decoration: line-through;
     opacity: 0.4;
 }
 
-.active {
-    background-color: #46b67c;
-    color: white;
+.button{
+    cursor: pointer;
+    padding: 2px 8px;
+    background-color: #1aa15e;
+    border: 2px solid#1aa15e;
     border-radius: 5px;
-    border: 2px solid #46b67c;
+    color: white;
+}
+
+.button + .button{
+    margin-left: 2px;
+}
+
+.active{
+    border: 2px solid #105933;
 }
 
 
