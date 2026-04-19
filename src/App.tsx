@@ -9,54 +9,91 @@ export type TaskType = {
     title: string
     isDone: boolean
 }
-
 export type FilterValue = 'all' | 'active' | 'completed'
+export type TodolistType = {
+    id: string
+    title: string
+    filter: FilterValue
+}
+
+export type TasksType = {
+    [key: string]: TaskType[]
+}
 
 function App() {
-    const todolistTitle = 'What to learn'
-    const [tasks, setTasks] = useState<TaskType[]>([
-        {id: crypto.randomUUID(), title: "HTML", isDone: true},
-        {id: crypto.randomUUID(), title: "CSS", isDone: true},
-        {id: crypto.randomUUID(), title: "JS", isDone: false},
-        {id: crypto.randomUUID(), title: "VITE", isDone: true},
-        {id: crypto.randomUUID(), title: "REACT", isDone: false},
-        {id: crypto.randomUUID(), title: "REDUX", isDone: false}
+    const todolistId_1 = crypto.randomUUID()
+    const todolistId_2 = crypto.randomUUID()
+
+    const [todolists, setTodolists] = useState<TodolistType[]>([
+        {id: todolistId_1, title: 'What to learn', filter: 'all'},
+        {id: todolistId_2, title: 'What to buy', filter: 'all'},
     ])
 
-    const [filter, setFilter] = useState<FilterValue>('all')
+    const [tasks, setTasks] = useState<TasksType>({
+        [todolistId_1]: [
+            {id: crypto.randomUUID(), title: "HTML", isDone: true},
+            {id: crypto.randomUUID(), title: "CSS", isDone: true},
+            {id: crypto.randomUUID(), title: "JS", isDone: false},
+            {id: crypto.randomUUID(), title: "VITE", isDone: true},
+            {id: crypto.randomUUID(), title: "REACT", isDone: false},
+            {id: crypto.randomUUID(), title: "REDUX", isDone: false}
+        ],
+        [todolistId_2]: [
+            {id: crypto.randomUUID(), title: "MILK", isDone: true},
+            {id: crypto.randomUUID(), title: "BREAD", isDone: true},
+            {id: crypto.randomUUID(), title: "JUICE", isDone: false},
+            {id: crypto.randomUUID(), title: "POTATO", isDone: true},
+            {id: crypto.randomUUID(), title: "TOMATO", isDone: false},
+            {id: crypto.randomUUID(), title: "SALT", isDone: false}
+        ]
+    })
+
     const changeFilter = (filter: FilterValue) => {
-        setFilter(filter)
+        // setFilter(filter)
     }
 
-    const removeTask = (taskId: string) => {
-        setTasks(prevState => prevState.filter(t => t.id !== taskId))
+    const removeTask = (payload: { todolistId: string, taskId: string }) => {
+        const {todolistId, taskId} = payload
+        setTasks(prevState => ({
+            ...prevState, [todolistId]: prevState[todolistId].filter(t => t.id !== taskId)
+        }))
     }
 
-    const addTask = (title: string) => {
+    const addTask = (payload: { todolistId: string, title: string }) => {
+        const {todolistId, title} = payload
         const newTask: TaskType = {
             id: crypto.randomUUID(),
             title,
             isDone: false
         }
-        setTasks(prevState => [newTask, ...prevState])
+        setTasks(prevState => ({...prevState, [todolistId]: [newTask, ...prevState[todolistId]]}))
     }
 
     const changeTaskStatus = (taskId: string, isDone: boolean) => {
-        setTasks(prevState => prevState.map(t => t.id === taskId ? {...t, isDone} : t))
+        // setTasks(prevState => prevState.map(t => t.id === taskId ? {...t, isDone} : t))
     }
 
-    const filteredTasks = getFilteredTasks(tasks, filter)
-    return (
-        <div className="app">
+    const mappedTodolists = todolists.map(tl => {
+        const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter)
+        return (
             <Todolist
-                title={todolistTitle}
-                filter={filter}
+                key={tl.id}
+                id={tl.id}
+                title={tl.title}
+                filter={tl.filter}
                 tasks={filteredTasks}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTask={addTask}
                 changeTaskStatus={changeTaskStatus}
             />
+        )
+    })
+
+
+    return (
+        <div className="app">
+            {mappedTodolists}
         </div>
     )
 }

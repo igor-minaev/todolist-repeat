@@ -4,15 +4,17 @@ import {ChangeEvent, KeyboardEvent, useState} from "react";
 import {Task} from "./Task.tsx";
 
 type TodolistPropsType = {
+    id: string
     title: string
     filter: FilterValue
     tasks: TaskType[]
-    removeTask: (taskId: string) => void
+    removeTask: (payload: { todolistId: string, taskId: string }) => void
     changeFilter: (filter: FilterValue) => void
-    addTask: (title: string) => void
+    addTask: (payload: { todolistId: string, title: string }) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
 export const Todolist = ({
+                             id,
                              title,
                              filter,
                              tasks,
@@ -28,7 +30,7 @@ export const Todolist = ({
     const mappedTasks = tasks.length
         ? <ul>
             {tasks.map(t => {
-                    const removeTaskHandler = () => removeTask(t.id)
+                    const removeTaskHandler = () => removeTask({todolistId: id, taskId: t.id})
                     const onChangeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(t.id, e.currentTarget.checked)
                     return (
                         <Task key={t.id} {...t} removeTaskHandler={removeTaskHandler} onChangeTaskStatusHandler={onChangeTaskStatusHandler}/>
@@ -47,7 +49,7 @@ export const Todolist = ({
     const addTaskHandler = () => {
         const trimmedTitle = newTaskTitle.trim()
         if (trimmedTitle) {
-            addTask(trimmedTitle)
+            addTask({todolistId: id, title: trimmedTitle})
         } else {
             setError(true)
         }
