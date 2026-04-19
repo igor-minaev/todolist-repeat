@@ -10,7 +10,7 @@ type TodolistPropsType = {
     filter: FilterValue
     tasks: TaskType[]
     removeTask: (payload: { todolistId: string, taskId: string }) => void
-    changeFilter: (payload: { todolistId: string, filter: FilterValue }) => void
+    changeTodolistFilter: (payload: { todolistId: string, filter: FilterValue }) => void
     addTask: (payload: { todolistId: string, title: string }) => void
     changeTaskStatus: (payload: { todolistId: string, taskId: string, isDone: boolean }) => void
     deleteTodolist: (todolistId: string) => void
@@ -21,7 +21,7 @@ export const Todolist = ({
                              filter,
                              tasks,
                              removeTask,
-                             changeFilter,
+                             changeTodolistFilter,
                              addTask,
                              changeTaskStatus,
                              deleteTodolist
@@ -57,9 +57,9 @@ export const Todolist = ({
     }
 
 
-    const changeAllFilterHandler = () => changeFilter({todolistId: id, filter: "all"})
-    const changeActiveFilterHandler = () => changeFilter({todolistId: id, filter: "active"})
-    const changeCompletedFilterHandler = () => changeFilter({todolistId: id, filter: "completed"})
+    const changeAllFilterHandler = () => changeTodolistFilter({todolistId: id, filter: "all"})
+    const changeActiveFilterHandler = () => changeTodolistFilter({todolistId: id, filter: "active"})
+    const changeCompletedFilterHandler = () => changeTodolistFilter({todolistId: id, filter: "completed"})
 
     return (
         <div>
