@@ -1,13 +1,17 @@
 import {FilterValue, TaskType} from "./App.tsx";
 import {Button} from "./components/Button.tsx";
+import {ChangeEvent, useState} from "react";
 
 type TodolistPropsType = {
     title: string
     tasks: TaskType[]
     removeTask: (taskId: string) => void
     changeFilter: (filter: FilterValue) => void
+    addTask: (title: string) => void
 }
-export const Todolist = ({title, tasks, removeTask, changeFilter}: TodolistPropsType) => {
+export const Todolist = ({title, tasks, removeTask, changeFilter, addTask}: TodolistPropsType) => {
+
+    const [newTaskTitle, setNewTaskTitle] = useState('')
 
     const mappedTasks = tasks.length
         ? <ul>
@@ -26,6 +30,15 @@ export const Todolist = ({title, tasks, removeTask, changeFilter}: TodolistProps
         </ul>
         : <p>Your tasklist is empty!</p>
 
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setNewTaskTitle(e.currentTarget.value)
+    }
+
+    const addTaskHandler = () => {
+        addTask(newTaskTitle)
+        setNewTaskTitle('')
+    }
+
     const changeAllFilterHandler = () => changeFilter('all')
     const changeActiveFilterHandler = () => changeFilter('active')
     const changeCompletedFilterHandler = () => changeFilter('completed')
@@ -34,8 +47,8 @@ export const Todolist = ({title, tasks, removeTask, changeFilter}: TodolistProps
         <div>
             <h3>{title}</h3>
             <div>
-                <input/>
-                <Button>+</Button>
+                <input onChange={onChangeHandler} value={newTaskTitle}/>
+                <Button onClick={addTaskHandler}>+</Button>
             </div>
             {
                 mappedTasks

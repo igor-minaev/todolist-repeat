@@ -32,6 +32,15 @@ function App() {
         setTasks(prevState => prevState.filter(t => t.id !== taskId))
     }
 
+    const addTask = (title: string) => {
+        const newTask: TaskType = {
+            id: crypto.randomUUID(),
+            title,
+            isDone: false
+        }
+        setTasks(prevState => [newTask, ...prevState])
+    }
+
     const filteredTasks = getFilteredTasks(tasks, filter)
     return (
         <div className="app">
@@ -40,6 +49,7 @@ function App() {
                 tasks={filteredTasks}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
+                addTask={addTask}
             />
         </div>
     )
