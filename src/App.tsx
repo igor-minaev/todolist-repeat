@@ -1,12 +1,15 @@
 import "./App.css"
 import {useState} from "react";
 import {Todolist} from "./Todolist.tsx";
+import {getFilteredTasks} from "./utils.ts";
 
 export type TaskType = {
     id: string
     title: string
     isDone: boolean
 }
+
+export type FilterType = 'all' | 'active' | 'completed'
 
 function App() {
 
@@ -20,16 +23,20 @@ function App() {
         {id: crypto.randomUUID(), title: 'REDUX', isDone: false}
     ])
 
+    const [filter, setFilter] = useState<FilterType>("all")
+
     const removeTask = (taskId: string) => {
         setTasks(prevState => prevState.filter(t => t.id !== taskId))
     }
 
 
+const filteredTasks = getFilteredTasks(tasks,filter)
+
     return (
         <div className="app">
             <Todolist
                 title={todolistTitle}
-                tasks={tasks}
+                tasks={filteredTasks}
                 removeTask={removeTask}
             />
         </div>
