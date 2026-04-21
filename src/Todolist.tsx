@@ -1,4 +1,5 @@
 import {FilterType, TaskType} from "./App.tsx";
+import {Button} from "./components/Button.tsx";
 
 type TodolistPropsType = {
     title: string
@@ -16,7 +17,7 @@ export const Todolist = ({title, tasks, removeTask, changeTodolistFilter}: Todol
                     <li key={t.id}>
                         <input type="checkbox" checked={t.isDone}/>
                         <span>{t.title}</span>
-                        <button onClick={removeTaskHandler}>x</button>
+                        <Button name='x' onClick={removeTaskHandler}/>
                     </li>
                 )
             })}
@@ -32,13 +33,13 @@ export const Todolist = ({title, tasks, removeTask, changeTodolistFilter}: Todol
             <h3>{title}</h3>
             <div>
                 <input/>
-                <button>+</button>
+                <Button name='+'/>
             </div>
             {mappedTasks}
             <div>
-                <button onClick={changeFilterToAllHandler}>All</button>
-                <button onClick={changeFilterToActiveHandler}>Active</button>
-                <button onClick={changeFilterToCompletedHandler}>Completed</button>
+                <Button name='All' onClick={changeFilterToAllHandler}/>
+                <Button name='Active' onClick={changeFilterToActiveHandler}/>
+                <Button name='Completed' onClick={changeFilterToCompletedHandler}/>
             </div>
         </div>
     );
