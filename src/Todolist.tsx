@@ -1,6 +1,7 @@
 import {FilterType, TaskType} from "./App.tsx";
 import {Button} from "./components/Button.tsx";
-import {ChangeEvent, KeyboardEvent, useState} from "react";
+import {ChangeEvent} from "react";
+import {CreateItemForm} from "./CreateItemForm.tsx";
 
 type TodolistPropsType = {
     id: string
@@ -26,9 +27,6 @@ export const Todolist = ({
                              removeTodolist
                          }: TodolistPropsType) => {
 
-    const [newTitleText, setNewTitleText] = useState('')
-    const [error, setError] = useState(false)
-
     const mappedTasks = tasks.length
         ? <ul>
             {tasks.map(t => {
@@ -53,33 +51,12 @@ export const Todolist = ({
     const changeFilterToActiveHandler = () => changeTodolistFilter({todolistId: id, filter: 'active'})
     const changeFilterToCompletedHandler = () => changeTodolistFilter({todolistId: id, filter: 'completed'})
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setError(false)
-        setNewTitleText(e.currentTarget.value)
-    }
 
-    const addTaskHandler = () => {
-        const trimmedTitle = newTitleText.trim()
-        if (trimmedTitle) {
-            addTask({todolistId: id, title: trimmedTitle})
-        } else {
-            setError(true)
-        }
-        setNewTitleText('')
-    }
-
-    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        e.key === "Enter" && addTaskHandler()
+    const addTaskHandler = (title: string) => {
+        addTask({todolistId: id, title})
     }
 
     const removeTodolistHandler = () => removeTodolist(id)
-
-    const disableButtonValidation = newTitleText.length < 5 || newTitleText.length > 20
-
-    const minLengthTitleValidation = newTitleText.length < 5 && <p>Title should be more then 5 chars</p>
-    const maxLengthTitleValidation = newTitleText.length > 20 && <p>Title should be less then 20 chars</p>
-    const errorMessage = error && <p className='errorMessage'>Title is required!</p>
-
 
     return (
         <div>
@@ -87,13 +64,7 @@ export const Todolist = ({
                 {title}
                 <Button name='x' onClick={removeTodolistHandler}/>
             </h3>
-            <div>
-                <input className={error ? 'error' : ''} onChange={onChangeHandler} value={newTitleText} onKeyDown={onKeyDownHandler}/>
-                <Button name='+' onClick={addTaskHandler} disabled={disableButtonValidation}/>
-                {!error && minLengthTitleValidation}
-                {!error && maxLengthTitleValidation}
-                {errorMessage}
-            </div>
+            <CreateItemForm createItem={addTaskHandler}/>
             {mappedTasks}
             <div>
                 <Button className={filter === 'all' ? `button active` : 'button'} name='All' onClick={changeFilterToAllHandler}/>
