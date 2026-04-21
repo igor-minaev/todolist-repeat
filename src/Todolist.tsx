@@ -15,6 +15,7 @@ type TodolistPropsType = {
     changeTaskStatus: (payload: { todolistId: string, taskId: string, isDone: boolean }) => void
     removeTodolist: (todolistId: string) => void
     changeTaskTitle: (payload: { todolistId: string, taskId: string, title: string }) => void
+    changeTodolistTitle: (payload: { todolistId: string, title: string }) => void
 }
 
 export const Todolist = ({
@@ -27,7 +28,8 @@ export const Todolist = ({
                              addTask,
                              changeTaskStatus,
                              removeTodolist,
-                             changeTaskTitle
+                             changeTaskTitle,
+                             changeTodolistTitle
                          }: TodolistPropsType) => {
 
     const mappedTasks = tasks.length
@@ -63,12 +65,14 @@ export const Todolist = ({
     }
 
     const removeTodolistHandler = () => removeTodolist(id)
-
+    const changeTodolistTitleHandler = (title: string) => {
+        changeTodolistTitle({todolistId: id, title})
+    }
 
     return (
         <div>
             <h3>
-                {title}
+                <EditableSpan oldTitle={title} changeTitle={changeTodolistTitleHandler}/>
                 <Button name='x' onClick={removeTodolistHandler}/>
             </h3>
             <CreateItemForm createItem={addTaskHandler}/>
