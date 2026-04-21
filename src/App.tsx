@@ -23,7 +23,7 @@ function App() {
 
     return (
         <div className="app">
-            <Todolist/>
+            <Todolist title={todolistTitle} tasks={tasks}/>
         </div>
     )
 }
