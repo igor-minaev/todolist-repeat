@@ -79,6 +79,14 @@ function App() {
         }))
     }
 
+    const changeTaskTitle = (payload: { todolistId: string, taskId: string, title: string }) => {
+        const {todolistId, taskId, title} = payload
+        setTasks(prevState => ({
+            ...prevState,
+            [todolistId]: prevState[todolistId].map(t => t.id === taskId ? {...t, title} : t)
+        }))
+    }
+
     const removeTodolist = (todolistId: string) => {
         setTodolists(prevState => prevState.filter(tl => tl.id !== todolistId))
         const copyTasks = {...tasks}
