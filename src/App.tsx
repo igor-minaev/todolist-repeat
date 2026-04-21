@@ -1,5 +1,6 @@
 import "./App.css"
 import {useState} from "react";
+import {Todolist} from "./Todolist.tsx";
 
 export type TaskType = {
     id: string
@@ -22,7 +23,7 @@ function App() {
 
     return (
         <div className="app">
-            Hello
+            <Todolist/>
         </div>
     )
 }
