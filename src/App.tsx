@@ -120,6 +120,7 @@ function App() {
                     addTask={addTask}
                     changeTaskStatus={changeTaskStatus}
                     removeTodolist={removeTodolist}
+                    changeTaskTitle={changeTaskTitle}
                 />
             )
         })
