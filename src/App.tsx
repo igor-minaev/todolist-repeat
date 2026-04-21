@@ -20,10 +20,18 @@ function App() {
         {id: crypto.randomUUID(), title: 'REDUX', isDone: false}
     ])
 
+    const removeTask = (taskId: string) => {
+        setTasks(prevState => prevState.filter(t => t.id !== taskId))
+    }
+
 
     return (
         <div className="app">
-            <Todolist title={todolistTitle} tasks={tasks}/>
+            <Todolist
+                title={todolistTitle}
+                tasks={tasks}
+                removeTask={removeTask}
+            />
         </div>
     )
 }
