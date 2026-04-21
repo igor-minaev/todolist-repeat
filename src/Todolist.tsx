@@ -1,14 +1,19 @@
 import {FilterType, TaskType} from "./App.tsx";
 import {Button} from "./components/Button.tsx";
+import {ChangeEvent, useState} from "react";
 
 type TodolistPropsType = {
     title: string
     tasks: TaskType[]
     removeTask: (taskId: string) => void
     changeTodolistFilter: (filter: FilterType) => void
+    addTask: (title: string) => void
 }
 
-export const Todolist = ({title, tasks, removeTask, changeTodolistFilter}: TodolistPropsType) => {
+export const Todolist = ({title, tasks, removeTask, changeTodolistFilter, addTask}: TodolistPropsType) => {
+
+    const [newTitleText, setNewTitleText] = useState('')
+
     const mappedTasks = tasks.length
         ? <ul>
             {tasks.map(t => {
@@ -28,12 +33,21 @@ export const Todolist = ({title, tasks, removeTask, changeTodolistFilter}: Todol
     const changeFilterToActiveHandler = () => changeTodolistFilter('active')
     const changeFilterToCompletedHandler = () => changeTodolistFilter('completed')
 
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setNewTitleText(e.currentTarget.value)
+    }
+
+    const addTaskHandler = () => {
+        addTask(newTitleText)
+        setNewTitleText('')
+    }
+
     return (
         <div>
             <h3>{title}</h3>
             <div>
-                <input/>
-                <Button name='+'/>
+                <input onChange={onChangeHandler} value={newTitleText}/>
+                <Button name='+' onClick={addTaskHandler}/>
             </div>
             {mappedTasks}
             <div>
