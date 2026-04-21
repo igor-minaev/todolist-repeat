@@ -3,16 +3,18 @@ import {Button} from "./components/Button.tsx";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type TodolistPropsType = {
+    id: string
     title: string
     filter: FilterType
     tasks: TaskType[]
     removeTask: (taskId: string) => void
-    changeTodolistFilter: (filter: FilterType) => void
+    changeTodolistFilter: (payload: { todolistId: string, filter: FilterType }) => void
     addTask: (title: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
 
 export const Todolist = ({
+                             id,
                              title,
                              filter,
                              tasks,
@@ -41,9 +43,9 @@ export const Todolist = ({
         </ul>
         : <p>Your taskslist is empty!</p>
 
-    const changeFilterToAllHandler = () => changeTodolistFilter('all')
-    const changeFilterToActiveHandler = () => changeTodolistFilter('active')
-    const changeFilterToCompletedHandler = () => changeTodolistFilter('completed')
+    const changeFilterToAllHandler = () => changeTodolistFilter({todolistId: id, filter: 'all'})
+    const changeFilterToActiveHandler = () => changeTodolistFilter({todolistId: id, filter: 'active'})
+    const changeFilterToCompletedHandler = () => changeTodolistFilter({todolistId: id, filter: 'completed'})
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setError(false)
