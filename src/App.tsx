@@ -17,6 +17,10 @@ export type TodolistType = {
     filter: FilterType
 }
 
+export type TasksType = {
+    [key: string]: TaskType[]
+}
+
 function App() {
     const todolistId_1 = crypto.randomUUID()
     const todolistId_2 = crypto.randomUUID()
@@ -26,7 +30,7 @@ function App() {
         {id: todolistId_2, title: 'What to buy', filter: 'all'}
     ])
 
-    const [tasks, setTasks] = useState({
+    const [tasks, setTasks] = useState<TasksType>({
         [todolistId_1]: [
             {id: crypto.randomUUID(), title: 'HTML', isDone: true},
             {id: crypto.randomUUID(), title: 'CSS', isDone: true},
@@ -56,13 +60,14 @@ function App() {
         setTasks(prevState => ({...prevState, [todolistId]: prevState[todolistId].filter(t => t.id !== taskId)}))
     }
 
-    const addTask = (title: string) => {
+    const addTask = (payload: { todolistId: string, title: string }) => {
+        const {todolistId, title} = payload
         const newTask: TaskType = {
             id: crypto.randomUUID(),
             title,
             isDone: false
         }
-        // setTasks(prevState => [newTask, ...prevState])
+        setTasks(prevState => ({...prevState, [todolistId]: [newTask, ...prevState[todolistId]]}))
     }
 
     const changeTaskStatus = (taskId: string, isDone: boolean) => {
