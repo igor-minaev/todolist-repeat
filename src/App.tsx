@@ -70,8 +70,12 @@ function App() {
         setTasks(prevState => ({...prevState, [todolistId]: [newTask, ...prevState[todolistId]]}))
     }
 
-    const changeTaskStatus = (taskId: string, isDone: boolean) => {
-        // setTasks(prevState => prevState.map(t => t.id === taskId ? {...t, isDone} : t))
+    const changeTaskStatus = (payload: { todolistId: string, taskId: string, isDone: boolean }) => {
+        const {todolistId, taskId, isDone} = payload
+        setTasks(prevState => ({
+            ...prevState,
+            [todolistId]: prevState[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)
+        }))
     }
 
 
