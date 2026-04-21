@@ -1,9 +1,10 @@
 import {FilterType, TaskType} from "./App.tsx";
 import {Button} from "./components/Button.tsx";
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type TodolistPropsType = {
     title: string
+    filter: FilterType
     tasks: TaskType[]
     removeTask: (taskId: string) => void
     changeTodolistFilter: (filter: FilterType) => void
@@ -13,6 +14,7 @@ type TodolistPropsType = {
 
 export const Todolist = ({
                              title,
+                             filter,
                              tasks,
                              removeTask,
                              changeTodolistFilter,
@@ -21,6 +23,7 @@ export const Todolist = ({
                          }: TodolistPropsType) => {
 
     const [newTitleText, setNewTitleText] = useState('')
+    const [error, setError] = useState(false)
 
     const mappedTasks = tasks.length
         ? <ul>
@@ -30,7 +33,7 @@ export const Todolist = ({
                 return (
                     <li key={t.id}>
                         <input type="checkbox" checked={t.isDone} onChange={changeTaskStatusHandler}/>
-                        <span>{t.title}</span>
+                        <span className={t.isDone ? 'taskDone' : 'task'}>{t.title}</span>
                         <Button name='x' onClick={removeTaskHandler}/>
                     </li>
                 )
@@ -43,26 +46,46 @@ export const Todolist = ({
     const changeFilterToCompletedHandler = () => changeTodolistFilter('completed')
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setError(false)
         setNewTitleText(e.currentTarget.value)
     }
 
     const addTaskHandler = () => {
-        addTask(newTitleText)
+        const trimmedTitle = newTitleText.trim()
+        if (trimmedTitle) {
+            addTask(trimmedTitle)
+        } else {
+            setError(true)
+        }
         setNewTitleText('')
     }
+
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        e.key === "Enter" && addTaskHandler()
+    }
+
+    const disableButtonValidation = newTitleText.length < 5 || newTitleText.length > 20
+
+    const minLengthTitleValidation = newTitleText.length < 5 && <p>Title should be more then 5 chars</p>
+    const maxLengthTitleValidation = newTitleText.length > 20 && <p>Title should be less then 20 chars</p>
+    const errorMessage = error && <p className='errorMessage'>Title is required!</p>
+
 
     return (
         <div>
             <h3>{title}</h3>
             <div>
-                <input onChange={onChangeHandler} value={newTitleText}/>
-                <Button name='+' onClick={addTaskHandler}/>
+                <input className={error ? 'error' : ''} onChange={onChangeHandler} value={newTitleText} onKeyDown={onKeyDownHandler}/>
+                <Button name='+' onClick={addTaskHandler} disabled={disableButtonValidation}/>
+                {!error && minLengthTitleValidation}
+                {!error && maxLengthTitleValidation}
+                {errorMessage}
             </div>
             {mappedTasks}
             <div>
-                <Button name='All' onClick={changeFilterToAllHandler}/>
-                <Button name='Active' onClick={changeFilterToActiveHandler}/>
-                <Button name='Completed' onClick={changeFilterToCompletedHandler}/>
+                <Button className={filter === 'all' ? `button active` : 'button'} name='All' onClick={changeFilterToAllHandler}/>
+                <Button className={filter === 'active' ? `button active` : 'button'} name='Active' onClick={changeFilterToActiveHandler}/>
+                <Button className={filter === 'completed' ? `button active` : 'button'} name='Completed' onClick={changeFilterToCompletedHandler}/>
             </div>
         </div>
     );

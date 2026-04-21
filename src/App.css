@@ -6,37 +6,37 @@
 }
 
 .errorMessage {
-    color: #d84242;
+    color: red;
 }
 
 .error {
-    border: 1px solid #d84242;
+    border: 1px solid red;
 }
 
-.task{
-    font-style: italic;
-}
-
-.taskDone{
-    text-decoration: line-through;
-    opacity: 0.4;
-}
-
-.button{
-    cursor: pointer;
+.button {
     padding: 2px 8px;
-    background-color: #1aa15e;
-    border: 2px solid#1aa15e;
-    border-radius: 5px;
+    border: 1px solid #0b8857;
+    background-color: #53a686;
     color: white;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.button + .button{
+.button + .button {
     margin-left: 2px;
 }
 
-.active{
-    border: 2px solid #105933;
+.active {
+    background-color: #106e49
+}
+
+.task {
+    font-style: italic;
+}
+
+.taskDone {
+    opacity: 0.4;
+    text-decoration: line-through;
 }
 
 
