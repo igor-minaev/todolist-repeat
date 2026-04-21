@@ -25,12 +25,16 @@ function App() {
 
     const [filter, setFilter] = useState<FilterType>("all")
 
+    const changeTodolistFilter = (filter: FilterType) => {
+        setFilter(filter)
+    }
+
     const removeTask = (taskId: string) => {
         setTasks(prevState => prevState.filter(t => t.id !== taskId))
     }
 
 
-const filteredTasks = getFilteredTasks(tasks,filter)
+    const filteredTasks = getFilteredTasks(tasks, filter)
 
     return (
         <div className="app">
@@ -38,6 +42,7 @@ const filteredTasks = getFilteredTasks(tasks,filter)
                 title={todolistTitle}
                 tasks={filteredTasks}
                 removeTask={removeTask}
+                changeTodolistFilter={changeTodolistFilter}
             />
         </div>
     )
