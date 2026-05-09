@@ -5,39 +5,7 @@
     flex-wrap: wrap;
 }
 
-.errorMessage {
-    color: red;
-}
-
-.error {
-    border: 1px solid red;
-}
-
-.button {
-    padding: 2px 8px;
-    border: 1px solid #0b8857;
-    background-color: #53a686;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.button + .button {
-    margin-left: 2px;
-}
-
-.active {
-    background-color: #106e49
-}
-
-.task {
-    font-style: italic;
-}
-
-.taskDone {
-    opacity: 0.4;
-    text-decoration: line-through;
-}
+.
 
 
 
