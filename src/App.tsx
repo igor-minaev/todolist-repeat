@@ -1,6 +1,7 @@
 import './App.css'
 import {useState} from "react";
-import {TaskType} from "./types/types.ts";
+import {TaskType} from "./types/task.ts";
+import {Todolist} from "./components/Todolist.tsx";
 
 function App() {
 
@@ -17,7 +18,7 @@ function App() {
 
     return (
         <div className="app">
-            Hello
+            <Todolist title={todolistTitle} tasks={tasks}/>
         </div>
     )
 }
