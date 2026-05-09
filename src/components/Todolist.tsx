@@ -5,6 +5,18 @@ type TodolistPropsType = {
     tasks: TaskType[]
 }
 export const Todolist = ({title, tasks}: TodolistPropsType) => {
+
+    const mappedTasks = tasks.length
+        ? <ul>
+            {tasks.map(t => (
+                <li key={t.id}>
+                    <input type="checkbox" checked={t.isDone}/>
+                    <span>{t.title}</span>
+                    <button>x</button>
+                </li>
+            ))}
+        </ul>
+        : <p>You don't create any task</p>
     return (
         <div>
             <h3>{title}</h3>
@@ -12,9 +24,7 @@ export const Todolist = ({title, tasks}: TodolistPropsType) => {
                 <input/>
                 <button>+</button>
             </div>
-            <ul>
-                tasks
-            </ul>
+            {mappedTasks}
             <div>
                 <button>All</button>
                 <button>Active</button>
