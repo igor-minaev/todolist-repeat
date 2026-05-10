@@ -1,7 +1,6 @@
 import {TaskType} from "../types/task.ts";
 import {Button} from "./Button.tsx";
 import {Task} from "./Task.tsx";
-import {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterType} from "../types/todolist.ts";
 import {CreateItemForm} from "./CreateItemForm.tsx";
 
@@ -15,6 +14,7 @@ type TodolistPropsType = {
     addTask: (payload: { todolistId: string, title: string }) => void
     changeTaskStatus: (payload: { todolistId: string, taskId: string, isDone: boolean }) => void
     deleteTodolist: (todolistId: string) => void
+    changeTaskTitle: (payload: { todolistId: string, taskId: string, title: string }) => void
 }
 export const Todolist = ({
                              id,
@@ -25,7 +25,8 @@ export const Todolist = ({
                              changeFilter,
                              addTask,
                              changeTaskStatus,
-                             deleteTodolist
+                             deleteTodolist,
+                             changeTaskTitle
                          }: TodolistPropsType) => {
 
 
@@ -38,7 +39,8 @@ export const Todolist = ({
                     taskId: t.id,
                     isDone
                 })
-                return <Task key={t.id} {...t} deleteTask={deleteTaskHandler} changeTaskStatus={changeTaskStatusHandler}/>
+                const changeTaskTitleHandler = (title: string) => changeTaskTitle({todolistId: id, taskId: t.id, title})
+                return <Task key={t.id} {...t} deleteTask={deleteTaskHandler} changeTaskStatus={changeTaskStatusHandler} changeTitle={changeTaskTitleHandler}/>
             })}
         </ul>
         : <p>You don't create any task</p>

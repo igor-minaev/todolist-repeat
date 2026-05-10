@@ -6,10 +6,11 @@ import {EditableSpan} from "./EditableSpan.tsx";
 type TaskPropsType = TaskType & {
     deleteTask: () => void
     changeTaskStatus: (isDone: boolean) => void
+    changeTitle: (title: string) => void
 }
 
 
-export const Task = ({id, title, isDone, deleteTask, changeTaskStatus}: TaskPropsType) => {
+export const Task = ({id, title, isDone, deleteTask, changeTaskStatus, changeTitle}: TaskPropsType) => {
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         changeTaskStatus(e.currentTarget.checked)
     }
@@ -17,7 +18,7 @@ export const Task = ({id, title, isDone, deleteTask, changeTaskStatus}: TaskProp
     return (
         <li>
             <input type="checkbox" checked={isDone} onChange={onChangeHandler}/>
-            <EditableSpan value={title} changeTitle={} className={isDone ? 'task-done' : 'task'}/>
+            <EditableSpan value={title} changeTitle={changeTitle} className={isDone ? 'task-done' : 'task'}/>
 
             <Button onClick={deleteTask}>x</Button>
         </li>
