@@ -1,7 +1,7 @@
 import {FilterType, TaskType} from "../types/task.ts";
 import {Button} from "./Button.tsx";
 import {Task} from "./Task.tsx";
-import {ChangeEvent, useState} from "react";
+import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type TodolistPropsType = {
     title: string
@@ -31,12 +31,15 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter, addTask}: Todo
         setNewTaskTitle('')
     }
 
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        e.key === 'Enter' && addTaskHandler()
+    }
 
     return (
         <div>
             <h3>{title}</h3>
             <div>
-                <input value={newTaskTitle} onChange={onChangeHandler} />
+                <input value={newTaskTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
                 <Button onClick={addTaskHandler}>+</Button>
             </div>
             {mappedTasks}
