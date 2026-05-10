@@ -29,6 +29,15 @@ function App() {
 
     const filteredTasks = getFilteredTasks(tasks, filter)
 
+    const addTask = (title: string) => {
+        const newTask: TaskType = {
+            id: crypto.randomUUID(),
+            title,
+            isDone: false
+        }
+        setTasks([newTask, ...tasks])
+    }
+
     return (
         <div className="app">
             <Todolist
@@ -36,6 +45,7 @@ function App() {
                 tasks={filteredTasks}
                 deleteTask={deleteTask}
                 changeFilter={changeFilter}
+                addTask={addTask}
             />
         </div>
     )
