@@ -4,13 +4,13 @@ import {ChangeEvent} from "react";
 
 type TaskPropsType = TaskType & {
     deleteTask: () => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    changeTaskStatus: (isDone: boolean) => void
 }
 
 
 export const Task = ({id, title, isDone, deleteTask, changeTaskStatus}: TaskPropsType) => {
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        changeTaskStatus(id, e.currentTarget.checked)
+        changeTaskStatus(e.currentTarget.checked)
     }
 
     return (

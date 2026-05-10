@@ -12,7 +12,7 @@ type TodolistPropsType = {
     deleteTask: (payload: { todolistId: string, taskId: string }) => void
     changeFilter: (payload: { todolistId: string, filter: FilterType }) => void
     addTask: (title: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
+    changeTaskStatus:  (payload: { todolistId: string, taskId: string, isDone: boolean }) => void
     deleteTodolist: (todolistId: string) => void
 }
 export const Todolist = ({
@@ -36,7 +36,8 @@ export const Todolist = ({
         ? <ul>
             {tasks.map(t => {
                 const deleteTaskHandler = () => deleteTask({todolistId: id, taskId: t.id})
-                return <Task key={t.id} {...t} deleteTask={deleteTaskHandler} changeTaskStatus={changeTaskStatus}/>
+                const changeTaskStatusHandler = (isDone:boolean)=>changeTaskStatus({todolistId:id,taskId:t.id,isDone})
+                return <Task key={t.id} {...t} deleteTask={deleteTaskHandler} changeTaskStatus={changeTaskStatusHandler}/>
             })}
         </ul>
         : <p>You don't create any task</p>

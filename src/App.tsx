@@ -47,8 +47,9 @@ function App() {
         // setTasks([newTask, ...tasks])
     }
 
-    const changeTaskStatus = (taskId: string, isDone: boolean) => {
-        // setTasks(tasks.map(t => t.id === taskId ? {...t, isDone} : t))
+    const changeTaskStatus = (payload: { todolistId: string, taskId: string, isDone: boolean }) => {
+        const {todolistId, taskId, isDone} = payload
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)})
     }
 
     const changeFilter = (payload: { todolistId: string, filter: FilterType }) => {
