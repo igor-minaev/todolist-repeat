@@ -1,9 +1,11 @@
-import {FilterType, TaskType} from "../types/task.ts";
+import {TaskType} from "../types/task.ts";
 import {Button} from "./Button.tsx";
 import {Task} from "./Task.tsx";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
+import {FilterType} from "../types/todolist.ts";
 
 type TodolistPropsType = {
+    id: string
     title: string
     tasks: TaskType[]
     filter: FilterType
@@ -13,6 +15,7 @@ type TodolistPropsType = {
     changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
 export const Todolist = ({
+                             id,
                              title,
                              tasks,
                              filter,

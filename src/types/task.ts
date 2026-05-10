@@ -4,4 +4,3 @@ export type TaskType = {
     isDone: boolean
 }
 
-export type FilterType = 'all' | 'active' | 'completed'
