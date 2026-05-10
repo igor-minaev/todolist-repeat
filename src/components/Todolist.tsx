@@ -11,8 +11,8 @@ type TodolistPropsType = {
     filter: FilterType
     deleteTask: (payload: { todolistId: string, taskId: string }) => void
     changeFilter: (payload: { todolistId: string, filter: FilterType }) => void
-    addTask: (title: string) => void
-    changeTaskStatus:  (payload: { todolistId: string, taskId: string, isDone: boolean }) => void
+    addTask: (payload: { todolistId: string, title: string }) => void
+    changeTaskStatus: (payload: { todolistId: string, taskId: string, isDone: boolean }) => void
     deleteTodolist: (todolistId: string) => void
 }
 export const Todolist = ({
@@ -36,7 +36,11 @@ export const Todolist = ({
         ? <ul>
             {tasks.map(t => {
                 const deleteTaskHandler = () => deleteTask({todolistId: id, taskId: t.id})
-                const changeTaskStatusHandler = (isDone:boolean)=>changeTaskStatus({todolistId:id,taskId:t.id,isDone})
+                const changeTaskStatusHandler = (isDone: boolean) => changeTaskStatus({
+                    todolistId: id,
+                    taskId: t.id,
+                    isDone
+                })
                 return <Task key={t.id} {...t} deleteTask={deleteTaskHandler} changeTaskStatus={changeTaskStatusHandler}/>
             })}
         </ul>
@@ -50,7 +54,7 @@ export const Todolist = ({
     const addTaskHandler = () => {
         const trimmedTitle = newTaskTitle.trim()
         if (trimmedTitle) {
-            addTask(trimmedTitle)
+            addTask({todolistId: id, title: trimmedTitle})
         } else {
             setError(true)
         }

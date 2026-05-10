@@ -1,6 +1,6 @@
 import './App.css'
 import {useState} from "react";
-import {TasksStateType} from "./types/task.ts";
+import {TasksStateType, TaskType} from "./types/task.ts";
 import {Todolist} from "./components/Todolist.tsx";
 import {getFilteredTasks} from "./utils/filtrationUtils.ts";
 import {FilterType, TodolistType} from "./types/todolist.ts";
@@ -38,13 +38,14 @@ function App() {
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)})
     }
 
-    const addTask = (title: string) => {
-        // const newTask: TaskType = {
-        //     id: crypto.randomUUID(),
-        //     title,
-        //     isDone: false
-        // }
-        // setTasks([newTask, ...tasks])
+    const addTask = (payload: { todolistId: string, title: string }) => {
+        const {todolistId, title} = payload
+        const newTask: TaskType = {
+            id: crypto.randomUUID(),
+            title,
+            isDone: false
+        }
+        setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
     }
 
     const changeTaskStatus = (payload: { todolistId: string, taskId: string, isDone: boolean }) => {
