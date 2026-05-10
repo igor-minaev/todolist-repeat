@@ -9,15 +9,16 @@ type TodolistPropsType = {
     deleteTask: (taskId: string) => void
     changeFilter: (filter: FilterType) => void
     addTask: (title: string) => void
+    changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
-export const Todolist = ({title, tasks, deleteTask, changeFilter, addTask}: TodolistPropsType) => {
+export const Todolist = ({title, tasks, deleteTask, changeFilter, addTask, changeTaskStatus}: TodolistPropsType) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState('')
 
     const mappedTasks = tasks.length
         ? <ul>
             {tasks.map(t => (
-                <Task key={t.id} {...t} deleteTask={deleteTask}/>
+                <Task key={t.id} {...t} deleteTask={deleteTask} changeTaskStatus={changeTaskStatus}/>
             ))}
         </ul>
         : <p>You don't create any task</p>
