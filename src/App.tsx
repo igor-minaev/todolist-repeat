@@ -35,6 +35,7 @@ function App() {
                 title={todolistTitle}
                 tasks={filteredTasks}
                 deleteTask={deleteTask}
+                changeFilter={changeFilter}
             />
         </div>
     )
