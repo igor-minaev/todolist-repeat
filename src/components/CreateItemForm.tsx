@@ -1,5 +1,7 @@
 import {Button} from "./Button.tsx";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
+import IconButton from '@mui/material/IconButton';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 type CreateItemFormPropsType = {
     addItem: (title: string) => void
@@ -40,7 +42,10 @@ export const CreateItemForm = ({addItem}: CreateItemFormPropsType) => {
     return (
         <div>
             <input className={error ? 'error' : ''} value={newItemTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
-            <Button onClick={addItemHandler} disabled={disableButton}>+</Button>
+            <IconButton color='secondary' onClick={addItemHandler} disabled={disableButton}>
+                <AddBoxIcon/>
+            </IconButton>
+            {/*<Button onClick={addItemHandler} disabled={disableButton}>+</Button>*/}
             {errorMessage}
             {!error && minLengthValidatingMessage}
             {!error && maxLengthValidatingMessage}

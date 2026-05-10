@@ -2,6 +2,8 @@ import {Button} from "./Button.tsx";
 import {TaskType} from "../types/task.ts";
 import {ChangeEvent} from "react";
 import {EditableSpan} from "./EditableSpan.tsx";
+import IconButton from '@mui/material/IconButton';
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 
 type TaskPropsType = TaskType & {
     deleteTask: () => void
@@ -19,8 +21,9 @@ export const Task = ({id, title, isDone, deleteTask, changeTaskStatus, changeTit
         <li>
             <input type="checkbox" checked={isDone} onChange={onChangeHandler}/>
             <EditableSpan value={title} changeTitle={changeTitle} className={isDone ? 'task-done' : 'task'}/>
-
-            <Button onClick={deleteTask}>x</Button>
+            <IconButton color='secondary' onClick={deleteTask}>
+                <DeleteSweepIcon/>
+            </IconButton>
         </li>
     );
 };

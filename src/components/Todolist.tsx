@@ -4,6 +4,8 @@ import {Task} from "./Task.tsx";
 import {FilterType} from "../types/todolist.ts";
 import {CreateItemForm} from "./CreateItemForm.tsx";
 import {EditableSpan} from "./EditableSpan.tsx";
+import IconButton from '@mui/material/IconButton';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 type TodolistPropsType = {
     id: string
@@ -64,7 +66,9 @@ export const Todolist = ({
         <div>
             <h3>
                 <EditableSpan value={title} changeTitle={changeTodolistTitleHandler}/>
-                <Button onClick={deleteTodolistHandler}>x</Button>
+                <IconButton color='secondary' onClick={deleteTodolistHandler}>
+                    <DeleteForeverIcon/>
+                </IconButton>
             </h3>
             <CreateItemForm addItem={addTaskHandler}/>
             {mappedTasks}
