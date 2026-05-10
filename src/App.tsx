@@ -60,7 +60,6 @@ function App() {
     }
 
 
-
     const addTodolist = (title: string) => {
         const newTodolistId = crypto.randomUUID()
         const newTodolist: TodolistType = {
@@ -84,6 +83,11 @@ function App() {
         setTasks(copyTasks)
     }
 
+    const changeTodolistTitle = (payload: { todolistId: string, title: string }) => {
+        const {todolistId, title} = payload
+        setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, title} : tl))
+    }
+
     const mappedTodolists = todolists.map(tl => {
         const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter)
         return <Todolist
@@ -98,6 +102,7 @@ function App() {
             changeTaskStatus={changeTaskStatus}
             deleteTodolist={deleteTodolist}
             changeTaskTitle={changeTaskTitle}
+            changeTodolistTitle={changeTodolistTitle}
         />
     })
 

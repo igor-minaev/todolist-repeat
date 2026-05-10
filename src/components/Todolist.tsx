@@ -3,6 +3,7 @@ import {Button} from "./Button.tsx";
 import {Task} from "./Task.tsx";
 import {FilterType} from "../types/todolist.ts";
 import {CreateItemForm} from "./CreateItemForm.tsx";
+import {EditableSpan} from "./EditableSpan.tsx";
 
 type TodolistPropsType = {
     id: string
@@ -15,6 +16,7 @@ type TodolistPropsType = {
     changeTaskStatus: (payload: { todolistId: string, taskId: string, isDone: boolean }) => void
     deleteTodolist: (todolistId: string) => void
     changeTaskTitle: (payload: { todolistId: string, taskId: string, title: string }) => void
+    changeTodolistTitle: (payload: { todolistId: string, title: string }) => void
 }
 export const Todolist = ({
                              id,
@@ -26,7 +28,8 @@ export const Todolist = ({
                              addTask,
                              changeTaskStatus,
                              deleteTodolist,
-                             changeTaskTitle
+                             changeTaskTitle,
+                             changeTodolistTitle
                          }: TodolistPropsType) => {
 
 
@@ -55,11 +58,12 @@ export const Todolist = ({
     const deleteTodolistHandler = () => {
         deleteTodolist(id)
     }
+    const changeTodolistTitleHandler = (title: string) => changeTodolistTitle({todolistId: id, title})
 
     return (
         <div>
             <h3>
-                {title}
+                <EditableSpan value={title} changeTitle={changeTodolistTitleHandler}/>
                 <Button onClick={deleteTodolistHandler}>x</Button>
             </h3>
             <CreateItemForm addItem={addTaskHandler}/>
