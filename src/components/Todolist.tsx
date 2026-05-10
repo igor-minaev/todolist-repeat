@@ -14,6 +14,9 @@ type TodolistPropsType = {
 export const Todolist = ({title, tasks, deleteTask, changeFilter, addTask, changeTaskStatus}: TodolistPropsType) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState('')
+    const [error, setError] = useState(false)
+    const minTaskTitleLength = 5
+    const maxTaskTitleLength = 15
 
     const mappedTasks = tasks.length
         ? <ul>
@@ -24,11 +27,17 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter, addTask, chang
         : <p>You don't create any task</p>
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        error && setError(false)
         setNewTaskTitle(e.currentTarget.value)
     }
 
     const addTaskHandler = () => {
-        addTask(newTaskTitle)
+        const trimmedTitle = newTaskTitle.trim()
+        if (trimmedTitle) {
+            addTask(trimmedTitle)
+        } else {
+            setError(true)
+        }
         setNewTaskTitle('')
     }
 
@@ -36,12 +45,22 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter, addTask, chang
         e.key === 'Enter' && addTaskHandler()
     }
 
+    const errorMessage = error && <p className='errorMessage'>Title is required!</p>
+    const disableButton = newTaskTitle.length < minTaskTitleLength || newTaskTitle.length > maxTaskTitleLength
+    const minLengthValidatingMessage = newTaskTitle.length < minTaskTitleLength &&
+        <p>Title of task should be more then 5 chars</p>
+    const maxLengthValidatingMessage = newTaskTitle.length > maxTaskTitleLength &&
+        <p>Title of task should be less then 15 chars</p>
+
     return (
         <div>
             <h3>{title}</h3>
             <div>
                 <input value={newTaskTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
-                <Button onClick={addTaskHandler}>+</Button>
+                <Button onClick={addTaskHandler} disabled={disableButton}>+</Button>
+                {errorMessage}
+                {!error && minLengthValidatingMessage}
+                {!error && maxLengthValidatingMessage}
             </div>
             {mappedTasks}
             <div>
