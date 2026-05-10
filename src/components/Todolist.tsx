@@ -10,7 +10,7 @@ type TodolistPropsType = {
     tasks: TaskType[]
     filter: FilterType
     deleteTask: (taskId: string) => void
-    changeFilter: (filter: FilterType) => void
+    changeFilter: (payload: { todolistId: string, filter: FilterType }) => void
     addTask: (title: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
 }
@@ -64,9 +64,9 @@ export const Todolist = ({
     const maxLengthValidatingMessage = newTaskTitle.length > maxTaskTitleLength &&
         <p>Title of task should be less then 15 chars</p>
 
-    const changeFilterAllHandler = () => changeFilter('all')
-    const changeFilterActiveHandler = () => changeFilter('active')
-    const changeFilterCompletedHandler = () => changeFilter('completed')
+    const changeFilterAllHandler = () => changeFilter({todolistId: id, filter: 'all'})
+    const changeFilterActiveHandler = () => changeFilter({todolistId: id, filter: 'active'})
+    const changeFilterCompletedHandler = () => changeFilter({todolistId: id, filter: 'completed'})
 
     return (
         <div>
