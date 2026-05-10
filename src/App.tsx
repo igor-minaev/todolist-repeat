@@ -4,6 +4,7 @@ import {TasksStateType, TaskType} from "./types/task.ts";
 import {Todolist} from "./components/Todolist.tsx";
 import {getFilteredTasks} from "./utils/filtrationUtils.ts";
 import {FilterType, TodolistType} from "./types/todolist.ts";
+import {CreateItemForm} from "./components/CreateItemForm.tsx";
 
 function App() {
 
@@ -33,11 +34,6 @@ function App() {
         ]
     })
 
-    const deleteTask = (payload: { todolistId: string, taskId: string }) => {
-        const {todolistId, taskId} = payload
-        setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)})
-    }
-
     const addTask = (payload: { todolistId: string, title: string }) => {
         const {todolistId, title} = payload
         const newTask: TaskType = {
@@ -48,9 +44,26 @@ function App() {
         setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
     }
 
+    const deleteTask = (payload: { todolistId: string, taskId: string }) => {
+        const {todolistId, taskId} = payload
+        setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)})
+    }
+
     const changeTaskStatus = (payload: { todolistId: string, taskId: string, isDone: boolean }) => {
         const {todolistId, taskId, isDone} = payload
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone} : t)})
+    }
+
+
+    const addTodolist = (title: string) => {
+        const newTodolistId = crypto.randomUUID()
+        const newTodolist: TodolistType = {
+            id: newTodolistId,
+            title,
+            filter: 'all'
+        }
+        setTodolists([newTodolist, ...todolists])
+        setTasks({...tasks, [newTodolistId]: []})
     }
 
     const changeFilter = (payload: { todolistId: string, filter: FilterType }) => {
@@ -83,6 +96,7 @@ function App() {
 
     return (
         <div className="app">
+            <CreateItemForm addItem={addTodolist}/>
             {mappedTodolists}
         </div>
     )
