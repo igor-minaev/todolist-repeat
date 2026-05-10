@@ -1,11 +1,11 @@
 import {TaskType} from "../types/task.ts";
-import {Button} from "./Button.tsx";
 import {Task} from "./Task.tsx";
 import {FilterType} from "../types/todolist.ts";
 import {CreateItemForm} from "./CreateItemForm.tsx";
 import {EditableSpan} from "./EditableSpan.tsx";
 import IconButton from '@mui/material/IconButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Button from '@mui/material/Button';
 
 type TodolistPropsType = {
     id: string
@@ -73,9 +73,11 @@ export const Todolist = ({
             <CreateItemForm addItem={addTaskHandler}/>
             {mappedTasks}
             <div>
-                <Button className={filter === 'all' ? 'filter-button active' : 'filter-button'} onClick={changeFilterAllHandler}>All</Button>
-                <Button className={filter === 'active' ? 'filter-button active' : 'filter-button'} onClick={changeFilterActiveHandler}> Active </Button>
-                <Button className={filter === 'completed' ? 'filter-button active' : 'filter-button'} onClick={changeFilterCompletedHandler}>Completed</Button>
+
+
+                <Button size='small' color='secondary' variant={filter === 'all' ? 'contained' : 'outlined'} onClick={changeFilterAllHandler}>All</Button>
+                <Button size='small' color='secondary' variant={filter === 'active' ? 'contained' : 'outlined'} onClick={changeFilterActiveHandler}> Active </Button>
+                <Button size='small' color='secondary' variant={filter === 'completed' ? 'contained' : 'outlined'} onClick={changeFilterCompletedHandler}>Completed</Button>
             </div>
         </div>
     );
