@@ -5,6 +5,31 @@
     flex-wrap: wrap;
 }
 
+.filter-button {
+    padding: 4px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px solid #3ad64b;
+}
+
+.filter-button + .filter-button {
+    margin-left: 3px;
+}
+
+.active {
+    background-color: #73d67d;
+    border: 1px solid #3ad64b;
+}
+
+.task {
+    font-style: italic;
+    font-weight: bold;
+}
+
+.task-done {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
 
 
 

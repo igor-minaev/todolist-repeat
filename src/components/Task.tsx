@@ -20,7 +20,7 @@ export const Task = ({id, title, isDone, deleteTask, changeTaskStatus}: TaskProp
     return (
         <li>
             <input type="checkbox" checked={isDone} onChange={onChangeHandler}/>
-            <span>{title}</span>
+            <span className={isDone ? 'task-done' : 'task'}>{title}</span>
             <Button onClick={deleteTaskHandler}>x</Button>
         </li>
     );
