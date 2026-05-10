@@ -13,6 +13,7 @@ type TodolistPropsType = {
     changeFilter: (payload: { todolistId: string, filter: FilterType }) => void
     addTask: (title: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
+    deleteTodolist: (todolistId: string) => void
 }
 export const Todolist = ({
                              id,
@@ -22,7 +23,8 @@ export const Todolist = ({
                              deleteTask,
                              changeFilter,
                              addTask,
-                             changeTaskStatus
+                             changeTaskStatus,
+                             deleteTodolist
                          }: TodolistPropsType) => {
 
     const [newTaskTitle, setNewTaskTitle] = useState('')
@@ -67,10 +69,16 @@ export const Todolist = ({
     const changeFilterAllHandler = () => changeFilter({todolistId: id, filter: 'all'})
     const changeFilterActiveHandler = () => changeFilter({todolistId: id, filter: 'active'})
     const changeFilterCompletedHandler = () => changeFilter({todolistId: id, filter: 'completed'})
+    const deleteTodolistHandler = () => {
+        deleteTodolist(id)
+    }
 
     return (
         <div>
-            <h3>{title}</h3>
+            <h3>
+                {title}
+                <Button onClick={deleteTodolistHandler}>x</Button>
+            </h3>
             <div>
                 <input value={newTaskTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
                 <Button onClick={addTaskHandler} disabled={disableButton}>+</Button>

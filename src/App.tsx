@@ -37,12 +37,6 @@ function App() {
         // setTasks(tasks.filter(t => t.id !== taskId))
     }
 
-    const changeFilter = (payload: { todolistId: string, filter: FilterType }) => {
-        const {todolistId, filter} = payload
-        setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, filter} : tl))
-    }
-
-
     const addTask = (title: string) => {
         // const newTask: TaskType = {
         //     id: crypto.randomUUID(),
@@ -54,6 +48,18 @@ function App() {
 
     const changeTaskStatus = (taskId: string, isDone: boolean) => {
         // setTasks(tasks.map(t => t.id === taskId ? {...t, isDone} : t))
+    }
+
+    const changeFilter = (payload: { todolistId: string, filter: FilterType }) => {
+        const {todolistId, filter} = payload
+        setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, filter} : tl))
+    }
+
+    const deleteTodolist = (todolistId: string) => {
+        setTodolists(todolists.filter(tl => tl.id !== todolistId))
+        const copyTasks = {...tasks}
+        delete copyTasks[todolistId]
+        setTasks(copyTasks)
     }
 
     const mappedTodolists = todolists.map(tl => {
@@ -68,6 +74,7 @@ function App() {
             changeFilter={changeFilter}
             addTask={addTask}
             changeTaskStatus={changeTaskStatus}
+            deleteTodolist={deleteTodolist}
         />
     })
 
