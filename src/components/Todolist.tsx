@@ -1,5 +1,6 @@
 import {TaskType} from "../types/task.ts";
 import {Button} from "./Button.tsx";
+import {Task} from "./Task.tsx";
 
 type TodolistPropsType = {
     title: string
@@ -10,11 +11,7 @@ export const Todolist = ({title, tasks}: TodolistPropsType) => {
     const mappedTasks = tasks.length
         ? <ul>
             {tasks.map(t => (
-                <li key={t.id}>
-                    <input type="checkbox" checked={t.isDone}/>
-                    <span>{t.title}</span>
-                    <Button>x</Button>
-                </li>
+                <Task key={t.id} {...t}/>
             ))}
         </ul>
         : <p>You don't create any task</p>
