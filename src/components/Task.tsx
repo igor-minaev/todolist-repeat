@@ -1,6 +1,7 @@
 import {Button} from "./Button.tsx";
 import {TaskType} from "../types/task.ts";
 import {ChangeEvent} from "react";
+import {EditableSpan} from "./EditableSpan.tsx";
 
 type TaskPropsType = TaskType & {
     deleteTask: () => void
@@ -16,7 +17,8 @@ export const Task = ({id, title, isDone, deleteTask, changeTaskStatus}: TaskProp
     return (
         <li>
             <input type="checkbox" checked={isDone} onChange={onChangeHandler}/>
-            <span className={isDone ? 'task-done' : 'task'}>{title}</span>
+            <EditableSpan value={title} changeTitle={} className={isDone ? 'task-done' : 'task'}/>
+
             <Button onClick={deleteTask}>x</Button>
         </li>
     );
