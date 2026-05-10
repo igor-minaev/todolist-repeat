@@ -5,13 +5,14 @@ import {Task} from "./Task.tsx";
 type TodolistPropsType = {
     title: string
     tasks: TaskType[]
+    deleteTask: (taskId: string) => void
 }
-export const Todolist = ({title, tasks}: TodolistPropsType) => {
+export const Todolist = ({title, tasks, deleteTask}: TodolistPropsType) => {
 
     const mappedTasks = tasks.length
         ? <ul>
             {tasks.map(t => (
-                <Task key={t.id} {...t}/>
+                <Task key={t.id} {...t} deleteTask={deleteTask}/>
             ))}
         </ul>
         : <p>You don't create any task</p>

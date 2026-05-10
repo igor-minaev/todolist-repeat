@@ -1,14 +1,20 @@
 import {Button} from "./Button.tsx";
 import {TaskType} from "../types/task.ts";
 
-type TaskPropsType = TaskType
+type TaskPropsType = TaskType & {
+    deleteTask: (taskId: string) => void
+}
 
-export const Task = ({title, isDone,...restProps}: TaskPropsType) => {
+
+export const Task = ({id, title, isDone, deleteTask}: TaskPropsType) => {
+    const deleteTaskHandler = () => {
+        deleteTask(id)
+    }
     return (
         <li>
             <input type="checkbox" checked={isDone}/>
             <span>{title}</span>
-            <Button>x</Button>
+            <Button onClick={deleteTaskHandler}>x</Button>
         </li>
     );
 };
