@@ -9,7 +9,7 @@ type TodolistPropsType = {
     title: string
     tasks: TaskType[]
     filter: FilterType
-    deleteTask: (taskId: string) => void
+    deleteTask: (payload: { todolistId: string, taskId: string }) => void
     changeFilter: (payload: { todolistId: string, filter: FilterType }) => void
     addTask: (title: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
@@ -34,9 +34,10 @@ export const Todolist = ({
 
     const mappedTasks = tasks.length
         ? <ul>
-            {tasks.map(t => (
-                <Task key={t.id} {...t} deleteTask={deleteTask} changeTaskStatus={changeTaskStatus}/>
-            ))}
+            {tasks.map(t => {
+                const deleteTaskHandler = () => deleteTask({todolistId: id, taskId: t.id})
+                return <Task key={t.id} {...t} deleteTask={deleteTaskHandler} changeTaskStatus={changeTaskStatus}/>
+            })}
         </ul>
         : <p>You don't create any task</p>
 

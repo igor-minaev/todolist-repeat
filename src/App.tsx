@@ -1,6 +1,6 @@
 import './App.css'
 import {useState} from "react";
-import {TaskType} from "./types/task.ts";
+import {TasksStateType} from "./types/task.ts";
 import {Todolist} from "./components/Todolist.tsx";
 import {getFilteredTasks} from "./utils/filtrationUtils.ts";
 import {FilterType, TodolistType} from "./types/todolist.ts";
@@ -15,7 +15,7 @@ function App() {
         {id: todolistId_2, title: 'What to buy', filter: 'all'}
     ])
 
-    const [tasks, setTasks] = useState({
+    const [tasks, setTasks] = useState<TasksStateType>({
         [todolistId_1]: [
             {id: crypto.randomUUID(), title: 'HTML', isDone: true},
             {id: crypto.randomUUID(), title: 'CSS', isDone: true},
@@ -33,8 +33,9 @@ function App() {
         ]
     })
 
-    const deleteTask = (taskId: string) => {
-        // setTasks(tasks.filter(t => t.id !== taskId))
+    const deleteTask = (payload: { todolistId: string, taskId: string }) => {
+        const {todolistId, taskId} = payload
+        setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)})
     }
 
     const addTask = (title: string) => {
