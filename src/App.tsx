@@ -1,7 +1,8 @@
 import './App.css'
 import {useState} from "react";
-import {TaskType} from "./types/task.ts";
+import {FilterType, TaskType} from "./types/task.ts";
 import {Todolist} from "./components/Todolist.tsx";
+import {getFilteredTasks} from "./utils/filtrationUtils.ts";
 
 function App() {
 
@@ -16,15 +17,23 @@ function App() {
         {id: crypto.randomUUID(), title: 'GIT', isDone: true}
     ])
 
+    const [filter, setFilter] = useState<FilterType>('all')
+
     const deleteTask = (taskId: string) => {
         setTasks(tasks.filter(t => t.id !== taskId))
     }
+
+    const changeFilter = (filter: FilterType) => {
+        setFilter(filter)
+    }
+
+    const filteredTasks = getFilteredTasks(tasks, filter)
 
     return (
         <div className="app">
             <Todolist
                 title={todolistTitle}
-                tasks={tasks}
+                tasks={filteredTasks}
                 deleteTask={deleteTask}
             />
         </div>
