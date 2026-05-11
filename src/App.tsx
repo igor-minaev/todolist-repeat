@@ -10,6 +10,9 @@ import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 
 function App() {
 
@@ -95,34 +98,45 @@ function App() {
 
     const mappedTodolists = todolists.map(tl => {
         const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter)
-        return <Todolist
-            key={tl.id}
-            id={tl.id}
-            title={tl.title}
-            tasks={filteredTasks}
-            filter={tl.filter}
-            deleteTask={deleteTask}
-            changeFilter={changeFilter}
-            addTask={addTask}
-            changeTaskStatus={changeTaskStatus}
-            deleteTodolist={deleteTodolist}
-            changeTaskTitle={changeTaskTitle}
-            changeTodolistTitle={changeTodolistTitle}
-        />
+        return <Grid key={tl.id}>
+            <Paper elevation={2}>
+            <Todolist
+                id={tl.id}
+                title={tl.title}
+                tasks={filteredTasks}
+                filter={tl.filter}
+                deleteTask={deleteTask}
+                changeFilter={changeFilter}
+                addTask={addTask}
+                changeTaskStatus={changeTaskStatus}
+                deleteTodolist={deleteTodolist}
+                changeTaskTitle={changeTaskTitle}
+                changeTodolistTitle={changeTodolistTitle}
+            />
+        </Paper>
+    </Grid>
     })
 
     return (
         <div className="app">
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton color="inherit">
-                        <MenuIcon />
-                    </IconButton>
-                    <Button color="inherit">Sign in</Button>
+                    <Container maxWidth={'lg'}>
+                        <IconButton color="inherit">
+                            <MenuIcon/>
+                        </IconButton>
+                        <Button color="inherit">Sign in</Button>
+                    </Container>
                 </Toolbar>
             </AppBar>
-            <CreateItemForm addItem={addTodolist}/>
-            {mappedTodolists}
+            <Container maxWidth={'lg'}>
+                <Grid container>
+                    <CreateItemForm addItem={addTodolist}/>
+                </Grid>
+                <Grid container>
+                    {mappedTodolists}
+                </Grid>
+            </Container>
         </div>
     )
 }
