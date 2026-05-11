@@ -2,10 +2,10 @@ import {FilterType, TodolistType} from "../types/todolist.ts";
 
 export type DeleteTodolistAT = ReturnType<typeof deleteTodolistAC>
 export type CreateTodolistAT = ReturnType<typeof createTodolistAC>
-export type ChangeTodolistTitleAC = ReturnType<typeof changeTodolistTitleAC>
-export type ChangeTodolistFilterAC = ReturnType<typeof changeTodolistFilterAC>
+export type ChangeTodolistTitleAT = ReturnType<typeof changeTodolistTitleAC>
+export type ChangeTodolistFilterAT = ReturnType<typeof changeTodolistFilterAC>
 
-type ActionType = DeleteTodolistAT | CreateTodolistAT | ChangeTodolistTitleAC | ChangeTodolistFilterAC
+type ActionType = DeleteTodolistAT | CreateTodolistAT | ChangeTodolistTitleAT | ChangeTodolistFilterAT
 
 export const todolistsReducer = (state: TodolistType[], action: ActionType): TodolistType[] => {
     switch (action.type) {
@@ -15,10 +15,9 @@ export const todolistsReducer = (state: TodolistType[], action: ActionType): Tod
         }
 
         case 'create-todolist': {
-            const {title} = action.payload
-            const newTodolistId = crypto.randomUUID()
+            const {title, id} = action.payload
             const newTodolist: TodolistType = {
-                id: newTodolistId,
+                id,
                 title,
                 filter: 'all'
             }
@@ -48,7 +47,8 @@ export const deleteTodolistAC = (id: string) => ({
 export const createTodolistAC = (title: string) => ({
     type: 'create-todolist',
     payload: {
-        title
+        title,
+        id: crypto.randomUUID()
     }
 } as const)
 
