@@ -41,7 +41,7 @@ export const CreateItemForm = ({addItem}: CreateItemFormPropsType) => {
     return (
         <div>
             <TextField
-                label="Task title"
+                label="Title"
                 variant="outlined"
                 value={newItemTitle}
                 onChange={onChangeHandler}

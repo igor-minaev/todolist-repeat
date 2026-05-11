@@ -14,6 +14,10 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import {NavButton} from "./NavButton.ts";
 import {containerSX} from "./styles/Todolist.styles.ts";
+import {createTheme, ThemeProvider} from '@mui/material/styles'
+import {cyan, pink} from "@mui/material/colors";
+import Switch from '@mui/material/Switch'
+import CssBaseline from '@mui/material/CssBaseline'
 
 function App() {
 
@@ -97,6 +101,16 @@ function App() {
         setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, title} : tl))
     }
 
+    const [themeMode, setThemMode] = useState(false)
+
+    const theme = createTheme({
+        palette: {
+            primary: cyan,
+            secondary: pink,
+            mode: themeMode ? 'dark' : 'light'
+        },
+    })
+
     const mappedTodolists = todolists.map(tl => {
         const filteredTasks = getFilteredTasks(tasks[tl.id], tl.filter)
         return <Grid key={tl.id}>
@@ -118,30 +132,35 @@ function App() {
         </Grid>
     })
 
+
     return (
         <div className="app">
-            <AppBar position="static" sx={{mb: '30px'}}>
-                <Toolbar>
-                    <Container maxWidth={'lg'} sx={containerSX}>
-                        <IconButton color="inherit">
-                            <MenuIcon/>
-                        </IconButton>
-                        <div>
-                            <NavButton background='#dc004e'>Sign in</NavButton>
-                            <NavButton background='#dc004e'>Sign up</NavButton>
-                            <NavButton background='#dc004e'>Faq</NavButton>
-                        </div>
-                    </Container>
-                </Toolbar>
-            </AppBar>
-            <Container maxWidth={'lg'}>
-                <Grid container sx={{mb: '30px'}}>
-                    <CreateItemForm addItem={addTodolist}/>
-                </Grid>
-                <Grid container spacing={4}>
-                    {mappedTodolists}
-                </Grid>
-            </Container>
+            <ThemeProvider theme={theme}>
+                <CssBaseline/>
+                <AppBar position="static" sx={{mb: '30px'}}>
+                    <Toolbar>
+                        <Container maxWidth={'lg'} sx={containerSX}>
+                            <IconButton color="inherit">
+                                <MenuIcon/>
+                            </IconButton>
+                            <div>
+                                <NavButton background={theme.palette.primary.light}>Sign in</NavButton>
+                                <NavButton background={theme.palette.primary.light}>Sign up</NavButton>
+                                <NavButton background={theme.palette.primary.light}>Faq</NavButton>
+                                <Switch onChange={() => setThemMode(!themeMode)}/>
+                            </div>
+                        </Container>
+                    </Toolbar>
+                </AppBar>
+                <Container maxWidth={'lg'}>
+                    <Grid container sx={{mb: '30px'}}>
+                        <CreateItemForm addItem={addTodolist}/>
+                    </Grid>
+                    <Grid container spacing={4}>
+                        {mappedTodolists}
+                    </Grid>
+                </Container>
+            </ThemeProvider>
         </div>
     )
 }
