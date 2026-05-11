@@ -1,7 +1,7 @@
-import {Button} from "./Button.tsx";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 import IconButton from '@mui/material/IconButton';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import TextField from '@mui/material/TextField';
 
 type CreateItemFormPropsType = {
     addItem: (title: string) => void
@@ -32,7 +32,6 @@ export const CreateItemForm = ({addItem}: CreateItemFormPropsType) => {
         e.key === 'Enter' && addItemHandler()
     }
 
-    const errorMessage = error && <p className='error-message'>Title is required!</p>
     const disableButton = newItemTitle.length < minItemTitleLength || newItemTitle.length > maxItemTitleLength
     const minLengthValidatingMessage = newItemTitle.length < minItemTitleLength &&
         <p>Title of task should be more then 5 chars</p>
@@ -41,12 +40,20 @@ export const CreateItemForm = ({addItem}: CreateItemFormPropsType) => {
 
     return (
         <div>
-            <input className={error ? 'error' : ''} value={newItemTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
+            <TextField
+                label="Task title"
+                variant="outlined"
+                value={newItemTitle}
+                onChange={onChangeHandler}
+                onKeyDown={onKeyDownHandler}
+                size='small'
+                error={error}
+                helperText={error && 'Title is required!'}/>
+            {/*<input className={error ? 'error' : ''} value={newItemTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>*/}
             <IconButton color='secondary' onClick={addItemHandler} disabled={disableButton}>
                 <AddBoxIcon/>
             </IconButton>
             {/*<Button onClick={addItemHandler} disabled={disableButton}>+</Button>*/}
-            {errorMessage}
             {!error && minLengthValidatingMessage}
             {!error && maxLengthValidatingMessage}
         </div>

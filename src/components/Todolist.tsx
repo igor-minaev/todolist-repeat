@@ -75,9 +75,9 @@ export const Todolist = ({
             <div>
 
 
-                <Button size='small' color='secondary' variant={filter === 'all' ? 'contained' : 'outlined'} onClick={changeFilterAllHandler}>All</Button>
+                <Button size='small' color='primary' variant={filter === 'all' ? 'contained' : 'outlined'} onClick={changeFilterAllHandler}>All</Button>
                 <Button size='small' color='secondary' variant={filter === 'active' ? 'contained' : 'outlined'} onClick={changeFilterActiveHandler}> Active </Button>
-                <Button size='small' color='secondary' variant={filter === 'completed' ? 'contained' : 'outlined'} onClick={changeFilterCompletedHandler}>Completed</Button>
+                <Button size='small' color='success' variant={filter === 'completed' ? 'contained' : 'outlined'} onClick={changeFilterCompletedHandler}>Completed</Button>
             </div>
         </div>
     );
