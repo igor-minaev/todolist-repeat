@@ -5,6 +5,9 @@ import {EditableSpan} from "./EditableSpan.tsx";
 import IconButton from '@mui/material/IconButton';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import Checkbox from '@mui/material/Checkbox';
+import ListItem from '@mui/material/ListItem';
+import Box from '@mui/material/Box';
+import {getListItemSx} from "../styles/Todolist.styles.ts";
 
 type TaskPropsType = TaskType & {
     deleteTask: () => void
@@ -19,13 +22,17 @@ export const Task = ({id, title, isDone, deleteTask, changeTaskStatus, changeTit
     }
 
     return (
-        <li>
-            <Checkbox checked={isDone} onChange={onChangeHandler}  color="secondary"  size='small'/>
-            <EditableSpan value={title} changeTitle={changeTitle} className={isDone ? 'task-done' : 'task'}/>
+        <ListItem disablePadding sx={{p: 0, justifyContent: 'space-between'}}>
+            <Box sx={{display:'flex',alignItems:'center'}}>
+                <Checkbox checked={isDone} onChange={onChangeHandler} color="secondary" size='small'/>
+                <Box sx={getListItemSx(isDone)}>
+                    <EditableSpan value={title} changeTitle={changeTitle}/>
+                </Box>
+            </Box>
             <IconButton color='secondary' onClick={deleteTask}>
                 <DeleteSweepIcon/>
             </IconButton>
-        </li>
+        </ListItem>
     );
 };
 

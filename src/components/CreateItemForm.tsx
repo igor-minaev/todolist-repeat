@@ -34,9 +34,9 @@ export const CreateItemForm = ({addItem}: CreateItemFormPropsType) => {
 
     const disableButton = newItemTitle.length < minItemTitleLength || newItemTitle.length > maxItemTitleLength
     const minLengthValidatingMessage = newItemTitle.length < minItemTitleLength &&
-        <p>Title of task should be more then 5 chars</p>
+        <p>Title should be more then 5 chars</p>
     const maxLengthValidatingMessage = newItemTitle.length > maxItemTitleLength &&
-        <p>Title of task should be less then 15 chars</p>
+        <p>Title should be less then 15 chars</p>
 
     return (
         <div>

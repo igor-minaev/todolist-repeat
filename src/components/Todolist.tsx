@@ -7,7 +7,9 @@ import IconButton from '@mui/material/IconButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
+import Box from '@mui/material/Box';
+import {containerSX} from "../styles/Todolist.styles.ts";
+
 
 type TodolistPropsType = {
     id: string
@@ -47,9 +49,8 @@ export const Todolist = ({
                     isDone
                 })
                 const changeTaskTitleHandler = (title: string) => changeTaskTitle({todolistId: id, taskId: t.id, title})
-                return <ListItem key={t.id}>
-                    <Task {...t} deleteTask={deleteTaskHandler} changeTaskStatus={changeTaskStatusHandler} changeTitle={changeTaskTitleHandler}/>
-                </ListItem>
+                return <Task key={t.id} {...t} deleteTask={deleteTaskHandler} changeTaskStatus={changeTaskStatusHandler} changeTitle={changeTaskTitleHandler}/>
+
             })}
         </List>
         : <p>You don't create any task</p>
@@ -76,13 +77,11 @@ export const Todolist = ({
             </h3>
             <CreateItemForm addItem={addTaskHandler}/>
             {mappedTasks}
-            <div>
-
-
+            <Box sx={containerSX}>
                 <Button size='small' color='primary' variant={filter === 'all' ? 'contained' : 'outlined'} onClick={changeFilterAllHandler}>All</Button>
                 <Button size='small' color='secondary' variant={filter === 'active' ? 'contained' : 'outlined'} onClick={changeFilterActiveHandler}> Active </Button>
                 <Button size='small' color='success' variant={filter === 'completed' ? 'contained' : 'outlined'} onClick={changeFilterCompletedHandler}>Completed</Button>
-            </div>
+            </Box>
         </div>
     );
 };
