@@ -6,6 +6,8 @@ import {EditableSpan} from "./EditableSpan.tsx";
 import IconButton from '@mui/material/IconButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 type TodolistPropsType = {
     id: string
@@ -36,7 +38,7 @@ export const Todolist = ({
 
 
     const mappedTasks = tasks.length
-        ? <ul>
+        ? <List disablePadding>
             {tasks.map(t => {
                 const deleteTaskHandler = () => deleteTask({todolistId: id, taskId: t.id})
                 const changeTaskStatusHandler = (isDone: boolean) => changeTaskStatus({
@@ -45,9 +47,11 @@ export const Todolist = ({
                     isDone
                 })
                 const changeTaskTitleHandler = (title: string) => changeTaskTitle({todolistId: id, taskId: t.id, title})
-                return <Task key={t.id} {...t} deleteTask={deleteTaskHandler} changeTaskStatus={changeTaskStatusHandler} changeTitle={changeTaskTitleHandler}/>
+                return <ListItem key={t.id}>
+                    <Task {...t} deleteTask={deleteTaskHandler} changeTaskStatus={changeTaskStatusHandler} changeTitle={changeTaskTitleHandler}/>
+                </ListItem>
             })}
-        </ul>
+        </List>
         : <p>You don't create any task</p>
 
 

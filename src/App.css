@@ -1,8 +1,11 @@
 .app {
-    padding: 30px;
     display: flex;
-    gap: 100px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    width: 100vw;
+}
+.container {
+    display: flex;
+    align-items: center;
 }
 
 .filter-button {

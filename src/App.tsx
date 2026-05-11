@@ -5,6 +5,11 @@ import {Todolist} from "./components/Todolist.tsx";
 import {getFilteredTasks} from "./utils/filtrationUtils.ts";
 import {FilterType, TodolistType} from "./types/todolist.ts";
 import {CreateItemForm} from "./components/CreateItemForm.tsx";
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
 
 function App() {
 
@@ -108,6 +113,14 @@ function App() {
 
     return (
         <div className="app">
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton color="inherit">
+                        <MenuIcon />
+                    </IconButton>
+                    <Button color="inherit">Sign in</Button>
+                </Toolbar>
+            </AppBar>
             <CreateItemForm addItem={addTodolist}/>
             {mappedTodolists}
         </div>
