@@ -1,29 +1,39 @@
-export const Todolist = () => {
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
+}
+
+type TodolistPropsType = {
+    title: string
+    tasks: TaskType[]
+}
+
+export const Todolist = ({title, tasks}: TodolistPropsType) => {
+
+    const mappedTasks = tasks.length
+        ? <ul>
+            {tasks.map(task => {
+                return (
+                    <li key={task.id}>
+                        <input type="checkbox" checked={task.isDone}/>
+                        <span>{task.title}</span>
+                        <button>x</button>
+                    </li>
+                )
+            })}
+        </ul>
+        : <p>Your tasks list is empty!</p>
+
+
     return (
         <div>
-            <h3>What to learn</h3>
+            <h3>{title}</h3>
             <div>
                 <input type="text"/>
                 <button>x</button>
             </div>
-            <ul>
-                <li>
-                    <input type="checkbox" checked/>
-                    <span>HTML</span>
-                </li>
-                <li>
-                    <input type="checkbox" checked/>
-                    <span>CSS</span>
-                </li>
-                <li>
-                    <input type="checkbox"/>
-                    <span>JS</span>
-                </li>
-                <li>
-                    <input type="checkbox"/>
-                    <span>REACT</span>
-                </li>
-            </ul>
+            {mappedTasks}
             <div>
                 <button>All</button>
                 <button>Active</button>
