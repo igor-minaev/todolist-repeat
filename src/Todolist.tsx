@@ -1,4 +1,5 @@
 import {Button} from "./Button"
+import type {FilterValuesType} from "./App";
 
 export type TaskType = {
     id: string
@@ -10,9 +11,10 @@ type TodolistPropsType = {
     title: string
     tasks: TaskType[]
     deleteTask: (id: string) => void
+    changeFilter: (filter: FilterValuesType) => void
 }
 
-export const Todolist = ({title, tasks, deleteTask}: TodolistPropsType) => {
+export const Todolist = ({title, tasks, deleteTask, changeFilter}: TodolistPropsType) => {
 
 
     const mappedTasks = tasks.length
@@ -30,6 +32,10 @@ export const Todolist = ({title, tasks, deleteTask}: TodolistPropsType) => {
         </ul>
         : <p>Your tasks list is empty!</p>
 
+    const filterAllHandler = () => changeFilter("all")
+    const filterActiveHandler = () => changeFilter("active")
+    const filterCompletedHandler = () => changeFilter("completed")
+
 
     return (
         <div>
@@ -40,9 +46,9 @@ export const Todolist = ({title, tasks, deleteTask}: TodolistPropsType) => {
             </div>
             {mappedTasks}
             <div>
-                <Button name='All'/>
-                <Button name='Active'/>
-                <Button name='Completed'/>
+                <Button name='All' onClick={filterAllHandler}/>
+                <Button name='Active' onClick={filterActiveHandler}/>
+                <Button name='Completed' onClick={filterCompletedHandler}/>
             </div>
         </div>
     );
