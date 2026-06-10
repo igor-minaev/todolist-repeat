@@ -9,18 +9,21 @@ export type TaskType = {
 type TodolistPropsType = {
     title: string
     tasks: TaskType[]
+    deleteTask: (id: string) => void
 }
 
-export const Todolist = ({title, tasks}: TodolistPropsType) => {
+export const Todolist = ({title, tasks, deleteTask}: TodolistPropsType) => {
+
 
     const mappedTasks = tasks.length
         ? <ul>
             {tasks.map(task => {
+                const deleteTaskHandler = () => deleteTask(task.id)
                 return (
                     <li key={task.id}>
                         <input type="checkbox" checked={task.isDone}/>
                         <span>{task.title}</span>
-                        <Button name='x'/>
+                        <Button name='x' onClick={deleteTaskHandler}/>
                     </li>
                 )
             })}
