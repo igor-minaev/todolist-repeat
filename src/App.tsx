@@ -34,10 +34,10 @@ function App() {
 
     const [filter, setFilter] = useState<FilterValuesType>('all')
 
+
     const deleteTask = (id: string) => {
         setTasks(tasks.filter(task => task.id !== id))
     }
-
     const createTask = (title: string) => {
         const newTask: TaskType = {
             id: crypto.randomUUID(),
@@ -45,6 +45,9 @@ function App() {
             isDone: false
         }
         setTasks([newTask, ...tasks])
+    }
+    const changeTaskStatus = (id: string, isDone: boolean) => {
+        setTasks(tasks.map(task => task.id === id ? {...task, isDone} : task))
     }
 
     const changeFilter = (filter: FilterValuesType) => setFilter(filter)
@@ -70,6 +73,7 @@ function App() {
                 deleteTask={deleteTask}
                 changeFilter={changeFilter}
                 createTask={createTask}
+                changeTaskStatus={changeTaskStatus}
             />
         </div>
     )
