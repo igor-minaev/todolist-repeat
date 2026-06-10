@@ -38,6 +38,15 @@ function App() {
         setTasks(tasks.filter(task => task.id !== id))
     }
 
+    const createTask = (title: string) => {
+        const newTask: TaskType = {
+            id: crypto.randomUUID(),
+            title,
+            isDone: false
+        }
+        setTasks([newTask, ...tasks])
+    }
+
     const changeFilter = (filter: FilterValuesType) => setFilter(filter)
 
     const getFilteredTasks = (tasks: TaskType[], filter: FilterValuesType): TaskType[] => {
@@ -60,6 +69,7 @@ function App() {
                 tasks={filteredTasks}
                 deleteTask={deleteTask}
                 changeFilter={changeFilter}
+                createTask={createTask}
             />
         </div>
     )

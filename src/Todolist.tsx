@@ -1,5 +1,6 @@
 import {Button} from "./Button"
 import type {FilterValuesType} from "./App";
+import {type ChangeEvent, useState} from "react";
 
 export type TaskType = {
     id: string
@@ -12,9 +13,12 @@ type TodolistPropsType = {
     tasks: TaskType[]
     deleteTask: (id: string) => void
     changeFilter: (filter: FilterValuesType) => void
+    createTask: (title: string) => void
 }
 
-export const Todolist = ({title, tasks, deleteTask, changeFilter}: TodolistPropsType) => {
+export const Todolist = ({title, tasks, deleteTask, changeFilter, createTask}: TodolistPropsType) => {
+
+    const [taskTitle, setTaskTitle] = useState('')
 
 
     const mappedTasks = tasks.length
@@ -31,6 +35,12 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter}: TodolistProps
             })}
         </ul>
         : <p>Your tasks list is empty!</p>
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => setTaskTitle(e.currentTarget.value)
+
+    const createTaskHandler = () => {
+        createTask(taskTitle)
+        setTaskTitle('')
+    }
 
     const filterAllHandler = () => changeFilter("all")
     const filterActiveHandler = () => changeFilter("active")
@@ -41,8 +51,8 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter}: TodolistProps
         <div>
             <h3>{title}</h3>
             <div>
-                <input type="text"/>
-                <Button name='+'/>
+                <input type="text" value={taskTitle} onChange={onChangeHandler}/>
+                <Button name='+' onClick={createTaskHandler}/>
             </div>
             {mappedTasks}
             <div>
