@@ -1,6 +1,6 @@
 import {Button} from "./Button"
 import type {FilterValuesType} from "./App";
-import {type ChangeEvent, useState} from "react";
+import {type ChangeEvent, KeyboardEvent, useState} from "react";
 
 export type TaskType = {
     id: string
@@ -42,6 +42,10 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter, createTask}: T
         setTaskTitle('')
     }
 
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        e.key === 'Enter' && createTaskHandler()
+    }
+
     const filterAllHandler = () => changeFilter("all")
     const filterActiveHandler = () => changeFilter("active")
     const filterCompletedHandler = () => changeFilter("completed")
@@ -51,7 +55,7 @@ export const Todolist = ({title, tasks, deleteTask, changeFilter, createTask}: T
         <div>
             <h3>{title}</h3>
             <div>
-                <input type="text" value={taskTitle} onChange={onChangeHandler}/>
+                <input type="text" value={taskTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
                 <Button name='+' onClick={createTaskHandler}/>
             </div>
             {mappedTasks}
