@@ -44,13 +44,13 @@ function App() {
     const deleteTask = (todolistId: string, taskId: string) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(task => task.id !== taskId)})
     }
-    const createTask = (title: string) => {
-        // const newTask: TaskType = {
-        //     id: crypto.randomUUID(),
-        //     title,
-        //     isDone: false
-        // }
-        // setTasks([newTask, ...tasks])
+    const createTask = (todolistId: string, title: string) => {
+        const newTask: TaskType = {
+            id: crypto.randomUUID(),
+            title,
+            isDone: false
+        }
+        setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
     }
     const changeTaskStatus = (id: string, isDone: boolean) => {
         // setTasks(tasks.map(task => task.id === id ? {...task, isDone} : task))
