@@ -1,8 +1,10 @@
-import {Button} from "./Button"
+import Button from '@mui/material/Button';
 import type {FilterValues} from "./App";
-import {type ChangeEvent, KeyboardEvent, useState} from "react";
+import {type ChangeEvent} from "react";
 import {CreateItemForm} from "./CreateItemForm";
 import {EditableSpan} from "./EditableSpan";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import IconButton from "@mui/material/IconButton";
 
 export type TaskType = {
     id: string
@@ -49,7 +51,9 @@ export const Todolist = ({
                     <li key={task.id}>
                         <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>
                         <EditableSpan className={task.isDone ? 'taskDone' : 'task'} value={task.title} onChange={changeTaskTitleHandler}/>
-                        <Button name='x' onClick={deleteTaskHandler}/>
+                        <IconButton color="secondary" onClick={deleteTaskHandler}>
+                            <DeleteForeverIcon/>
+                        </IconButton>
                     </li>
                 )
             })}
@@ -68,14 +72,16 @@ export const Todolist = ({
         <div>
             <h3>
                 <EditableSpan value={title} onChange={changeTodolistTitleHandler}/>
-                <Button name='x' onClick={deleteTodolistHandler}/>
+                <IconButton color="secondary" onClick={deleteTodolistHandler}>
+                    <DeleteForeverIcon/>
+                </IconButton>
             </h3>
             <CreateItemForm createItem={createTaskHandler}/>
             {mappedTasks}
             <div className='buttonsWrapper'>
-                <Button className={filter === 'all' ? 'activeButton' : 'button'} name='All' onClick={filterAllHandler}/>
-                <Button className={filter === 'active' ? 'activeButton' : 'button'} name='Active' onClick={filterActiveHandler}/>
-                <Button className={filter === 'completed' ? 'activeButton' : 'button'} name='Completed' onClick={filterCompletedHandler}/>
+                <Button size='small' color="secondary" variant={filter === 'all' ? 'contained' : "outlined"} onClick={filterAllHandler}>All</Button>
+                <Button size='small' color="primary" variant={filter === 'active' ? 'contained' : "outlined"} onClick={filterActiveHandler}>Active</Button>
+                <Button size='small' color="success" variant={filter === 'completed' ? 'contained' : "outlined"} onClick={filterCompletedHandler}>Completed</Button>
             </div>
         </div>
     );
