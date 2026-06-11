@@ -1,6 +1,7 @@
 import './App.css'
 import {type TaskType, Todolist} from "./Todolist";
 import {useState} from "react";
+import {CreateItemForm} from "./CreateItemForm";
 
 export type FilterValues = 'all' | 'active' | 'completed'
 export type Todolist = {
@@ -9,7 +10,7 @@ export type Todolist = {
     filter: FilterValues
 }
 
-export type TasksState= Record<string, TaskType[]>
+export type TasksState = Record<string, TaskType[]>
 
 
 function App() {
@@ -54,6 +55,11 @@ function App() {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(task => task.id === id ? {...task, isDone} : task)})
     }
 
+    const createTodolist = (title: string) => {
+        const newTodolistId = crypto.randomUUID()
+        setTodolists([{id: newTodolistId, title, filter: 'all'}, ...todolists])
+        setTasks({...tasks, [newTodolistId]: []})
+    }
     const deleteTodolist = (todolistId: string) => {
         setTodolists(todolists.filter(todolist => todolist.id !== todolistId))
         const copyTasks = {...tasks}
@@ -77,6 +83,7 @@ function App() {
 
     return (
         <div className="app">
+            <CreateItemForm createItem={createTodolist}/>
             {todolists.map(todolist => {
                 return (
                     <Todolist
