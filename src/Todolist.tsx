@@ -6,6 +6,8 @@ import {EditableSpan} from "./EditableSpan";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from "@mui/material/IconButton";
 import Checkbox from '@mui/material/Checkbox';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 export type TaskType = {
     id: string
@@ -43,22 +45,22 @@ export const Todolist = ({
 
     const mappedTasks = tasks.length === 0
         ? <p>Your tasks list is empty!</p>
-        : <ul>
+        : <List>
             {tasks.map(task => {
                 const deleteTaskHandler = () => deleteTask(id, task.id)
                 const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(id, task.id, e.currentTarget.checked)
                 const changeTaskTitleHandler = (title: string) => changeTaskTitle(id, task.id, title)
                 return (
-                    <li key={task.id}>
+                    <ListItem key={task.id}>
                         <Checkbox size='small' color="secondary" checked={task.isDone} onChange={changeTaskStatusHandler}/>
                         <EditableSpan className={task.isDone ? 'taskDone' : 'task'} value={task.title} onChange={changeTaskTitleHandler}/>
                         <IconButton color="secondary" onClick={deleteTaskHandler}>
                             <DeleteForeverIcon/>
                         </IconButton>
-                    </li>
+                    </ListItem>
                 )
             })}
-        </ul>
+        </List>
 
     const filterAllHandler = () => changeTodolistFilter(id, "all")
     const filterActiveHandler = () => changeTodolistFilter(id, "active")
