@@ -2,14 +2,14 @@ import './App.css'
 import {type TaskType, Todolist} from "./Todolist";
 import {useState} from "react";
 
-export type FilterValuesType = 'all' | 'active' | 'completed'
-export type TodolistType = {
+export type FilterValues = 'all' | 'active' | 'completed'
+export type Todolist = {
     id: string
     title: string
-    filter: FilterValuesType
+    filter: FilterValues
 }
 
-export type TasksStateType = Record<string, TaskType[]>
+export type TasksState= Record<string, TaskType[]>
 
 
 function App() {
@@ -18,12 +18,12 @@ function App() {
     const todolistId_1 = crypto.randomUUID();
     const todolistId_2 = crypto.randomUUID();
 
-    const [todolists, setTodolists] = useState<TodolistType[]>([
+    const [todolists, setTodolists] = useState<Todolist[]>([
         {id: todolistId_1, title: 'What to learn', filter: 'all'},
         {id: todolistId_2, title: 'What to buy', filter: 'all'},
     ])
 
-    const [tasks, setTasks] = useState<TasksStateType>({
+    const [tasks, setTasks] = useState<TasksState>({
         [todolistId_1]: [
             {id: crypto.randomUUID(), title: 'HTML', isDone: true},
             {id: crypto.randomUUID(), title: 'CSS', isDone: true},
@@ -60,10 +60,10 @@ function App() {
         delete copyTasks[todolistId]
         setTasks(copyTasks)
     }
-    const changeTodolistFilter = (todolistId: string, filter: FilterValuesType) => {
+    const changeTodolistFilter = (todolistId: string, filter: FilterValues) => {
         setTodolists(todolists.map(todolist => todolist.id === todolistId ? {...todolist, filter} : todolist))
     }
-    const getFilteredTasks = (tasks: TaskType[], filter: FilterValuesType): TaskType[] => {
+    const getFilteredTasks = (tasks: TaskType[], filter: FilterValues): TaskType[] => {
         switch (filter) {
             case "active":
                 return tasks.filter(task => !task.isDone)
