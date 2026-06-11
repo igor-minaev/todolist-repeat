@@ -10,6 +10,8 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
+import {containerSx} from "./Todolist.styles";
+import {NavButton} from "./NavButton";
 
 export type FilterValues = 'all' | 'active' | 'completed'
 export type Todolist = {
@@ -98,25 +100,29 @@ function App() {
 
     return (
         <div className="app">
-            <AppBar position="static" sx={{mb:'30px'}}>
+            <AppBar position="static" sx={{mb: '30px'}}>
                 <Toolbar>
-                    <Container maxWidth='lg'>
+                    <Container maxWidth='lg' sx={containerSx}>
                         <IconButton color="inherit">
                             <MenuIcon/>
                         </IconButton>
-                        <Button color="inherit">Sign in</Button>
+                        <div>
+                            <NavButton>Sign in</NavButton>
+                            <NavButton>Sign up</NavButton>
+                            <NavButton background='dodgerblue'>Faq</NavButton>
+                        </div>
                     </Container>
                 </Toolbar>
             </AppBar>
             <Container maxWidth='lg'>
-                <Grid container sx={{mb:'30px'}}>
+                <Grid container sx={{mb: '30px'}}>
                     <CreateItemForm createItem={createTodolist}/>
                 </Grid>
                 <Grid container spacing={4}>
                     {todolists.map(todolist => {
                         return (
                             <Grid key={todolist.id}>
-                                <Paper elevation={5} sx={{p:'15px'}}>
+                                <Paper elevation={5} sx={{p: '15px'}}>
                                     <Todolist
                                         id={todolist.id}
                                         title={todolist.title}
