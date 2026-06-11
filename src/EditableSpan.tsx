@@ -3,9 +3,10 @@ import {type ChangeEvent, useState} from "react";
 type Props = {
     value: string
     onChange: (title: string) => void
+    className?: string
 }
 
-export const EditableSpan = ({value, onChange}: Props) => {
+export const EditableSpan = ({value, onChange,className}: Props) => {
     const [title, setTitle] = useState(value)
     const [editMode, setEditMode] = useState(false)
 
@@ -19,7 +20,7 @@ export const EditableSpan = ({value, onChange}: Props) => {
         <>
             {editMode
                 ? <input value={title} onChange={onChangeHandler} onBlur={offEditMode} autoFocus/>
-                : <span onDoubleClick={onEdit}>{value}</span>
+                : <span className={className} onDoubleClick={onEdit}>{value}</span>
             }
         </>
 

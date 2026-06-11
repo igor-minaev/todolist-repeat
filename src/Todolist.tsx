@@ -21,6 +21,7 @@ type Props = {
     changeTaskStatus: (todolistId: string, id: string, isDone: boolean) => void
     deleteTodolist: (todolistId: string) => void
     changeTodolistTitle: (todolistId: string, title: string) => void
+    changeTaskTitle: (todolistId: string, id: string, title: string) => void
 }
 
 export const Todolist = ({
@@ -33,7 +34,8 @@ export const Todolist = ({
                              createTask,
                              changeTaskStatus,
                              deleteTodolist,
-                             changeTodolistTitle
+                             changeTodolistTitle,
+                             changeTaskTitle
                          }: Props) => {
 
     const mappedTasks = tasks.length === 0
@@ -42,10 +44,11 @@ export const Todolist = ({
             {tasks.map(task => {
                 const deleteTaskHandler = () => deleteTask(id, task.id)
                 const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(id, task.id, e.currentTarget.checked)
+                const changeTaskTitleHandler = (title: string) => changeTaskTitle(id, task.id, title)
                 return (
                     <li key={task.id}>
                         <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>
-                        <span className={task.isDone ? 'taskDone' : 'task'}>{task.title}</span>
+                        <EditableSpan className={task.isDone ? 'taskDone' : 'task'} value={task.title} onChange={changeTaskTitleHandler}/>
                         <Button name='x' onClick={deleteTaskHandler}/>
                     </li>
                 )

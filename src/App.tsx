@@ -54,6 +54,9 @@ function App() {
     const changeTaskStatus = (todolistId: string, id: string, isDone: boolean) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(task => task.id === id ? {...task, isDone} : task)})
     }
+    const changeTaskTitle = (todolistId: string, id: string, title: string) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(task => task.id === id ? {...task, title} : task)})
+    }
 
     const createTodolist = (title: string) => {
         const newTodolistId = crypto.randomUUID()
@@ -100,6 +103,7 @@ function App() {
                         changeTodolistFilter={changeTodolistFilter}
                         createTask={createTask}
                         changeTaskStatus={changeTaskStatus}
+                        changeTaskTitle={changeTaskTitle}
                         deleteTodolist={deleteTodolist}
                         changeTodolistTitle={changeTodolistTitle}
                     />
