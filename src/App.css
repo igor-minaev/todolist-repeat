@@ -9,7 +9,46 @@
     align-items: center;
 }
 
+.error {
+    border: red 1px solid;
+}
 
+.errorMessage {
+    color: red;
+}
+
+.buttonsWrapper {
+    display: flex;
+    gap: 5px;
+}
+
+.activeButton {
+    background-color: #dd67a9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.button {
+    background-color: #ae598d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.task {
+    font-style: italic;
+}
+
+.taskDone {
+    font-weight: bold;
+    opacity: 0.4;
+    text-decoration: line-through;
+}
 
 
 
