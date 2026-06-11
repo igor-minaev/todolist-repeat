@@ -17,6 +17,7 @@ type TodolistPropsType = {
     changeTodolistFilter: (todolistId: string, filter: FilterValuesType) => void
     createTask: (todolistId: string, title: string) => void
     changeTaskStatus: (todolistId: string, id: string, isDone: boolean) => void
+    deleteTodolist: (todolistId: string) => void
 }
 
 export const Todolist = ({
@@ -27,7 +28,8 @@ export const Todolist = ({
                              deleteTask,
                              changeTodolistFilter,
                              createTask,
-                             changeTaskStatus
+                             changeTaskStatus,
+                             deleteTodolist
                          }: TodolistPropsType) => {
 
     const [taskTitle, setTaskTitle] = useState('')
@@ -72,10 +74,14 @@ export const Todolist = ({
     const filterActiveHandler = () => changeTodolistFilter(id, "active")
     const filterCompletedHandler = () => changeTodolistFilter(id, "completed")
     const errorClassName = error ? 'error' : ''
+    const deleteTodolistHandler = () => deleteTodolist(id)
 
     return (
         <div>
-            <h3>{title}</h3>
+            <h3>
+                {title}
+                <Button name='x' onClick={deleteTodolistHandler}/>
+            </h3>
             <div>
                 <input className={errorClassName} type="text" value={taskTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
                 <Button name='+' onClick={createTaskHandler}/>

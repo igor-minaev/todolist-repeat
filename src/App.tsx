@@ -14,6 +14,7 @@ export type TasksStateType = Record<string, TaskType[]>
 
 function App() {
 
+
     const todolistId_1 = crypto.randomUUID();
     const todolistId_2 = crypto.randomUUID();
 
@@ -38,9 +39,6 @@ function App() {
     })
 
 
-    const [filter, setFilter] = useState<FilterValuesType>('all')
-
-
     const deleteTask = (todolistId: string, taskId: string) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(task => task.id !== taskId)})
     }
@@ -56,10 +54,15 @@ function App() {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(task => task.id === id ? {...task, isDone} : task)})
     }
 
+    const deleteTodolist = (todolistId: string) => {
+        setTodolists(todolists.filter(todolist => todolist.id !== todolistId))
+        const copyTasks = {...tasks}
+        delete copyTasks[todolistId]
+        setTasks(copyTasks)
+    }
     const changeTodolistFilter = (todolistId: string, filter: FilterValuesType) => {
         setTodolists(todolists.map(todolist => todolist.id === todolistId ? {...todolist, filter} : todolist))
     }
-
     const getFilteredTasks = (tasks: TaskType[], filter: FilterValuesType): TaskType[] => {
         switch (filter) {
             case "active":
@@ -86,6 +89,7 @@ function App() {
                         changeTodolistFilter={changeTodolistFilter}
                         createTask={createTask}
                         changeTaskStatus={changeTaskStatus}
+                        deleteTodolist={deleteTodolist}
                     />
                 )
             })}
