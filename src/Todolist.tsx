@@ -20,6 +20,7 @@ type Props = {
     createTask: (todolistId: string, title: string) => void
     changeTaskStatus: (todolistId: string, id: string, isDone: boolean) => void
     deleteTodolist: (todolistId: string) => void
+    changeTodolistTitle: (todolistId: string, title: string) => void
 }
 
 export const Todolist = ({
@@ -31,7 +32,8 @@ export const Todolist = ({
                              changeTodolistFilter,
                              createTask,
                              changeTaskStatus,
-                             deleteTodolist
+                             deleteTodolist,
+                             changeTodolistTitle
                          }: Props) => {
 
     const mappedTasks = tasks.length === 0
@@ -55,11 +57,14 @@ export const Todolist = ({
     const filterCompletedHandler = () => changeTodolistFilter(id, "completed")
     const deleteTodolistHandler = () => deleteTodolist(id)
     const createTaskHandler = (title: string) => createTask(id, title)
+    const changeTodolistTitleHandler = (title: string) => {
+        changeTodolistTitle(id, title)
+    }
 
     return (
         <div>
             <h3>
-                <EditableSpan value={title} onChange={}/>
+                <EditableSpan value={title} onChange={changeTodolistTitleHandler}/>
                 <Button name='x' onClick={deleteTodolistHandler}/>
             </h3>
             <CreateItemForm createItem={createTaskHandler}/>
