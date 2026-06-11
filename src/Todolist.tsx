@@ -10,20 +10,22 @@ export type TaskType = {
 
 type TodolistPropsType = {
     title: string
+    id: string
     filter: FilterValuesType
     tasks: TaskType[]
     deleteTask: (id: string) => void
-    changeFilter: (filter: FilterValuesType) => void
+    changeTodolistFilter: (todolistId: string, filter: FilterValuesType) => void
     createTask: (title: string) => void
     changeTaskStatus: (id: string, isDone: boolean) => void
 }
 
 export const Todolist = ({
                              title,
+                             id,
                              filter,
                              tasks,
                              deleteTask,
-                             changeFilter,
+                             changeTodolistFilter,
                              createTask,
                              changeTaskStatus
                          }: TodolistPropsType) => {
@@ -32,8 +34,9 @@ export const Todolist = ({
     const [error, setError] = useState(false)
 
 
-    const mappedTasks = tasks.length
-        ? <ul>
+    const mappedTasks = tasks.length === 0
+        ? <p>Your tasks list is empty!</p>
+        : <ul>
             {tasks.map(task => {
                 const deleteTaskHandler = () => deleteTask(task.id)
                 const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(task.id, e.currentTarget.checked)
@@ -46,7 +49,6 @@ export const Todolist = ({
                 )
             })}
         </ul>
-        : <p>Your tasks list is empty!</p>
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTaskTitle(e.currentTarget.value)
         setError(false)
@@ -66,9 +68,9 @@ export const Todolist = ({
         e.key === 'Enter' && createTaskHandler()
     }
 
-    const filterAllHandler = () => changeFilter("all")
-    const filterActiveHandler = () => changeFilter("active")
-    const filterCompletedHandler = () => changeFilter("completed")
+    const filterAllHandler = () => changeTodolistFilter(id, "all")
+    const filterActiveHandler = () => changeTodolistFilter(id, "active")
+    const filterCompletedHandler = () => changeTodolistFilter(id, "completed")
     const errorClassName = error ? 'error' : ''
 
     return (
