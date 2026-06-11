@@ -2,6 +2,7 @@ import {Button} from "./Button"
 import type {FilterValues} from "./App";
 import {type ChangeEvent, KeyboardEvent, useState} from "react";
 import {CreateItemForm} from "./CreateItemForm";
+import {EditableSpan} from "./EditableSpan";
 
 export type TaskType = {
     id: string
@@ -58,7 +59,7 @@ export const Todolist = ({
     return (
         <div>
             <h3>
-                {title}
+                <EditableSpan value={title} onChange={}/>
                 <Button name='x' onClick={deleteTodolistHandler}/>
             </h3>
             <CreateItemForm createItem={createTaskHandler}/>

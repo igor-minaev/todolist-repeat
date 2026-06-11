@@ -69,6 +69,10 @@ function App() {
     const changeTodolistFilter = (todolistId: string, filter: FilterValues) => {
         setTodolists(todolists.map(todolist => todolist.id === todolistId ? {...todolist, filter} : todolist))
     }
+    const changeTodolistTitle = (todolistId: string, title: string) => {
+        setTodolists(todolists.map(todolist => todolist.id === todolistId ? {...todolist, title} : todolist))
+    }
+
     const getFilteredTasks = (tasks: TaskType[], filter: FilterValues): TaskType[] => {
         switch (filter) {
             case "active":
@@ -97,6 +101,7 @@ function App() {
                         createTask={createTask}
                         changeTaskStatus={changeTaskStatus}
                         deleteTodolist={deleteTodolist}
+                        changeTodolistTitle={changeTodolistTitle}
                     />
                 )
             })}
