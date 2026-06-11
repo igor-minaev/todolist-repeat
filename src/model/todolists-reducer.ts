@@ -1,7 +1,5 @@
 import type {FilterValues, Todolist} from "../App";
 
-const initialState: Todolist[] = []
-
 export type DeleteTodolist = ReturnType<typeof deleteTodolistAC>
 export type CreateTodolist = ReturnType<typeof createTodolistAC>
 export type ChangeTodolistTitle = ReturnType<typeof changeTodolistTitleAC>
@@ -9,7 +7,7 @@ export type ChangeTodolistFilterAC = ReturnType<typeof changeTodolistFilterAC>
 
 type Actions = DeleteTodolist | CreateTodolist | ChangeTodolistTitle | ChangeTodolistFilterAC
 
-export const todolistsReducer = (state: Todolist[] = initialState, action: Actions): Todolist[] => {
+export const todolistsReducer = (state: Todolist[], action: Actions): Todolist[] => {
     switch (action.type) {
         case "delete_todolist":
             return state.filter(todolist => todolist.id !== action.payload.id)
