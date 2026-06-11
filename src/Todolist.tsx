@@ -5,6 +5,7 @@ import {CreateItemForm} from "./CreateItemForm";
 import {EditableSpan} from "./EditableSpan";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from "@mui/material/IconButton";
+import Checkbox from '@mui/material/Checkbox';
 
 export type TaskType = {
     id: string
@@ -49,7 +50,7 @@ export const Todolist = ({
                 const changeTaskTitleHandler = (title: string) => changeTaskTitle(id, task.id, title)
                 return (
                     <li key={task.id}>
-                        <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>
+                        <Checkbox size='small' color="secondary" checked={task.isDone} onChange={changeTaskStatusHandler}/>
                         <EditableSpan className={task.isDone ? 'taskDone' : 'task'} value={task.title} onChange={changeTaskTitleHandler}/>
                         <IconButton color="secondary" onClick={deleteTaskHandler}>
                             <DeleteForeverIcon/>

@@ -1,6 +1,7 @@
 import {type ChangeEvent, KeyboardEvent, useState} from "react";
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import IconButton from '@mui/material/IconButton';
+import TextField from '@mui/material/TextField';
 
 type Props = {
     createItem: (title: string) => void
@@ -26,15 +27,21 @@ export const CreateItemForm = ({createItem}: Props) => {
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         e.key === 'Enter' && createItemHandler()
     }
-    const errorClassName = error ? 'error' : ''
 
     return (
         <div>
-            <input className={errorClassName} type="text" value={itemTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
+            <TextField
+                size='small'
+                variant="outlined"
+                label="Enter title"
+                error={error}
+                helperText={error && 'Title is required!'}
+                value={itemTitle}
+                onChange={onChangeHandler}
+                onKeyDown={onKeyDownHandler}/>
             <IconButton color="secondary" onClick={createItemHandler}>
                 <AddTaskIcon/>
             </IconButton>
-            {error && <p className='errorMessage'>Title is required!</p>}
         </div>
     );
 };
