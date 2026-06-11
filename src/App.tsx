@@ -1,10 +1,9 @@
 import './App.css'
 import {type TaskType, Todolist} from "./Todolist";
-import {useState} from "react";
+import {useReducer, useState} from "react";
 import {CreateItemForm} from "./CreateItemForm";
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
-import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
@@ -16,6 +15,13 @@ import {createTheme, ThemeProvider} from "@mui/material";
 import {lime, purple} from "@mui/material/colors";
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
+import {
+    changeTodolistFilterAC,
+    changeTodolistTitleAC,
+    createTodolistAC,
+    deleteTodolistAC,
+    todolistsReducer
+} from "./model/todolists-reducer";
 
 
 export type FilterValues = 'all' | 'active' | 'completed'
@@ -35,7 +41,7 @@ function App() {
     const todolistId_1 = crypto.randomUUID();
     const todolistId_2 = crypto.randomUUID();
 
-    const [todolists, setTodolists] = useState<Todolist[]>([
+    const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
         {id: todolistId_1, title: 'What to learn', filter: 'all'},
         {id: todolistId_2, title: 'What to buy', filter: 'all'},
     ])
@@ -75,21 +81,22 @@ function App() {
     }
 
     const createTodolist = (title: string) => {
-        const newTodolistId = crypto.randomUUID()
-        setTodolists([{id: newTodolistId, title, filter: 'all'}, ...todolists])
-        setTasks({...tasks, [newTodolistId]: []})
+        const action = createTodolistAC(title)
+        dispatchToTodolists(action)
+        // setTasks({...tasks, [newTodolistId]: []})
     }
     const deleteTodolist = (todolistId: string) => {
-        setTodolists(todolists.filter(todolist => todolist.id !== todolistId))
-        const copyTasks = {...tasks}
-        delete copyTasks[todolistId]
-        setTasks(copyTasks)
+        const action = deleteTodolistAC(todolistId)
+        dispatchToTodolists(action)
+        // const copyTasks = {...tasks}
+        // delete copyTasks[todolistId]
+        // setTasks(copyTasks)
     }
     const changeTodolistFilter = (todolistId: string, filter: FilterValues) => {
-        setTodolists(todolists.map(todolist => todolist.id === todolistId ? {...todolist, filter} : todolist))
+        dispatchToTodolists(changeTodolistFilterAC({id: todolistId, filter}))
     }
     const changeTodolistTitle = (todolistId: string, title: string) => {
-        setTodolists(todolists.map(todolist => todolist.id === todolistId ? {...todolist, title} : todolist))
+        dispatchToTodolists(changeTodolistTitleAC({id: todolistId, title}))
     }
 
     const getFilteredTasks = (tasks: TaskType[], filter: FilterValues): TaskType[] => {
@@ -118,7 +125,7 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
+            <CssBaseline/>
             <AppBar position="static" sx={{mb: '30px'}}>
                 <Toolbar>
                     <Container maxWidth='lg' sx={containerSx}>
@@ -129,7 +136,7 @@ function App() {
                             <NavButton>Sign in</NavButton>
                             <NavButton>Sign up</NavButton>
                             <NavButton background={theme.palette.primary.dark}>Faq</NavButton>
-                            <Switch color={'default'} onChange={changeMode} />
+                            <Switch color={'default'} onChange={changeMode}/>
                         </div>
                     </Container>
                 </Toolbar>
