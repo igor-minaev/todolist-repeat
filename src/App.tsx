@@ -2,6 +2,11 @@ import './App.css'
 import {type TaskType, Todolist} from "./Todolist";
 import {useState} from "react";
 import {CreateItemForm} from "./CreateItemForm";
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
 
 export type FilterValues = 'all' | 'active' | 'completed'
 export type Todolist = {
@@ -90,6 +95,14 @@ function App() {
 
     return (
         <div className="app">
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton color="inherit">
+                        <MenuIcon />
+                    </IconButton>
+                    <Button color="inherit">Sign in</Button>
+                </Toolbar>
+            </AppBar>
             <CreateItemForm createItem={createTodolist}/>
             {todolists.map(todolist => {
                 return (
