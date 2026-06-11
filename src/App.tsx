@@ -98,7 +98,7 @@ function App() {
 
     return (
         <div className="app">
-            <AppBar position="static">
+            <AppBar position="static" sx={{mb:'30px'}}>
                 <Toolbar>
                     <Container maxWidth='lg'>
                         <IconButton color="inherit">
@@ -109,14 +109,14 @@ function App() {
                 </Toolbar>
             </AppBar>
             <Container maxWidth='lg'>
-                <Grid container>
+                <Grid container sx={{mb:'30px'}}>
                     <CreateItemForm createItem={createTodolist}/>
                 </Grid>
                 <Grid container spacing={4}>
                     {todolists.map(todolist => {
                         return (
                             <Grid key={todolist.id}>
-                                <Paper elevation={5}>
+                                <Paper elevation={5} sx={{p:'15px'}}>
                                     <Todolist
                                         id={todolist.id}
                                         title={todolist.title}

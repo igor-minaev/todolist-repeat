@@ -8,6 +8,8 @@ import IconButton from "@mui/material/IconButton";
 import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import Box from '@mui/material/Box';
+import {containerSx, getListItemSX} from "./Todolist.styles";
 
 export type TaskType = {
     id: string
@@ -51,9 +53,11 @@ export const Todolist = ({
                 const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(id, task.id, e.currentTarget.checked)
                 const changeTaskTitleHandler = (title: string) => changeTaskTitle(id, task.id, title)
                 return (
-                    <ListItem key={task.id}>
-                        <Checkbox size='small' color="secondary" checked={task.isDone} onChange={changeTaskStatusHandler}/>
-                        <EditableSpan className={task.isDone ? 'taskDone' : 'task'} value={task.title} onChange={changeTaskTitleHandler}/>
+                    <ListItem key={task.id} sx={getListItemSX(task.isDone)}>
+                        <div>
+                            <Checkbox size='small' color="secondary" checked={task.isDone} onChange={changeTaskStatusHandler}/>
+                            <EditableSpan className={task.isDone ? 'taskDone' : 'task'} value={task.title} onChange={changeTaskTitleHandler}/>
+                        </div>
                         <IconButton color="secondary" onClick={deleteTaskHandler}>
                             <DeleteForeverIcon/>
                         </IconButton>
@@ -81,11 +85,11 @@ export const Todolist = ({
             </h3>
             <CreateItemForm createItem={createTaskHandler}/>
             {mappedTasks}
-            <div className='buttonsWrapper'>
+            <Box sx={containerSx}>
                 <Button size='small' color="secondary" variant={filter === 'all' ? 'contained' : "outlined"} onClick={filterAllHandler}>All</Button>
                 <Button size='small' color="primary" variant={filter === 'active' ? 'contained' : "outlined"} onClick={filterActiveHandler}>Active</Button>
                 <Button size='small' color="success" variant={filter === 'completed' ? 'contained' : "outlined"} onClick={filterCompletedHandler}>Completed</Button>
-            </div>
+            </Box>
         </div>
     );
 };
