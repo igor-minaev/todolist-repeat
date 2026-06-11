@@ -41,8 +41,8 @@ function App() {
     const [filter, setFilter] = useState<FilterValuesType>('all')
 
 
-    const deleteTask = (id: string) => {
-        // setTasks(tasks.filter(task => task.id !== id))
+    const deleteTask = (todolistId: string, taskId: string) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].filter(task => task.id !== taskId)})
     }
     const createTask = (title: string) => {
         // const newTask: TaskType = {

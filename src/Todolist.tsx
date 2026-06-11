@@ -13,7 +13,7 @@ type TodolistPropsType = {
     id: string
     filter: FilterValuesType
     tasks: TaskType[]
-    deleteTask: (id: string) => void
+    deleteTask: (todolistId: string, taskId: string) => void
     changeTodolistFilter: (todolistId: string, filter: FilterValuesType) => void
     createTask: (title: string) => void
     changeTaskStatus: (id: string, isDone: boolean) => void
@@ -38,7 +38,7 @@ export const Todolist = ({
         ? <p>Your tasks list is empty!</p>
         : <ul>
             {tasks.map(task => {
-                const deleteTaskHandler = () => deleteTask(task.id)
+                const deleteTaskHandler = () => deleteTask(id,task.id)
                 const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(task.id, e.currentTarget.checked)
                 return (
                     <li key={task.id}>
