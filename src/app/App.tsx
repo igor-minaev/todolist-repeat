@@ -22,7 +22,6 @@ import {
     deleteTodolistAC
 } from "../model/todolists-reducer";
 import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC} from "../model/tasks-reducer";
-import type {RootState} from "./store";
 import {useAppSelector} from "../common/hooks/useAppSelector";
 import {useAppDispatch} from "../common/hooks/useAppDispatch";
 import {selectTasks} from "../model/tasks-selectors";
@@ -48,33 +47,30 @@ function App() {
     const dispatch = useAppDispatch()
 
     const deleteTask = (todolistId: string, taskId: string) => {
-        dispatchToTasks(deleteTaskAC({todolistId, taskId}))
+        dispatch(deleteTaskAC({todolistId, taskId}))
     }
     const createTask = (todolistId: string, title: string) => {
-        dispatchToTasks(createTaskAC({todolistId, title}))
+        dispatch(createTaskAC({todolistId, title}))
     }
     const changeTaskStatus = (todolistId: string, id: string, isDone: boolean) => {
-        dispatchToTasks(changeTaskStatusAC({todolistId, taskId: id, isDone}))
+        dispatch(changeTaskStatusAC({todolistId, taskId: id, isDone}))
     }
     const changeTaskTitle = (todolistId: string, id: string, title: string) => {
-        dispatchToTasks(changeTaskTitleAC({todolistId, taskId: id, title}))
+        dispatch(changeTaskTitleAC({todolistId, taskId: id, title}))
     }
 
     const createTodolist = (title: string) => {
-        const action = createTodolistAC(title)
-        dispatchToTodolists(action)
-        dispatchToTasks(action)
+        dispatch(createTodolistAC(title))
+
     }
     const deleteTodolist = (todolistId: string) => {
-        const action = deleteTodolistAC(todolistId)
-        dispatchToTodolists(action)
-        dispatchToTasks(action)
+        dispatch(deleteTodolistAC({id: todolistId}))
     }
     const changeTodolistFilter = (todolistId: string, filter: FilterValues) => {
-        dispatchToTodolists(changeTodolistFilterAC({id: todolistId, filter}))
+        dispatch(changeTodolistFilterAC({id: todolistId, filter}))
     }
     const changeTodolistTitle = (todolistId: string, title: string) => {
-        dispatchToTodolists(changeTodolistTitleAC({id: todolistId, title}))
+        dispatch(changeTodolistTitleAC({id: todolistId, title}))
     }
 
     const getFilteredTasks = (tasks: TaskType[], filter: FilterValues): TaskType[] => {
@@ -124,27 +120,29 @@ function App() {
                     <CreateItemForm createItem={createTodolist}/>
                 </Grid>
                 <Grid container spacing={4}>
-                    {todolists.map(todolist => {
-                        return (
-                            <Grid key={todolist.id}>
-                                <Paper elevation={5} sx={{p: '15px'}}>
-                                    <Todolist
-                                        id={todolist.id}
-                                        title={todolist.title}
-                                        filter={todolist.filter}
-                                        tasks={getFilteredTasks(tasks[todolist.id], todolist.filter)}
-                                        deleteTask={deleteTask}
-                                        changeTodolistFilter={changeTodolistFilter}
-                                        createTask={createTask}
-                                        changeTaskStatus={changeTaskStatus}
-                                        changeTaskTitle={changeTaskTitle}
-                                        deleteTodolist={deleteTodolist}
-                                        changeTodolistTitle={changeTodolistTitle}
-                                    />
-                                </Paper>
-                            </Grid>
-                        )
-                    })}
+                    {todolists.length === 0
+                        ? <p>Create new todolist!</p>
+                        : todolists.map(todolist => {
+                            return (
+                                <Grid key={todolist.id}>
+                                    <Paper elevation={5} sx={{p: '15px'}}>
+                                        <Todolist
+                                            id={todolist.id}
+                                            title={todolist.title}
+                                            filter={todolist.filter}
+                                            tasks={getFilteredTasks(tasks[todolist.id], todolist.filter)}
+                                            deleteTask={deleteTask}
+                                            changeTodolistFilter={changeTodolistFilter}
+                                            createTask={createTask}
+                                            changeTaskStatus={changeTaskStatus}
+                                            changeTaskTitle={changeTaskTitle}
+                                            deleteTodolist={deleteTodolist}
+                                            changeTodolistTitle={changeTodolistTitle}
+                                        />
+                                    </Paper>
+                                </Grid>
+                            )
+                        })}
                 </Grid>
             </Container>
         </ThemeProvider>
