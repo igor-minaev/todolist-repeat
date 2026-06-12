@@ -1,12 +1,12 @@
 import type {FilterValues, Todolist} from "../app/App";
-import {createAction, createReducer} from "@reduxjs/toolkit";
+import {createAction, createReducer, nanoid} from "@reduxjs/toolkit";
 
 
 export const deleteTodolistAC = createAction<{ id: string }>('todolists/deleteTodolist')
 export const createTodolistAC = createAction('todolists/createTodolist', (title: string) => ({
     payload: {
         title,
-        id: crypto.randomUUID()
+        id: nanoid()
     }
 }))
 export const changeTodolistTitleAC = createAction<{ id: string, title: string }>('todolists/changeTodolistTitle')
