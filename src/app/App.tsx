@@ -23,6 +23,8 @@ import {
     todolistsReducer
 } from "../model/todolists-reducer";
 import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC, tasksReducer} from "../model/tasks-reducer";
+import type {RootState} from "./store";
+import {useDispatch, useSelector} from "react-redux";
 
 
 export type FilterValues = 'all' | 'active' | 'completed'
@@ -38,29 +40,10 @@ type ThemeMode = 'dark' | 'light'
 
 function App() {
 
+    const todolists = useSelector((state: RootState) => state.todolists)
+    const tasks = useSelector((state: RootState) => state.tasks)
 
-    const todolistId_1 = crypto.randomUUID();
-    const todolistId_2 = crypto.randomUUID();
-
-    const [todolists, dispatchToTodolists] = useReducer(todolistsReducer, [
-        {id: todolistId_1, title: 'What to learn', filter: 'all'},
-        {id: todolistId_2, title: 'What to buy', filter: 'all'},
-    ])
-    const [tasks, dispatchToTasks] = useReducer(tasksReducer, {
-        [todolistId_1]: [
-            {id: crypto.randomUUID(), title: 'HTML', isDone: true},
-            {id: crypto.randomUUID(), title: 'CSS', isDone: true},
-            {id: crypto.randomUUID(), title: 'JS', isDone: false},
-            {id: crypto.randomUUID(), title: 'REACT', isDone: false},
-        ],
-        [todolistId_2]: [
-            {id: crypto.randomUUID(), title: 'MILK', isDone: true},
-            {id: crypto.randomUUID(), title: 'BREAD', isDone: true},
-            {id: crypto.randomUUID(), title: 'SALT', isDone: false},
-            {id: crypto.randomUUID(), title: 'ICE-CREAM', isDone: false},
-        ]
-    })
-
+    const dispatch = useDispatch()
 
     const deleteTask = (todolistId: string, taskId: string) => {
         dispatchToTasks(deleteTaskAC({todolistId, taskId}))
