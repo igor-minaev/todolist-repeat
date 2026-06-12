@@ -1,4 +1,4 @@
-import type {TasksState} from "../App";
+import type {TasksState} from "../app/App";
 import type {CreateTodolist, DeleteTodolist} from "./todolists-reducer";
 import type {TaskType} from "../Todolist";
 

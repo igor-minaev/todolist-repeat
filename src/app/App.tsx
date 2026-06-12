@@ -1,7 +1,7 @@
 import './App.css'
-import {type TaskType, Todolist} from "./Todolist";
+import {type TaskType, Todolist} from "../Todolist";
 import {useReducer, useState} from "react";
-import {CreateItemForm} from "./CreateItemForm";
+import {CreateItemForm} from "../CreateItemForm";
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
@@ -9,8 +9,8 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
-import {containerSx} from "./Todolist.styles";
-import {NavButton} from "./NavButton";
+import {containerSx} from "../Todolist.styles";
+import {NavButton} from "../NavButton";
 import {createTheme, ThemeProvider} from "@mui/material";
 import {lime, purple} from "@mui/material/colors";
 import Switch from '@mui/material/Switch'
@@ -21,8 +21,8 @@ import {
     createTodolistAC,
     deleteTodolistAC,
     todolistsReducer
-} from "./model/todolists-reducer";
-import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC, tasksReducer} from "./model/tasks-reducer";
+} from "../model/todolists-reducer";
+import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC, tasksReducer} from "../model/tasks-reducer";
 
 
 export type FilterValues = 'all' | 'active' | 'completed'

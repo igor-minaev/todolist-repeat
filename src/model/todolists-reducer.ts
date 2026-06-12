@@ -1,4 +1,4 @@
-import type {FilterValues, Todolist} from "../App";
+import type {FilterValues, Todolist} from "../app/App";
 
 export type DeleteTodolist = ReturnType<typeof deleteTodolistAC>
 export type CreateTodolist = ReturnType<typeof createTodolistAC>
