@@ -1,6 +1,6 @@
 import './App.css'
 import {type TaskType, Todolist} from "../Todolist";
-import {useReducer, useState} from "react";
+import {useState} from "react";
 import {CreateItemForm} from "../CreateItemForm";
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -19,12 +19,14 @@ import {
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     createTodolistAC,
-    deleteTodolistAC,
-    todolistsReducer
+    deleteTodolistAC
 } from "../model/todolists-reducer";
-import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC, tasksReducer} from "../model/tasks-reducer";
+import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC} from "../model/tasks-reducer";
 import type {RootState} from "./store";
-import {useDispatch, useSelector} from "react-redux";
+import {useAppSelector} from "../common/hooks/useAppSelector";
+import {useAppDispatch} from "../common/hooks/useAppDispatch";
+import {selectTasks} from "../model/tasks-selectors";
+import {selectTodolists} from "../model/todolists-selectors";
 
 
 export type FilterValues = 'all' | 'active' | 'completed'
@@ -40,10 +42,10 @@ type ThemeMode = 'dark' | 'light'
 
 function App() {
 
-    const todolists = useSelector((state: RootState) => state.todolists)
-    const tasks = useSelector((state: RootState) => state.tasks)
+    const todolists = useAppSelector(selectTodolists)
+    const tasks = useAppSelector(selectTasks)
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const deleteTask = (todolistId: string, taskId: string) => {
         dispatchToTasks(deleteTaskAC({todolistId, taskId}))
