@@ -1,13 +1,33 @@
 import type {FilterValues, Todolist} from "../app/App";
+import {createAction, createReducer} from "@reduxjs/toolkit";
 
-export type DeleteTodolist = ReturnType<typeof deleteTodolistAC>
-export type CreateTodolist = ReturnType<typeof createTodolistAC>
-export type ChangeTodolistTitle = ReturnType<typeof changeTodolistTitleAC>
-export type ChangeTodolistFilterAC = ReturnType<typeof changeTodolistFilterAC>
 
-type Actions = DeleteTodolist | CreateTodolist | ChangeTodolistTitle | ChangeTodolistFilterAC
+export const deleteTodolistAC = createAction<{ id: string }>('todolists/deleteTodolist')
+export const createTodolistAC = createAction('todolists/createTodolist', (title: string) => ({
+    payload: {
+        title,
+        id: crypto.randomUUID()
+    }
+}))
+export const changeTodolistTitleAC = createAction<{ id: string, title: string }>('todolists/changeTodolistTitle')
+export const changeTodolistFilterAC = createAction<{
+    id: string,
+    filter: FilterValues
+}>('todolists/changeTodolistFilter')
 
-export const todolistsReducer = (state: Todolist[], action: Actions): Todolist[] => {
+const initialState: Todolist[] = []
+
+export const todolistsReducer = createReducer(initialState, (builder) => {
+    builder
+        .addCase(deleteTodolistAC, (state, action) => {
+            const index = state.findIndex(todolist => todolist.id === action.payload.id)
+            if (index !== -1) state.splice(index, 1)
+        })
+        .addCase(createTodolistAC,(state, action) =>)
+})
+
+
+export const todolistsReducer2 = (state: Todolist[], action: Actions): Todolist[] => {
     switch (action.type) {
         case "delete_todolist":
             return state.filter(todolist => todolist.id !== action.payload.id)
@@ -30,22 +50,7 @@ export const todolistsReducer = (state: Todolist[], action: Actions): Todolist[]
 }
 
 
-export const deleteTodolistAC = (id: string) => ({
-    type: 'delete_todolist',
-    payload: {id}
-} as const)
 
-export const createTodolistAC = (title: string) => ({
-    type: 'create_todolist',
-    payload: {title, id: crypto.randomUUID()}
-} as const)
 
-export const changeTodolistTitleAC = (payload: { id: string, title: string }) => ({
-    type: 'change_todolist_title',
-    payload
-} as const)
 
-export const changeTodolistFilterAC = (payload: { id: string, filter: FilterValues }) => ({
-    type: 'change_todolist_filter',
-    payload
-} as const)
+
