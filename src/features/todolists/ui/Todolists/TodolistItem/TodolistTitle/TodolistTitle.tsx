@@ -1,7 +1,7 @@
-import {EditableSpan} from "@/EditableSpan";
+import {EditableSpan} from "@/common/components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import {changeTodolistTitleAC, deleteTodolistAC} from "@/model/todolists-reducer";
+import {changeTodolistTitleAC, deleteTodolistAC} from "@/features/todolists/model/todolists-reducer";
 import {useAppDispatch} from "@/common/hooks/useAppDispatch";
 import type {Todolist} from "@/app/App";
 

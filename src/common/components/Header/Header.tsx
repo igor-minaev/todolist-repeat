@@ -1,9 +1,10 @@
+import {containerSx} from "@/common/styles/container.styles";
 import Toolbar from "@mui/material/Toolbar";
 import Container from "@mui/material/Container";
-import {containerSx} from "@/Todolist.styles";
+
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import {NavButton} from "@/NavButton";
+import {NavButton} from "@/common/components/NavButton/NavButton";
 import Switch from "@mui/material/Switch";
 import AppBar from "@mui/material/AppBar";
 import {useAppSelector} from "@/common/hooks/useAppSelector";

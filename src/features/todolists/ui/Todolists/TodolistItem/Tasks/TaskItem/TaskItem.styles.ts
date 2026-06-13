@@ -1,10 +1,5 @@
 import type {SxProps} from "@mui/material";
 
-export const containerSx: SxProps = {
-    display: 'flex',
-    justifyContent: 'space-between'
-}
-
 export const getListItemSX = (isDone: boolean): SxProps => ({
     p: 0,
     justifyContent: 'space-between',

@@ -1,16 +1,10 @@
-import Button from '@mui/material/Button';
-import type {Todolist} from "./app/App";
-import {CreateItemForm} from "./CreateItemForm";
-import Box from '@mui/material/Box';
-import {containerSx} from "./Todolist.styles";
-import {createTaskAC} from "@/model/tasks-reducer";
 import {useAppDispatch} from "@/common/hooks/useAppDispatch";
-import {changeTodolistFilterAC} from "@/model/todolists-reducer";
-import {useAppSelector} from "@/common/hooks/useAppSelector";
-import {selectTasks} from "@/model/tasks-selectors";
-import {TodolistTitle} from "@/TodolistTitle";
-import {Tasks} from "@/Tasks";
-import {FilterButtons} from "@/FilterButtons";
+import {createTaskAC} from "@/features/todolists/model/tasks-reducer";
+import {FilterButtons} from "@/features/todolists/ui/Todolists/TodolistItem/FilterButtons/FilterButtons";
+import {Tasks} from "@/features/todolists/ui/Todolists/TodolistItem/Tasks/Tasks";
+import {TodolistTitle} from "@/features/todolists/ui/Todolists/TodolistItem/TodolistTitle/TodolistTitle";
+import type {Todolist} from "@/app/App";
+import {CreateItemForm} from "@/common/components/CreateItemForm/CreateItemForm";
 
 export type TaskType = {
     id: string
