@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import {useAppSelector} from "@/common/hooks/useAppSelector";
 import {selectThemeMode} from "./app-selectors";
 import {getTheme} from "@/common/theme/theme";
-import {Header} from "@/Heder";
+import {Header} from "@/Header";
 import {Main} from "@/app/Main";
 
 
