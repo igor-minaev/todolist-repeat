@@ -1,6 +1,6 @@
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import {TodolistItem} from "@/Todolist";
+import {TodolistItem} from "@/TodolistItem";
 import {selectTodolists} from "@/model/todolists-selectors";
 import {useAppSelector} from "@/common/hooks/useAppSelector";
 

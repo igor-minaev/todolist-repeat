@@ -1,5 +1,5 @@
 import './App.css'
-import {type TaskType} from "@/Todolist";
+import {type TaskType} from "@/TodolistItem";
 import {ThemeProvider} from "@mui/material";
 import CssBaseline from '@mui/material/CssBaseline'
 import {useAppSelector} from "@/common/hooks/useAppSelector";
