@@ -1,6 +1,5 @@
 import './App.css'
 import {type TaskType, Todolist} from "../Todolist";
-import {useState} from "react";
 import {CreateItemForm} from "../CreateItemForm";
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -11,8 +10,7 @@ import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 import {containerSx} from "../Todolist.styles";
 import {NavButton} from "../NavButton";
-import {createTheme, ThemeProvider} from "@mui/material";
-import {lime, purple} from "@mui/material/colors";
+import {ThemeProvider} from "@mui/material";
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
 import {
@@ -26,6 +24,9 @@ import {useAppSelector} from "../common/hooks/useAppSelector";
 import {useAppDispatch} from "../common/hooks/useAppDispatch";
 import {selectTasks} from "../model/tasks-selectors";
 import {selectTodolists} from "../model/todolists-selectors";
+import {selectThemeMode} from "./app-selectors";
+import {changeThemeModeAC} from "./app-reducer";
+import {getTheme} from "../common/theme/theme";
 
 
 export type FilterValues = 'all' | 'active' | 'completed'
@@ -36,13 +37,13 @@ export type Todolist = {
 }
 
 export type TasksState = Record<string, TaskType[]>
-type ThemeMode = 'dark' | 'light'
 
 
 function App() {
 
     const todolists = useAppSelector(selectTodolists)
     const tasks = useAppSelector(selectTasks)
+    const themeMode = useAppSelector(selectThemeMode)
 
     const dispatch = useAppDispatch()
 
@@ -84,17 +85,11 @@ function App() {
         }
     }
 
-    const [themeMode, setThemeMode] = useState<ThemeMode>('dark')
+    const theme = getTheme(themeMode)
 
-    const theme = createTheme({
-        palette: {
-            mode: themeMode,
-            primary: lime,
-            secondary: purple,
-        },
-    })
-
-    const changeMode = () => setThemeMode(themeMode === 'light' ? 'dark' : 'light')
+    const changeThemeMode = () => dispatch(changeThemeModeAC({
+        themeMode: themeMode === 'light' ? 'dark' : 'light'
+    }))
 
 
     return (
@@ -110,7 +105,7 @@ function App() {
                             <NavButton>Sign in</NavButton>
                             <NavButton>Sign up</NavButton>
                             <NavButton background={theme.palette.primary.dark}>Faq</NavButton>
-                            <Switch color={'default'} onChange={changeMode}/>
+                            <Switch color={'default'} onChange={changeThemeMode}/>
                         </div>
                     </Container>
                 </Toolbar>
