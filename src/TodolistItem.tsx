@@ -1,4 +1,5 @@
 import type {Task} from "@/App";
+import {Button} from "@/Button";
 
 type Props = {
     title: string
@@ -13,7 +14,7 @@ export const TodolistItem = ({title, tasks}: Props) => {
                     <li key={task.id}>
                         <input type="checkbox" checked={task.isDone}/>
                         <span>{task.title}</span>
-                        <button>x</button>
+                        <Button>x</Button>
                     </li>
                 ))
             }
@@ -25,13 +26,13 @@ export const TodolistItem = ({title, tasks}: Props) => {
             <h3>{title}</h3>
             <div>
                 <input/>
-                <button>+</button>
+                <Button>+</Button>
             </div>
             {mappedTasks}
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <Button>All</Button>
+                <Button>Active</Button>
+                <Button>Completed</Button>
             </div>
         </div>
     );
