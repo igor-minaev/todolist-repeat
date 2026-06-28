@@ -14,10 +14,13 @@ function App() {
         {id: 3, title: 'ReactJS', isDone: false},
     ])
 
+    const deleteTask = (taskId: number) => {
+        setTasks(tasks.filter(task => task.id !== taskId))
+    }
 
     return (
         <div>
-            <TodolistItem title="What to learn" tasks={tasks}/>
+            <TodolistItem title="What to learn" tasks={tasks} deleteTask={deleteTask}/>
         </div>
     )
 }

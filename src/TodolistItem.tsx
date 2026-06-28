@@ -4,19 +4,23 @@ import {Button} from "@/Button";
 type Props = {
     title: string
     tasks: Task[]
+    deleteTask: (taskId: number) => void
 };
-export const TodolistItem = ({title, tasks}: Props) => {
+export const TodolistItem = ({title, tasks, deleteTask}: Props) => {
 
     const mappedTasks = tasks.length
         ? <ul>
             {
-                tasks.map(task => (
-                    <li key={task.id}>
-                        <input type="checkbox" checked={task.isDone}/>
-                        <span>{task.title}</span>
-                        <Button>x</Button>
-                    </li>
-                ))
+                tasks.map(task => {
+                    const deleteTaskHandler = () => deleteTask(task.id)
+                    return (
+                        <li key={task.id}>
+                            <input type="checkbox" checked={task.isDone}/>
+                            <span>{task.title}</span>
+                            <Button onClick={deleteTaskHandler}>x</Button>
+                        </li>
+                    )
+                })
             }
         </ul>
         : <p>You don't have any task</p>
