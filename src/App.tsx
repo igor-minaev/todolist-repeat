@@ -1,4 +1,5 @@
 import {TodolistItem} from "@/TodolistItem";
+import {useState} from "react";
 
 export type Task = {
     id: number
@@ -7,16 +8,16 @@ export type Task = {
 }
 
 function App() {
-
-    const tasks1: Task[] = [
+    const [tasks, setTasks] = useState<Task[]>([
         {id: 1, title: 'HTML&CSS', isDone: true},
         {id: 2, title: 'JS', isDone: true},
         {id: 3, title: 'ReactJS', isDone: false},
-    ]
+    ])
+
 
     return (
         <div>
-            <TodolistItem title="What to learn" tasks={tasks1}/>
+            <TodolistItem title="What to learn" tasks={tasks}/>
         </div>
     )
 }
