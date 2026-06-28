@@ -1,39 +1,33 @@
-type Props = {};
-export const TodolistItem = (props: Props) => {
+import type {Task} from "@/App";
+
+type Props = {
+    title: string
+    tasks: Task[]
+};
+export const TodolistItem = ({title, tasks}: Props) => {
+
+    const mappedTasks = tasks.length
+        ? <ul>
+            {
+                tasks.map(task => (
+                    <li key={task.id}>
+                        <input type="checkbox" checked={task.isDone}/>
+                        <span>{task.title}</span>
+                        <button>x</button>
+                    </li>
+                ))
+            }
+        </ul>
+        : <p>You don't have any task</p>
+
     return (
         <div>
-            <h3>What to learn</h3>
+            <h3>{title}</h3>
             <div>
                 <input/>
                 <button>+</button>
             </div>
-            <ul>
-                <li>
-                    <input type="checkbox" checked={true}/>
-                    <span>HTML</span>
-                    <button>x</button>
-                </li>
-                <li>
-                    <input type="checkbox" checked={true}/>
-                    <span>CSS</span>
-                    <button>x</button>
-                </li>
-                <li>
-                    <input type="checkbox" checked={true}/>
-                    <span>JS</span>
-                    <button>x</button>
-                </li>
-                <li>
-                    <input type="checkbox" checked={false}/>
-                    <span>REACT</span>
-                    <button>x</button>
-                </li>
-                <li>
-                    <input type="checkbox" checked={false}/>
-                    <span>REDUX</span>
-                    <button>x</button>
-                </li>
-            </ul>
+            {mappedTasks}
             <div>
                 <button>All</button>
                 <button>Active</button>
