@@ -1,12 +1,13 @@
-import type {Task} from "@/App";
+import type {FilterValues, Task} from "@/App";
 import {Button} from "@/Button";
 
 type Props = {
     title: string
     tasks: Task[]
     deleteTask: (taskId: number) => void
+    changeFilter: (filter: FilterValues) => void
 };
-export const TodolistItem = ({title, tasks, deleteTask}: Props) => {
+export const TodolistItem = ({title, tasks, deleteTask, changeFilter}: Props) => {
 
     const mappedTasks = tasks.length
         ? <ul>
@@ -25,6 +26,7 @@ export const TodolistItem = ({title, tasks, deleteTask}: Props) => {
         </ul>
         : <p>You don't have any task</p>
 
+
     return (
         <div>
             <h3>{title}</h3>
@@ -34,9 +36,9 @@ export const TodolistItem = ({title, tasks, deleteTask}: Props) => {
             </div>
             {mappedTasks}
             <div>
-                <Button>All</Button>
-                <Button>Active</Button>
-                <Button>Completed</Button>
+                <Button onClick={() => changeFilter('all')}>All</Button>
+                <Button onClick={() => changeFilter('active')}> Active </Button>
+                <Button onClick={() => changeFilter('completed')}>Completed</Button>
             </div>
         </div>
     );
