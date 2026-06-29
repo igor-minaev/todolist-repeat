@@ -11,6 +11,7 @@ type Props = {
     changeFilter: (todolistId: string, filter: FilterValues) => void
     createTask: (todolistId: string, title: string) => void
     changeTaskStatus: (todolistId: string, taskId: string, isDone: boolean) => void
+    deleteTodolist: (todolistId: string) => void
 };
 export const TodolistItem = ({
                                  id,
@@ -20,7 +21,8 @@ export const TodolistItem = ({
                                  changeFilter,
                                  createTask,
                                  changeTaskStatus,
-                                 filter
+                                 filter,
+                                 deleteTodolist
                              }: Props) => {
     const [newTitle, setNewTitle] = useState('')
     const [error, setError] = useState(false)
@@ -64,10 +66,15 @@ export const TodolistItem = ({
         e.key === 'Enter' && createTaskHandler()
     }
 
+    const deleteTodolistHandler = () => deleteTodolist(id)
+
 
     return (
         <div>
-            <h3>{title}</h3>
+            <h3>
+                {title}
+                <Button onClick={deleteTodolistHandler}>x</Button>
+            </h3>
             <div>
                 <input style={{border: error ? '1px solid red' : ''}} value={newTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
                 <Button onClick={createTaskHandler}>+</Button>
