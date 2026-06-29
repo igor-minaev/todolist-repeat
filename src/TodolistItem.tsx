@@ -12,6 +12,7 @@ type Props = {
 };
 export const TodolistItem = ({title, tasks, deleteTask, changeFilter, createTask, changeTaskStatus}: Props) => {
     const [newTitle, setNewTitle] = useState('')
+    const [error, setError] = useState(false)
 
     const mappedTasks = tasks.length
         ? <ul>
@@ -34,6 +35,7 @@ export const TodolistItem = ({title, tasks, deleteTask, changeFilter, createTask
         : <p>You don't have any task</p>
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        error && setError(false)
         setNewTitle(e.currentTarget.value)
     }
 
@@ -41,8 +43,10 @@ export const TodolistItem = ({title, tasks, deleteTask, changeFilter, createTask
         const trimmedTitle = newTitle.trim()
         if (trimmedTitle) {
             createTask(newTitle)
-            setNewTitle('')
+        } else {
+            setError(true)
         }
+        setNewTitle('')
     }
 
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -54,8 +58,9 @@ export const TodolistItem = ({title, tasks, deleteTask, changeFilter, createTask
         <div>
             <h3>{title}</h3>
             <div>
-                <input value={newTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
+                <input style={{border: error ? '1px solid red' : ''}} value={newTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
                 <Button onClick={createTaskHandler}>+</Button>
+                {error && <p style={{color: 'red'}}>Title is required!</p>}
             </div>
             {mappedTasks}
             <div>
