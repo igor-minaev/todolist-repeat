@@ -20,6 +20,15 @@ function App() {
         setTasks(tasks.filter(task => task.id !== taskId))
     }
 
+    const createTask = (title: string) => {
+        const newTask: Task = {
+            id: crypto.randomUUID(),
+            title,
+            isDone: false
+        }
+        setTasks([newTask, ...tasks])
+    }
+
     const [filter, setFilter] = useState<FilterValues>('all')
 
     const changeFilter = (filter: FilterValues) => setFilter(filter)
@@ -43,7 +52,8 @@ function App() {
                 title="What to learn"
                 tasks={tasksForTodolist}
                 deleteTask={deleteTask}
-                changeFilter={changeFilter}/>
+                changeFilter={changeFilter}
+                createTask={createTask}/>
         </div>
     )
 }
