@@ -83,7 +83,7 @@ function App() {
                         id={todolist.id}
                         title={todolist.title}
                         filter={todolist.filter}
-                        tasks={getTasksForTodolist(tasks, todolist.filter)}
+                        tasks={getTasksForTodolist(tasks[todolist.id], todolist.filter)}
                         deleteTask={deleteTask}
                         changeFilter={changeFilter}
                         createTask={createTask}
