@@ -28,7 +28,6 @@ function App() {
         {id: todolistId_1, title: 'What to learn', filter: 'all'},
         {id: todolistId_2, title: 'What to buy', filter: 'all'}
     ])
-
     const [tasks, setTasks] = useState<TasksState>({
         [todolistId_1]: [
             {id: crypto.randomUUID(), title: 'HTML&CSS', isDone: true},
@@ -44,7 +43,6 @@ function App() {
     const deleteTask = (todolistId: string, taskId: string) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(task => task.id !== taskId)})
     }
-
     const createTask = (todolistId: string, title: string) => {
         const newTask: Task = {
             id: crypto.randomUUID(),
@@ -53,9 +51,11 @@ function App() {
         }
         setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
     }
-
     const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(task => task.id === taskId ? {...task, isDone} : task)})
+    }
+    const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(task => task.id === taskId ? {...task, title} : task)})
     }
 
     const createTodolist = (title: string) => {
@@ -65,18 +65,17 @@ function App() {
         setTodolists([newTodolist, ...todolists])
         setTasks({...tasks, [newTodolist.id]: []})
     }
-
     const deleteTodolist = (todolistId: string) => {
         setTodolists(todolists.filter(todolist => todolist.id !== todolistId))
         const copyTasks = {...tasks}
         delete copyTasks[todolistId]
         setTasks(copyTasks)
     }
-    console.log(tasks)
-
-
-    const changeFilter = (todolistId: string, filter: FilterValues) => {
+    const changeTodolistFilter = (todolistId: string, filter: FilterValues) => {
         setTodolists(todolists.map(todolist => todolist.id === todolistId ? {...todolist, filter} : todolist))
+    }
+    const changeTodolistTitle = (todolistId: string, title: string) => {
+        setTodolists(todolists.map(todolist => todolist.id === todolistId ? {...todolist, title} : todolist))
     }
 
     const getTasksForTodolist = (tasks: Task[], filter: FilterValues): Task[] => {
@@ -90,7 +89,6 @@ function App() {
         }
     }
 
-
     return (
         <div>
             <CreateItemForm createItem={createTodolist}/>
@@ -103,10 +101,12 @@ function App() {
                         filter={todolist.filter}
                         tasks={getTasksForTodolist(tasks[todolist.id], todolist.filter)}
                         deleteTask={deleteTask}
-                        changeFilter={changeFilter}
+                        changeTodolistFilter={changeTodolistFilter}
                         createTask={createTask}
                         changeTaskStatus={changeTaskStatus}
-                        deleteTodolist={deleteTodolist}/>
+                        deleteTodolist={deleteTodolist}
+                        changeTaskTitle={changeTaskTitle}
+                        changeTodolistTitle={changeTodolistTitle}/>
                 )
             })}
 
