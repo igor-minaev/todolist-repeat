@@ -55,6 +55,7 @@ function App() {
         <div>
             <TodolistItem
                 title="What to learn"
+                filter={filter}
                 tasks={tasksForTodolist}
                 deleteTask={deleteTask}
                 changeFilter={changeFilter}

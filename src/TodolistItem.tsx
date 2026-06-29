@@ -4,13 +4,14 @@ import {type ChangeEvent, KeyboardEvent, useState} from "react";
 
 type Props = {
     title: string
+    filter: FilterValues
     tasks: Task[]
     deleteTask: (taskId: string) => void
     changeFilter: (filter: FilterValues) => void
     createTask: (title: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
 };
-export const TodolistItem = ({title, tasks, deleteTask, changeFilter, createTask, changeTaskStatus}: Props) => {
+export const TodolistItem = ({title, tasks, deleteTask, changeFilter, createTask, changeTaskStatus, filter}: Props) => {
     const [newTitle, setNewTitle] = useState('')
     const [error, setError] = useState(false)
 
@@ -64,9 +65,9 @@ export const TodolistItem = ({title, tasks, deleteTask, changeFilter, createTask
             </div>
             {mappedTasks}
             <div>
-                <Button onClick={() => changeFilter('all')}>All</Button>
-                <Button onClick={() => changeFilter('active')}> Active </Button>
-                <Button onClick={() => changeFilter('completed')}>Completed</Button>
+                <Button style={{background: filter === 'all' ? 'pink' : ''}} onClick={() => changeFilter('all')}>All</Button>
+                <Button style={{background: filter === 'active' ? 'pink' : ''}} onClick={() => changeFilter('active')}> Active </Button>
+                <Button style={{background: filter === 'completed' ? 'pink' : ''}} onClick={() => changeFilter('completed')}>Completed</Button>
             </div>
         </div>
     );
