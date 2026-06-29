@@ -2,7 +2,7 @@ import {TodolistItem} from "@/TodolistItem";
 import {useState} from "react";
 
 export type Task = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -11,12 +11,12 @@ export type FilterValues = 'all' | 'active' | 'completed'
 
 function App() {
     const [tasks, setTasks] = useState<Task[]>([
-        {id: 1, title: 'HTML&CSS', isDone: true},
-        {id: 2, title: 'JS', isDone: true},
-        {id: 3, title: 'ReactJS', isDone: false},
+        {id: crypto.randomUUID(), title: 'HTML&CSS', isDone: true},
+        {id: crypto.randomUUID(), title: 'JS', isDone: true},
+        {id: crypto.randomUUID(), title: 'ReactJS', isDone: false},
     ])
 
-    const deleteTask = (taskId: number) => {
+    const deleteTask = (taskId: string) => {
         setTasks(tasks.filter(task => task.id !== taskId))
     }
 
