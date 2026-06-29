@@ -1,5 +1,6 @@
 import type {FilterValues, Task} from "@/App";
 import {Button} from "@/Button";
+import {CreateItemForm} from "@/CreateItemForm";
 import {type ChangeEvent, KeyboardEvent, useState} from "react";
 
 type Props = {
@@ -24,8 +25,6 @@ export const TodolistItem = ({
                                  filter,
                                  deleteTodolist
                              }: Props) => {
-    const [newTitle, setNewTitle] = useState('')
-    const [error, setError] = useState(false)
 
     const mappedTasks = tasks.length
         ? <ul>
@@ -47,24 +46,9 @@ export const TodolistItem = ({
         </ul>
         : <p>You don't have any task</p>
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        error && setError(false)
-        setNewTitle(e.currentTarget.value)
-    }
 
-    const createTaskHandler = () => {
-        const trimmedTitle = newTitle.trim()
-        if (trimmedTitle) {
-            createTask(id, newTitle)
-        } else {
-            setError(true)
-        }
-        setNewTitle('')
-    }
+    const createTaskHandler = (title: string) => createTask(id, title)
 
-    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        e.key === 'Enter' && createTaskHandler()
-    }
 
     const deleteTodolistHandler = () => deleteTodolist(id)
 
@@ -75,11 +59,7 @@ export const TodolistItem = ({
                 {title}
                 <Button onClick={deleteTodolistHandler}>x</Button>
             </h3>
-            <div>
-                <input style={{border: error ? '1px solid red' : ''}} value={newTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
-                <Button onClick={createTaskHandler}>+</Button>
-                {error && <p style={{color: 'red'}}>Title is required!</p>}
-            </div>
+            <CreateItemForm createItem={createTaskHandler}/>
             {mappedTasks}
             <div>
                 <Button style={{background: filter === 'all' ? 'pink' : ''}} onClick={() => changeFilter(id, 'all')}>All</Button>

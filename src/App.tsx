@@ -1,3 +1,4 @@
+import {CreateItemForm} from "@/CreateItemForm";
 import {TodolistItem} from "@/TodolistItem";
 import {useState} from "react";
 
@@ -57,6 +58,14 @@ function App() {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(task => task.id === taskId ? {...task, isDone} : task)})
     }
 
+    const createTodolist = (title: string) => {
+        const newTodolist: Todolist = {
+            id: crypto.randomUUID(), title, filter: 'all'
+        }
+        setTodolists([newTodolist, ...todolists])
+        setTasks({...tasks, [newTodolist.id]: []})
+    }
+
     const deleteTodolist = (todolistId: string) => {
         setTodolists(todolists.filter(todolist => todolist.id !== todolistId))
         const copyTasks = {...tasks}
@@ -84,6 +93,7 @@ function App() {
 
     return (
         <div>
+            <CreateItemForm createItem={createTodolist}/>
             {todolists.map(todolist => {
                 return (
                     <TodolistItem
