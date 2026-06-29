@@ -1,13 +1,16 @@
 import type {FilterValues, Task} from "@/App";
 import {Button} from "@/Button";
+import {type ChangeEvent, KeyboardEvent, useState} from "react";
 
 type Props = {
     title: string
     tasks: Task[]
     deleteTask: (taskId: string) => void
     changeFilter: (filter: FilterValues) => void
+    createTask: (title: string) => void
 };
-export const TodolistItem = ({title, tasks, deleteTask, changeFilter}: Props) => {
+export const TodolistItem = ({title, tasks, deleteTask, changeFilter, createTask}: Props) => {
+    const [newTitle, setNewTitle] = useState('')
 
     const mappedTasks = tasks.length
         ? <ul>
@@ -26,13 +29,26 @@ export const TodolistItem = ({title, tasks, deleteTask, changeFilter}: Props) =>
         </ul>
         : <p>You don't have any task</p>
 
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setNewTitle(e.currentTarget.value)
+    }
+
+    const createTaskHandler = () => {
+        createTask(newTitle)
+        setNewTitle('')
+    }
+
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        e.key === 'Enter' && createTaskHandler()
+    }
+
 
     return (
         <div>
             <h3>{title}</h3>
             <div>
-                <input/>
-                <Button>+</Button>
+                <input value={newTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
+                <Button onClick={createTaskHandler}>+</Button>
             </div>
             {mappedTasks}
             <div>
