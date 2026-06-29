@@ -38,8 +38,11 @@ export const TodolistItem = ({title, tasks, deleteTask, changeFilter, createTask
     }
 
     const createTaskHandler = () => {
-        createTask(newTitle)
-        setNewTitle('')
+        const trimmedTitle = newTitle.trim()
+        if (trimmedTitle) {
+            createTask(newTitle)
+            setNewTitle('')
+        }
     }
 
     const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
