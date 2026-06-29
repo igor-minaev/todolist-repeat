@@ -3,15 +3,25 @@ import {Button} from "@/Button";
 import {type ChangeEvent, KeyboardEvent, useState} from "react";
 
 type Props = {
+    id: string
     title: string
     filter: FilterValues
     tasks: Task[]
     deleteTask: (taskId: string) => void
-    changeFilter: (filter: FilterValues) => void
+    changeFilter: (todolistId: string, filter: FilterValues) => void
     createTask: (title: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
 };
-export const TodolistItem = ({title, tasks, deleteTask, changeFilter, createTask, changeTaskStatus, filter}: Props) => {
+export const TodolistItem = ({
+                                 id,
+                                 title,
+                                 tasks,
+                                 deleteTask,
+                                 changeFilter,
+                                 createTask,
+                                 changeTaskStatus,
+                                 filter
+                             }: Props) => {
     const [newTitle, setNewTitle] = useState('')
     const [error, setError] = useState(false)
 
@@ -65,9 +75,9 @@ export const TodolistItem = ({title, tasks, deleteTask, changeFilter, createTask
             </div>
             {mappedTasks}
             <div>
-                <Button style={{background: filter === 'all' ? 'pink' : ''}} onClick={() => changeFilter('all')}>All</Button>
-                <Button style={{background: filter === 'active' ? 'pink' : ''}} onClick={() => changeFilter('active')}> Active </Button>
-                <Button style={{background: filter === 'completed' ? 'pink' : ''}} onClick={() => changeFilter('completed')}>Completed</Button>
+                <Button style={{background: filter === 'all' ? 'pink' : ''}} onClick={() => changeFilter(id, 'all')}>All</Button>
+                <Button style={{background: filter === 'active' ? 'pink' : ''}} onClick={() => changeFilter(id, 'active')}> Active </Button>
+                <Button style={{background: filter === 'completed' ? 'pink' : ''}} onClick={() => changeFilter(id, 'completed')}>Completed</Button>
             </div>
         </div>
     );
