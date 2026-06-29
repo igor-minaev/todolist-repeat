@@ -9,7 +9,7 @@ type Props = {
     tasks: Task[]
     deleteTask: (todolistId: string, taskId: string) => void
     changeFilter: (todolistId: string, filter: FilterValues) => void
-    createTask: (title: string) => void
+    createTask: (todolistId: string, title: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean) => void
 };
 export const TodolistItem = ({
@@ -53,7 +53,7 @@ export const TodolistItem = ({
     const createTaskHandler = () => {
         const trimmedTitle = newTitle.trim()
         if (trimmedTitle) {
-            createTask(newTitle)
+            createTask(id, newTitle)
         } else {
             setError(true)
         }
