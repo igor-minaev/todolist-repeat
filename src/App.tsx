@@ -14,6 +14,8 @@ export type Todolist = {
     filter: FilterValues
 }
 
+export type TasksState = Record<string, Task[]>
+
 export type FilterValues = 'all' | 'active' | 'completed'
 
 function App() {
@@ -25,11 +27,18 @@ function App() {
         {id: todolistId_1, title: 'What to learn', filter: 'all'},
         {id: todolistId_2, title: 'What to buy', filter: 'all'}
     ])
-    const [tasks, setTasks] = useState<Task[]>([
-        {id: crypto.randomUUID(), title: 'HTML&CSS', isDone: true},
-        {id: crypto.randomUUID(), title: 'JS', isDone: true},
-        {id: crypto.randomUUID(), title: 'ReactJS', isDone: false},
-    ])
+
+    const [tasks, setTasks] = useState<TasksState>({
+        [todolistId_1]: [
+            {id: crypto.randomUUID(), title: 'HTML&CSS', isDone: true},
+            {id: crypto.randomUUID(), title: 'JS', isDone: true},
+            {id: crypto.randomUUID(), title: 'ReactJS', isDone: false},
+        ],
+        [todolistId_2]: [
+            {id: crypto.randomUUID(), title: 'Milk', isDone: true},
+            {id: crypto.randomUUID(), title: 'Bread', isDone: false},
+        ]
+    })
 
     const deleteTask = (taskId: string) => {
         setTasks(tasks.filter(task => task.id !== taskId))
