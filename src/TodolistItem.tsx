@@ -8,8 +8,9 @@ type Props = {
     deleteTask: (taskId: string) => void
     changeFilter: (filter: FilterValues) => void
     createTask: (title: string) => void
+    changeTaskStatus: (taskId: string, isDone: boolean) => void
 };
-export const TodolistItem = ({title, tasks, deleteTask, changeFilter, createTask}: Props) => {
+export const TodolistItem = ({title, tasks, deleteTask, changeFilter, createTask, changeTaskStatus}: Props) => {
     const [newTitle, setNewTitle] = useState('')
 
     const mappedTasks = tasks.length
@@ -17,9 +18,12 @@ export const TodolistItem = ({title, tasks, deleteTask, changeFilter, createTask
             {
                 tasks.map(task => {
                     const deleteTaskHandler = () => deleteTask(task.id)
+                    const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                        changeTaskStatus(task.id, e.currentTarget.checked)
+                    }
                     return (
                         <li key={task.id}>
-                            <input type="checkbox" checked={task.isDone}/>
+                            <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>
                             <span>{task.title}</span>
                             <Button onClick={deleteTaskHandler}>x</Button>
                         </li>
