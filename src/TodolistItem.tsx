@@ -6,6 +6,8 @@ import IconButton from '@mui/material/IconButton';
 import {type ChangeEvent} from "react";
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 type Props = {
     id: string
@@ -35,7 +37,7 @@ export const TodolistItem = ({
                              }: Props) => {
 
     const mappedTasks = tasks.length
-        ? <ul>
+        ? <List>
             {
                 tasks.map(task => {
                     const deleteTaskHandler = () => deleteTask(id, task.id)
@@ -44,17 +46,17 @@ export const TodolistItem = ({
                     }
                     const changeTaskTitleHandler = (title: string) => changeTaskTitle(id, task.id, title)
                     return (
-                        <li key={task.id}>
+                        <ListItem key={task.id}>
                             <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
                             <EditableSpan oldTitle={task.title} changeTitle={changeTaskTitleHandler}/>
                             <IconButton onClick={deleteTaskHandler}>
                                 <DeleteForeverIcon/>
                             </IconButton>
-                        </li>
+                        </ListItem>
                     )
                 })
             }
-        </ul>
+        </List>
         : <p>You don't have any task</p>
 
 
