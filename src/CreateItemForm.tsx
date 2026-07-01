@@ -1,6 +1,6 @@
-import {Button} from "@/Button";
 import {type ChangeEvent, KeyboardEvent, useState} from "react";
-
+import IconButton from '@mui/material/IconButton';
+import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 
 type Props = {
     createItem: (title: string) => void
@@ -31,7 +31,9 @@ export const CreateItemForm = ({createItem}: Props) => {
     return (
         <div>
             <input style={{border: error ? '1px solid red' : ''}} value={newTitle} onChange={onChangeHandler} onKeyDown={onKeyDownHandler}/>
-            <Button onClick={createTaskHandler}>+</Button>
+            <IconButton onClick={createTaskHandler}>
+                <AddToQueueIcon/>
+            </IconButton>
             {error && <p style={{color: 'red'}}>Title is required!</p>}
         </div>
     );
