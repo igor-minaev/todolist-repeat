@@ -31,7 +31,7 @@ export const EditableSpan = ({oldTitle, changeTitle}: Props) => {
                         value={title}
                         onChange={onChangeHandler}
                         autoFocus onBlur={editOff}
-                        variant="outlined"}/>
+                        variant="outlined"/>
                     : <span onDoubleClick={editOn}>{oldTitle}</span>
             }
         </>

@@ -5,6 +5,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from '@mui/material/IconButton';
 import {type ChangeEvent} from "react";
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
 
 type Props = {
     id: string
@@ -44,7 +45,7 @@ export const TodolistItem = ({
                     const changeTaskTitleHandler = (title: string) => changeTaskTitle(id, task.id, title)
                     return (
                         <li key={task.id}>
-                            <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>
+                            <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
                             <EditableSpan oldTitle={task.title} changeTitle={changeTaskTitleHandler}/>
                             <IconButton onClick={deleteTaskHandler}>
                                 <DeleteForeverIcon/>
