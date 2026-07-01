@@ -6,6 +6,8 @@ import Toolbar from '@mui/material/Toolbar'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
 
 
 export type Task = {
@@ -98,31 +100,39 @@ function App() {
         <div className='app'>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton color="inherit">
-                        <MenuIcon/>
-                    </IconButton>
-                    <Button color="inherit">Sign in</Button>
+                    <Container maxWidth={'lg'}>
+                        <IconButton color="inherit">
+                            <MenuIcon/>
+                        </IconButton>
+                        <Button color="inherit">Sign in</Button>
+                    </Container>
                 </Toolbar>
             </AppBar>
-            <CreateItemForm createItem={createTodolist}/>
-            {todolists.map(todolist => {
-                return (
-                    <TodolistItem
-                        key={todolist.id}
-                        id={todolist.id}
-                        title={todolist.title}
-                        filter={todolist.filter}
-                        tasks={getTasksForTodolist(tasks[todolist.id], todolist.filter)}
-                        deleteTask={deleteTask}
-                        changeTodolistFilter={changeTodolistFilter}
-                        createTask={createTask}
-                        changeTaskStatus={changeTaskStatus}
-                        deleteTodolist={deleteTodolist}
-                        changeTaskTitle={changeTaskTitle}
-                        changeTodolistTitle={changeTodolistTitle}/>
-                )
-            })}
-
+            <Container maxWidth={'lg'}>
+                <Grid container>
+                    <CreateItemForm createItem={createTodolist}/>
+                </Grid>
+                <Grid container spacing={4}>
+                    {todolists.map(todolist => {
+                        return (
+                            <Grid key={todolist.id}>
+                                <TodolistItem
+                                    id={todolist.id}
+                                    title={todolist.title}
+                                    filter={todolist.filter}
+                                    tasks={getTasksForTodolist(tasks[todolist.id], todolist.filter)}
+                                    deleteTask={deleteTask}
+                                    changeTodolistFilter={changeTodolistFilter}
+                                    createTask={createTask}
+                                    changeTaskStatus={changeTaskStatus}
+                                    deleteTodolist={deleteTodolist}
+                                    changeTaskTitle={changeTaskTitle}
+                                    changeTodolistTitle={changeTodolistTitle}/>
+                            </Grid>
+                        )
+                    })}
+                </Grid>
+            </Container>
         </div>
     )
 }
