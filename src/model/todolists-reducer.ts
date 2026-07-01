@@ -1,16 +1,15 @@
 import type {FilterValues, Todolist} from "@/App";
-import * as crypto from "node:crypto";
-
 export type DeleteTodolistAT = ReturnType<typeof deleteTodolistAC>
 export type ChangeTodolistFilterAT = ReturnType<typeof changeTodolistFilterAC>
 export type ChangeTodolistTitleAT = ReturnType<typeof changeTodolistTitleAC>
-export type createTodolistAT = ReturnType<typeof createTodolistAC>
+export type CreateTodolistAT = ReturnType<typeof createTodolistAC>
 
-type ActionsType = DeleteTodolistAT | ChangeTodolistFilterAT | ChangeTodolistTitleAT | createTodolistAT
+type ActionsType = DeleteTodolistAT | ChangeTodolistFilterAT | ChangeTodolistTitleAT | CreateTodolistAT
 
 const initialState: Todolist[] = []
 
 export const todolistsReducer = (state: Todolist[] = initialState, action: ActionsType): Todolist[] => {
+    debugger
     switch (action.type) {
         case "delete_todolist":
             return state.filter(todolist => todolist.id !== action.payload.todolistId)
@@ -23,6 +22,7 @@ export const todolistsReducer = (state: Todolist[] = initialState, action: Actio
             return state.map(todolist => todolist.id === todolistId ? {...todolist, title} : todolist)
         }
         case "create_todolist": {
+            debugger
             const {todolistId, title} = action.payload
             const newTodolist: Todolist = {id: todolistId, title, filter: 'all'}
             return [newTodolist, ...state]
