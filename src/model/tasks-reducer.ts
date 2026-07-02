@@ -1,4 +1,4 @@
-import type {Task, TasksState} from "@/App";
+import type {Task, TasksState} from "@/app/App";
 import type {CreateTodolistAT, DeleteTodolistAT} from "@/model/todolists-reducer";
 
 export type DeleteTaskAT = ReturnType<typeof deleteTaskAC>

@@ -1,4 +1,4 @@
-import type {FilterValues, Task} from "@/App";
+import type {FilterValues, Task} from "@/app/App";
 import {CreateItemForm} from "@/CreateItemForm";
 import {EditableSpan} from "@/EditableSpan";
 import {containerSx, getListItemSx} from "@/TodolistItem.styles";
