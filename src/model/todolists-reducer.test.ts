@@ -1,3 +1,4 @@
+import {nanoid} from "@reduxjs/toolkit";
 import {beforeEach, expect, test} from 'vitest'
 import type {Todolist} from '../app/App'
 import {
@@ -13,8 +14,8 @@ let todolistId1: string
 let todolistId2: string
 let startState: Todolist[]
 beforeEach(() => {
-    todolistId1 = crypto.randomUUID()
-    todolistId2 = crypto.randomUUID()
+    todolistId1 = nanoid()
+    todolistId2 = nanoid()
     startState = [
         {id: todolistId1, title: 'What to learn', filter: 'all'},
         {id: todolistId2, title: 'What to buy', filter: 'all'},
@@ -24,7 +25,7 @@ beforeEach(() => {
 
 test('correct todolist should be deleted', () => {
 
-    const endState = todolistsReducer(startState, deleteTodolistAC(todolistId1))
+    const endState = todolistsReducer(startState, deleteTodolistAC({todolistId: todolistId1}))
 
     // 3. Проверка, что действие измененило state соответствующим образом
     // в массиве останется один тудулист
@@ -40,7 +41,7 @@ test('correct todolist should be created', () => {
     const endState = todolistsReducer(startState, createTodolistAC(title))
 
     expect(endState.length).toBe(3)
-    expect(endState[0].title).toBe(title)
+    expect(endState[2].title).toBe(title)
 })
 
 test('correct todolist should change its title', () => {
