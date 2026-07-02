@@ -1,3 +1,5 @@
+import {changeModeAC} from "@/app/app-reducer";
+import {selectApp} from "@/app/app-selectors";
 import type {RootState} from "@/app/store";
 import {useAppDispatch} from "@/common/hooks/useAppDispatch";
 import {useAppSelector} from "@/common/hooks/useAppSelector";
@@ -46,6 +48,7 @@ export type FilterValues = 'all' | 'active' | 'completed'
 function App() {
     const todolists = useAppSelector(selectTodolists)
     const tasks = useAppSelector(selectTasks)
+    const themeMode = useAppSelector(selectApp)
 
     const dispatch = useAppDispatch()
 
@@ -86,11 +89,9 @@ function App() {
         }
     }
 
-    type ThemeMode = 'dark' | 'light'
-    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
     const changeMode = () => {
-        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
+        dispatch(changeModeAC({themeMode: themeMode === 'light' ? 'dark' : 'light'}))
     }
 
     const theme = createTheme({
