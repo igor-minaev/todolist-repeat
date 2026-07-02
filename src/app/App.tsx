@@ -1,6 +1,5 @@
-import {changeModeAC} from "@/app/app-reducer";
+import {changeThemeModeAC} from "@/app/app-reducer";
 import {selectApp} from "@/app/app-selectors";
-import type {RootState} from "@/app/store";
 import {useAppDispatch} from "@/common/hooks/useAppDispatch";
 import {useAppSelector} from "@/common/hooks/useAppSelector";
 import {CreateItemForm} from "@/CreateItemForm";
@@ -26,7 +25,6 @@ import Paper from '@mui/material/Paper'
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import Toolbar from '@mui/material/Toolbar'
-import {useState} from "react";
 
 
 export type Task = {
@@ -90,8 +88,8 @@ function App() {
     }
 
 
-    const changeMode = () => {
-        dispatch(changeModeAC({themeMode: themeMode === 'light' ? 'dark' : 'light'}))
+    const changeThemeMode = () => {
+        dispatch(changeThemeModeAC({themeMode: themeMode === 'light' ? 'dark' : 'light'}))
     }
 
     const theme = createTheme({
@@ -116,7 +114,7 @@ function App() {
                             <NavButton background="turquoise">Sign in</NavButton>
                             <NavButton>Sign up</NavButton>
                             <NavButton>Faq</NavButton>
-                            <Switch color={'default'} onChange={changeMode}/>
+                            <Switch color={'default'} onChange={changeThemeMode}/>
                         </div>
                     </Container>
                 </Toolbar>
