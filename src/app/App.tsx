@@ -1,12 +1,13 @@
 import type {RootState} from "@/app/store";
+import {useAppDispatch} from "@/common/hooks/useAppDispatch";
+import {useAppSelector} from "@/common/hooks/useAppSelector";
 import {CreateItemForm} from "@/CreateItemForm";
-import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC, tasksReducer} from "@/model/tasks-reducer";
+import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC} from "@/model/tasks-reducer";
 import {
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     createTodolistAC,
-    deleteTodolistAC,
-    todolistsReducer
+    deleteTodolistAC
 } from "@/model/todolists-reducer";
 import {NavButton} from "@/NavButtons";
 import {TodolistItem} from "@/TodolistItem";
@@ -21,8 +22,7 @@ import Paper from '@mui/material/Paper'
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import Toolbar from '@mui/material/Toolbar'
-import {useReducer, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
 
 
 export type Task = {
@@ -42,10 +42,10 @@ export type TasksState = Record<string, Task[]>
 export type FilterValues = 'all' | 'active' | 'completed'
 
 function App() {
-    const todolists = useSelector<RootState, Todolist[]>(state => state.todolists)
-    const tasks = useSelector<RootState, TasksState>(state => state.tasks)
+    const todolists = useAppSelector<RootState, Todolist[]>(state => state.todolists)
+    const tasks = useAppSelector<RootState, TasksState>(state => state.tasks)
 
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const deleteTask = (todolistId: string, taskId: string) => {
         dispatch(deleteTaskAC({todolistId, taskId}))
