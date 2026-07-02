@@ -66,7 +66,7 @@ function App() {
         dispatch(createTodolistAC(title))
     }
     const deleteTodolist = (todolistId: string) => {
-        dispatch(deleteTodolistAC(todolistId))
+        dispatch(deleteTodolistAC({todolistId}))
     }
     const changeTodolistFilter = (todolistId: string, filter: FilterValues) => {
         dispatch(changeTodolistFilterAC({todolistId, filter}))
