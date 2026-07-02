@@ -3,12 +3,14 @@ import {useAppDispatch} from "@/common/hooks/useAppDispatch";
 import {useAppSelector} from "@/common/hooks/useAppSelector";
 import {CreateItemForm} from "@/CreateItemForm";
 import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC} from "@/model/tasks-reducer";
+import {selectTasks} from "@/model/tasks-selectors";
 import {
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     createTodolistAC,
     deleteTodolistAC
 } from "@/model/todolists-reducer";
+import {selectTodolists} from "@/model/todolists-selectors";
 import {NavButton} from "@/NavButtons";
 import {TodolistItem} from "@/TodolistItem";
 import {containerSx} from "@/TodolistItem.styles";
@@ -42,8 +44,8 @@ export type TasksState = Record<string, Task[]>
 export type FilterValues = 'all' | 'active' | 'completed'
 
 function App() {
-    const todolists = useAppSelector<RootState, Todolist[]>(state => state.todolists)
-    const tasks = useAppSelector<RootState, TasksState>(state => state.tasks)
+    const todolists = useAppSelector(selectTodolists)
+    const tasks = useAppSelector(selectTasks)
 
     const dispatch = useAppDispatch()
 
