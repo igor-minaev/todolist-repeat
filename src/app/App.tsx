@@ -1,3 +1,4 @@
+import type {RootState} from "@/app/store";
 import {CreateItemForm} from "@/CreateItemForm";
 import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC, tasksReducer} from "@/model/tasks-reducer";
 import {
@@ -21,6 +22,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import Toolbar from '@mui/material/Toolbar'
 import {useReducer, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 
 
 export type Task = {
@@ -40,43 +42,35 @@ export type TasksState = Record<string, Task[]>
 export type FilterValues = 'all' | 'active' | 'completed'
 
 function App() {
+    const todolists = useSelector<RootState, Todolist[]>(state => state.todolists)
+    const tasks = useSelector<RootState, TasksState>(state => state.tasks)
 
-    const todolistId_1 = crypto.randomUUID()
-    const todolistId_2 = crypto.randomUUID()
-
-    const [todolists, dispatchTodolists] = useReducer(todolistsReducer, [])
-
-
-    const [tasks, dispatchTasks] = useReducer(tasksReducer, {})
+    const dispatch = useDispatch()
 
     const deleteTask = (todolistId: string, taskId: string) => {
-        dispatchTasks(deleteTaskAC({todolistId, taskId}))
+        dispatch(deleteTaskAC({todolistId, taskId}))
     }
     const createTask = (todolistId: string, title: string) => {
-        dispatchTasks(createTaskAC({todolistId, title}))
+        dispatch(createTaskAC({todolistId, title}))
     }
     const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
-        dispatchTasks(changeTaskStatusAC({todolistId, taskId, isDone}))
+        dispatch(changeTaskStatusAC({todolistId, taskId, isDone}))
     }
     const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
-        dispatchTasks(changeTaskTitleAC({todolistId, taskId, title}))
+        dispatch(changeTaskTitleAC({todolistId, taskId, title}))
     }
 
     const createTodolist = (title: string) => {
-        const action = createTodolistAC(title)
-        dispatchTodolists(action)
-        dispatchTasks(action)
+        dispatch(createTodolistAC(title))
     }
     const deleteTodolist = (todolistId: string) => {
-        const action = deleteTodolistAC(todolistId)
-        dispatchTodolists(action)
-        dispatchTasks(action)
+        dispatch(deleteTodolistAC(todolistId))
     }
     const changeTodolistFilter = (todolistId: string, filter: FilterValues) => {
-        dispatchTodolists(changeTodolistFilterAC({todolistId, filter}))
+        dispatch(changeTodolistFilterAC({todolistId, filter}))
     }
     const changeTodolistTitle = (todolistId: string, title: string) => {
-        dispatchTodolists(changeTodolistTitleAC({todolistId, title}))
+        dispatch(changeTodolistTitleAC({todolistId, title}))
     }
 
     const getTasksForTodolist = (tasks: Task[], filter: FilterValues): Task[] => {
@@ -129,7 +123,7 @@ function App() {
                     <CreateItemForm createItem={createTodolist}/>
                 </Grid>
                 <Grid container spacing={4}>
-                    {todolists.length === 0 ? <p>Create new todolist!</p>: todolists.map(todolist => {
+                    {todolists.length === 0 ? <p>Create new todolist!</p> : todolists.map(todolist => {
                         return (
                             <Grid key={todolist.id}>
                                 <Paper elevation={3} sx={{p: '20px'}}>
